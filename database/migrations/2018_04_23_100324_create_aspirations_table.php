@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrdersTable extends Migration
+class CreateAspirationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('aspirations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('project', 100)->nullable();
-            $table->string('observation', 100)->nullable();
-            $table->integer('client_id')->unsigned();
-            $table->foreign('client_id')->references('id')->on('clients');
-            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('aspirations');
     }
 }

@@ -55,14 +55,13 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                 <thead>
                                     <tr>
-                                        <th>Identificación</th>
+                                        <th># Orden</th>
+                                        <th>Local</th>
                                         <th>Razón Social</th>
-                                        <th>Dirección</th>
                                         <th>Teléfono</th>
                                         <th>Celular</th>
                                         <th>Correo</th>
                                         <th>Contacto</th>
-                                        <th>Cargo</th>
                                         <th>Aprobada</th>
                                         <th></th>
                                     </tr>
@@ -70,14 +69,12 @@
                                 <tbody>
                                     @foreach ($productionOrders as $productionOrder)
                                         <tr>
-                                            <td>{{ $productionOrder->client->identification_number }}</td>
+                                            <td>{{ $productionOrder->id }}</td>
                                             <td>{{ $productionOrder->client->bussiness_name }}</td>
-                                            <td>{{ $productionOrder->client->address }}</td>
                                             <td>{{ $productionOrder->client->phone }}</td>
                                             <td>{{ $productionOrder->client->cellphone }}</td>
                                             <td>{{ $productionOrder->client->email }}</td>
                                             <td>{{ $productionOrder->client->contact }}</td>
-                                            <td>{{ $productionOrder->client->position }}</td>
                                             {!! ($productionOrder->approved) ? '<td class="text-success">Sí</td>' : '<td class="text-danger">No</td>'  !!}
                                             <td>
                                                 <a href="{{ route($route, $productionOrder->id) }}" class="btn btn-sm btn-info {{($productionOrder->approved) ? 'disabled' : ''}}">Aprobar</a>

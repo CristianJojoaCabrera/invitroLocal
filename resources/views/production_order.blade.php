@@ -133,7 +133,7 @@
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Observación</label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" name="txtObservation"></textarea>
                                     </div>
                                 </div>
                                 <div class="panel-group" id="accordion">
@@ -175,6 +175,7 @@
                                                 <table id="tblLocals" class="table table-striped table-bordered table-hover dataTables-example" >
                                                     <thead>
                                                     <tr>
+                                                        <th></th>
                                                         <th>Nombre</th>
                                                         <th>Ciudad</th>
                                                         <th>Departamento</th>
@@ -187,28 +188,31 @@
                                                         @foreach($client->locals as $local)
                                                             <tr>
                                                                 <td>
+                                                                    <input type="checkbox" name="chkLocal[{{ $local->id }}]">
+                                                                </td>
+                                                                <td>
                                                                     {{ $local->name }}
-                                                                    <input type="hidden" name="txtLocalName[]" value="{{ $local->name }}">
+                                                                    <input type="hidden" name="txtLocalName[{{ $local->id }}]" value="{{ $local->name }}">
                                                                 </td>
                                                                 <td>
                                                                     {{ $local->city }}
-                                                                    <input type="hidden" name="txtLocalCity[]" value="{{ $local->city }}">
+                                                                    <input type="hidden" name="txtLocalCity[{{ $local->id }}]" value="{{ $local->city }}">
                                                                 </td>
                                                                 <td>
                                                                     {{ $local->department }}
-                                                                    <input type="hidden" name="txtLocalDepartment[]" value="{{ $local->department }}">
+                                                                    <input type="hidden" name="txtLocalDepartment[{{ $local->id }}]" value="{{ $local->department }}">
                                                                 </td>
                                                                 <td>
                                                                     {{ $local->phone }}
-                                                                    <input type="hidden" name="txtLocalPhone[]" value="{{ $local->phone }}">
+                                                                    <input type="hidden" name="txtLocalPhone[{{ $local->id }}]" value="{{ $local->phone }}">
                                                                 </td>
                                                                 <td>
                                                                     {{ $local->email }}
-                                                                    <input type="hidden" name="txtLocalEmail[]" value="{{ $local->email }}">
+                                                                    <input type="hidden" name="txtLocalEmail[{{ $local->id }}]" value="{{ $local->email }}">
                                                                 </td>
                                                                 <td>
                                                                     {{ $local->contact }}
-                                                                    <input type="hidden" name="txtLocalContact[]" value="{{ $local->contact }}">
+                                                                    <input type="hidden" name="txtLocalContact[{{ $local->id }}]" value="{{ $local->contact }}">
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -227,6 +231,7 @@
                                     <table id="tblServices" class="table table-striped table-bordered" >
                                         <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Servicio</th>
                                             <th>Subservicio</th>
                                             <th>Valor</th>
@@ -236,14 +241,15 @@
                                         @foreach($client->services as $service)
                                             @foreach($service->service->subservices as $subservice)
                                                 <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="chkSubservice[{{ $service->id }}][{{ $subservice->id }}]">
+                                                    </td>
                                                     <td>{{ $service->service->name }}</td>
                                                     <td>{{ $subservice->name }}</td>
                                                     <td>
                                                         <div class="input-group m-b">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="hidden" class="form-control" name="txtServiceId[]" value="{{ $service->id }}">
-                                                            <input type="hidden" class="form-control" name="txtSubServiceId[]" value="{{ $subservice->id }}">
-                                                            <input type="number" class="form-control" name="txtService[]" value="{{ ($service->service->name == $subservice->name) ? $service->amount : '' }}">
+                                                            <input type="number" class="form-control" name="txtService[{{ $service->id }}][{{ $subservice->id }}]" value="{{ ($service->service->name == $subservice->name) ? $service->amount : '0' }}">
                                                             <span class="input-group-addon">.00</span>
                                                         </div>
                                                     </td>
@@ -293,7 +299,6 @@
                                 <table id="tblFinalServices" class="table table-striped table-bordered table-hover dataTables-example" disabled>
                                     <thead>
                                     <tr>
-                                        <th></th>
                                         <th>Servicio</th>
                                         <th>Subservicio</th>
                                         <th>Valor</th>
@@ -399,25 +404,27 @@
 
                         $('#tblFinalLocals tbody').html('');
                         $.each($('#tblLocals tbody tr'), function() {
-                            var tr = '<tr>';
-                            tr += '<td>' + $(this).children('td').text() + '</td>';
-                            tr += '<td>' + $(this).children('td').next().text() + '</td>';
-                            tr += '<td>' + $(this).children('td').next().next().text() + '</td>';
-                            tr += '<td>' + $(this).children('td').next().next().next().text() + '</td>';
-                            tr += '<td>' + $(this).children('td').next().next().next().next().text() + '</td>';
-                            tr += '<td>' + $(this).children('td').next().next().next().next().next().text() + '</td>';
-                            tr += '</tr>';
-                            $('#tblFinalLocals tbody').append(tr);
+                            if ($(this).children('td').children('input:checkbox').prop("checked")) {
+                                var tr = '<tr>';
+                                tr += '<td>' + $(this).children('td').next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().next().next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().next().next().next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().next().next().next().next().html() + '</td>';
+                                tr += '</tr>';
+                                $('#tblFinalLocals tbody').append(tr);
+                             }
                         });
+                        $('#tblFinalLocals tbody input').remove();
 
                         $('#tblFinalServices tbody').html('');
                         $.each($('#tblServices tbody tr'), function() {
-                            if ($(this).children('td').next().next().children().children('input').next().next().val() != '') {
+                            if ($(this).children('td').children('input:checkbox').prop('checked')) {
                                 var tr = '<tr>';
-                                tr += '<td></td>';
-                                tr += '<td>' + $(this).children('td').html() + '</td>';
                                 tr += '<td>' + $(this).children('td').next().html() + '</td>';
-                                tr += '<td>' + $(this).children('td').next().next().children().children('input').next().next().val() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().html() + '</td>';
+                                tr += '<td>' + $(this).children('td').next().next().next().children().children('input').val() + '</td>';
                                 tr += '</tr>';
                                 $('#tblFinalServices tbody').append(tr);
                                 $('#tblFinalServices tbody input').attr('disabled', true);
@@ -561,73 +568,37 @@
         $(document).on('click', '#btnNewLocal', function () {
             var tr = '<tr>';
             tr += '<td>';
+            tr += '<input type="checkbox" name="chkLocal[' + $('#tblLocals tbody tr').length * -1 + ']">';
+            tr += '</td>';
+            tr += '<td>';
             tr += $('#txtNewLocalName').val();
-            tr += '<input type="hidden" name="txtLocalName[]" value="' + $('#txtNewLocalName').val() + '">';
+            tr += '<input type="hidden" name="txtLocalName[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalName').val() + '">';
             tr += '</td>';
             tr += '<td>'
             tr += $('#txtNewLocalCity').val();
-            tr += '<input type="hidden" name="txtLocalCity[]" value="' + $('#txtNewLocalCity').val() + '">';
+            tr += '<input type="hidden" name="txtLocalCity[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalCity').val() + '">';
             tr += '</td>';
             tr += '<td>';
             tr += $('#txtNewLocalDepartment').val();
-            tr += '<input type="hidden" name="txtLocalDepartment[]" value="' + $('#txtNewLocalDepartment').val() + '">';
+            tr += '<input type="hidden" name="txtLocalDepartment[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalDepartment').val() + '">';
             tr += '</td>';
             tr += '<td>';
             tr += $('#txtNewLocalPhone').val();
-            tr += '<input type="hidden" name="txtLocalPhone[]" value="' + $('#txtNewLocalPhone').val() + '">';
+            tr += '<input type="hidden" name="txtLocalPhone[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalPhone').val() + '">';
             tr += '</td>';
             tr += '<td>';
             tr += $('#txtNewLocalEmail').val();
-            tr += '<input type="hidden" name="txtLocalEmail[]" value="' + $('#txtNewLocalEmail').val() + '">';
+            tr += '<input type="hidden" name="txtLocalEmail[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalEmail').val() + '">';
             tr += '</td>';
             tr += '<td>';
             tr += $('#txtNewLocalContact').val();
-            tr += '<input type="hidden" name="txtLocalContact[]" value="' + $('#txtNewLocalContact').val() + '">';
+            tr += '<input type="hidden" name="txtLocalContact[' + $('#tblLocals tbody tr').length * -1 + ']" value="' + $('#txtNewLocalContact').val() + '">';
             tr += '</td>';
             tr += '</tr>';
 
             $('#tblLocals tbody').append(tr);
-            $('#txtNewLocalName, #txtNewLocalCity, #txtNewLocalDepartment').val('');
+            $('#txtNewLocalName, #txtNewLocalCity, #txtNewLocalDepartment, #txtNewLocalPhone, #txtNewLocalEmail, #txtNewLocalContact').val('');
         });
-
-        function findClient(clientId) {
-            $('#cmbIdType, #txtIdNumber, #txtBussinessName, #txtAddress, #txtPhone, #txtCellphone, #txtEmail, #txtContact, #txtPosition, #txtCity, #txtDepartment').val('');
-            $(clients).each(function (client) {
-                if (clients[client].id == clientId) {
-                    $('#cmbIdType').val(clients[client].identification_type_id);
-                    $('#txtIdNumber, #txtIdOP').val(clients[client].identification_number);
-                    $('#txtBussinessName, #txtClientOP').val(clients[client].bussiness_name);
-                    $('#txtAddress').val(clients[client].address);
-                    $('#txtPhone').val(clients[client].phone);
-                    $('#txtCellphone').val(clients[client].cellphone);
-                    $('#txtEmail').val(clients[client].email);
-                    $('#txtContact').val(clients[client].contact);
-                    $('#txtPosition').val(clients[client].position);
-                    $('#txtCity').val(clients[client].city);
-                    $('#txtDepartment').val(clients[client].department);
-                    $('.tblLocals tbody').html('');
-                    $(clients[client].locales).each(function(j) {
-                        var local = clients[client].locales[j];
-                        var tr = '<tr>';
-                        tr += '<td>';
-                        tr += local.name;
-                        tr += '<input type="hidden" name="txtLocalName[]" value="' + local.name + '">';
-                        tr += '</td>';
-                        tr += '<td>'
-                        tr += local.city;
-                        tr += '<input type="hidden" name="txtLocalCity[]" value="' + local.city + '">';
-                        tr += '</td>';
-                        tr += '<td>';
-                        tr += local.department;
-                        tr += '<input type="hidden" name="txtLocalDepartment[]" value="' + local.department + '">';
-                        tr += '</td>';
-                        tr += '</tr>';
-                        $('.tblLocals tbody').append(tr);
-
-                    });
-                }
-            });
-        }
 
     </script>
 @endsection

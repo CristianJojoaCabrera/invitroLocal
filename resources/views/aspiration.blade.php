@@ -140,6 +140,22 @@
                                             <label>GIII</label>
                                             <input id="txtGIII" type="text" class="form-control">
                                         </div>
+                                        <div class="form-group">
+                                            <label>GIII</label>
+                                            <input id="txtOtros" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Viables</label>
+                                            <input id="txtViables" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Toro</label>
+                                            <input id="txtToro" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Raza</label>
+                                            <input id="txtRaza" type="text" class="form-control">
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -196,12 +212,12 @@
                 tr += '<td>' + $('#txtGI').val() + '</td>';
                 tr += '<td>' + $('#txtGII').val() + '</td>';
                 tr += '<td>' + $('#txtGIII').val() + '</td>';
-                tr += '<td></td>';
-                tr += '<td></td>';
-                tr += '<td></td>';
-                tr += '<td></td>';
-                tr += '<td></td>';
-                tr += '<td></td>';
+                tr += '<td>' + $('#txtOtros').val() + '</td>';
+                tr += '<td>' + $('#txtViables').val() + '</td>';
+                tr += '<td>' + $('#txtTotal').val() + '</td>';
+                tr += '<td>' + $('#txtToro').val() + '</td>';
+                tr += '<td>' + $('#txtRaza').val() + '</td>';
+                tr += '<td>' + $('#txtGIII').val() + '</td>';
                 tr += '</tr>';
                 $('#tblPlanilla tbody').append(tr);
             });
