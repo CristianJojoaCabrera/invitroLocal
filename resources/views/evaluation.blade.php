@@ -4,200 +4,156 @@
 
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Selección Receptoras</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li class="active">
-                <strong>Selección Receptoras</strong>
-            </li>
-        </ol>
+        <div class="col-lg-10">
+            <h2>Selección Receptoras</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active">
+                    <strong>Planilla de Selección de Receptoras</strong>
+                </li>
+            </ol>
+        </div>
     </div>
-    </div>
+
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Orden de Producción</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
+        <form method="POST" action="{{ route('create_evaluation') }}">
+            <div class="row">
+                {{ csrf_field() }}
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Orden de Producción</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="form-group col-lg-2">
+                                    <label>Orden de producción</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $productionOrder->id }}" id="txtOrder_id" name="txtOrder_id" readonly>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Cliente</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $productionOrder->client->bussiness_name }}" readonly>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Ciudad</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $productionOrder->client->city }}" readonly>
+                                </div>
+                                <div class="form-group col-lg-2">
+                                    <label>Fecha</label>
+                                    <input type="text" class="form-control input-sm" value="{{ date('Y-m-d') }}" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="form-group col-lg-2">
-                                <label>Orden de Producción</label>
-                                <input type="text" class="form-control input-sm">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Planilla de Selección de Receptoras</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <button id="btnModalAgregar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                Agregar
+                            </button>
+                            <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content animated bounceInRight">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Planilla de Selección de Receptoras</h4>
+                                            <small class="font-bold"></small>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Id. Animal</label>
+                                                <input id="txtAnimal_id" name="txtAnimal_id" type="text"  class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Chapeta</label>
+                                                <input id="txtChapeta" name="txtChapeta" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Diagnóstico</label>
+                                                <input id="txtDiagnostic" name="txtDiagnostic" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Apta</label>
+                                                <input id="txtFit" name="txtFit" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Otros Procedimientos</label>
+                                                <input id="txtOther_procedures" name="txtOther_procedures" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Observaciones</label>
+                                                <input id="txtComments" name="txtComments" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-lg-4">
-                                <label>Cliente</label>
-                                <input type="text" class="form-control input-sm">
+                            <div class="table-responsive">
+                                <table id="tblPlanilla" class="table table-striped table-bordered table-hover dataTables-example" >
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID. Animal</th>
+                                        <th>Chapeta</th>
+                                        <th>Diagnóstico</th>
+                                        <th>Apta</th>
+                                        <th>Otros Procedimientos</th>
+                                        <th>Observaciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
                             </div>
-                            <div class="form-group col-lg-4">
-                                <label>Ciudad</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label>Fecha</label>
-                                <input type="text" class="form-control input-sm">
+                            <div class="ibox-content" align="right">
+                                <button type="submit" class="btn btn-w-m btn-primary">Guardar Planilla</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Planilla de Selección de Receptoras</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>ID. Animal</th>
-                                    <th>Chapeta</th>
-                                    <th>Diagnóstico</th>
-                                    <th>Apta</th>
-                                    <th>Otros Procedimientos</th>
-                                    <th>Observaciones</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeX">
-                                    <td>1</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeC">
-                                    <td>2</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 5.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>3</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 5.5
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>4</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 6
-                                    </td>
-                                    <td>Win 98+</td>
-                                    <td class="center">6</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>5</td>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 7</td>
-                                    <td>Win XP SP2+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">7</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>6</td>
-                                    <td>Trident</td>
-                                    <td>AOL browser (AOL desktop)</td>
-                                    <td>Win XP</td>
-                                    <td class="center">6</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>7</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 1.0</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">1.7</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>8</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 1.5</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">1</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>9</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 2.0</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">8</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>10</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 3.0</td>
-                                    <td>Win 2k+ / OSX.3+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">9</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>11</td>
-                                    <td>Gecko</td>
-                                    <td>Camino 1.0</td>
-                                    <td>OSX.2+</td>
-                                    <td class="center">8</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $('#btnAgregar').on('click', function () {
+                var tr = '<tr>';
+                tr += '<td></td>';
+                tr += '<td>' + $('#txtAnimal_id').val() + '</td>';
+                tr += '<td>' + $('#txtChapeta').val() + '</td>';
+                tr += '<td>' + $('#txtDiagnostic').val() + '</td>';
+                tr += '<td>' + $('#txtFit').val() + '</td>';
+                tr += '<td>' + $('#txtOther_procedures').val() + '</td>';
+                tr += '<td>' + $('#txtComments').val() + '</td>';
+                tr += '</tr>';
+                $('#tblPlanilla tbody').append(tr);
+            });
+
+            $('#myModal').on('hidden.bs.modal', function(e){
+                $(".modal-body input").val("")
+            }) ;
+
+        });
+    </script>
+@endsection
+

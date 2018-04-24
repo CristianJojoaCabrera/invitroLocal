@@ -46,7 +46,7 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ route('evaluation') }}"><i class="fa fa-search"></i> <span class="nav-label">Evaluación Receptoras</span></a>
+                <a href="{{ route('evaluation_po') }}"><i class="fa fa-search"></i> <span class="nav-label">Evaluación Receptoras</span></a>
             </li>
             <li>
                 <a href="{{ route('aspiration_po') }}"><i class="fa fa-eyedropper"></i> <span class="nav-label">Aspiración Folicular</span></a>
