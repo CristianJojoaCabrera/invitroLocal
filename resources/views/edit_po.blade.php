@@ -85,25 +85,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($order->client->locals as $local)
+                                        @foreach($order->details as $detail)
                                             <tr>
                                                 <td>
-                                                    {{ $local->name }}
+                                                    {{ $detail->local->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $local->city }}
+                                                    {{ $detail->local->city }}
                                                 </td>
                                                 <td>
-                                                    {{ $local->department }}
+                                                    {{ $detail->local->department }}
                                                 </td>
                                                 <td>
-                                                    {{ $local->phone }}
+                                                    {{ $detail->local->phone }}
                                                 </td>
                                                 <td>
-                                                    {{ $local->email }}
+                                                    {{ $detail->local->email }}
                                                 </td>
                                                 <td>
-                                                    {{ $local->contact }}
+                                                    {{ $detail->local->contact }}
                                                 </td>
                                             </tr>
                                         @endforeach

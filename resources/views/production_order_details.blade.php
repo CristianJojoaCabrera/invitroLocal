@@ -55,15 +55,9 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                 <thead>
                                     <tr>
-                                        <th>Tipo Id.</th>
-                                        <th>Identificación</th>
+                                        <th># Orden</th>
                                         <th>Razón Social</th>
-                                        <th>Dirección</th>
-                                        <th>Teléfono</th>
-                                        <th>Celular</th>
-                                        <th>Correo</th>
-                                        <th>Contacto</th>
-                                        <th>Cargo</th>
+                                        <th>Local</th>
                                         @if ($route == '')
                                             <th>Aprobada</th>
                                         @endif
@@ -72,20 +66,16 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($productionOrders as $productionOrder)
+                                        @foreach ($productionOrder->details as $detail)
                                             <tr>
-                                                <td>{{ $productionOrder->client->identification_type_id }}</td>
-                                                <td>{{ $productionOrder->client->identification_number }}</td>
+                                                <td>{{ $productionOrder->id }}</td>
                                                 <td>{{ $productionOrder->client->bussiness_name }}</td>
-                                                <td>{{ $productionOrder->client->address }}</td>
-                                                <td>{{ $productionOrder->client->phone }}</td>
-                                                <td>{{ $productionOrder->client->cellphone }}</td>
-                                                <td>{{ $productionOrder->client->email }}</td>
-                                                <td>{{ $productionOrder->client->contact }}</td>
-                                                <td>{{ $productionOrder->client->position }}</td>
+                                                <td>{{ $detail->local->name }}</td>
                                                 <td>
-                                                    <a href="{{ route($route, $productionOrder->id) }}" class="btn btn-sm btn-warning">Ir</a>
+                                                    <a href="{{ route($route, $productionOrder->id) }}" class="btn btn-sm btn-warning">Planilla</a>
                                                 </td>
                                             </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
