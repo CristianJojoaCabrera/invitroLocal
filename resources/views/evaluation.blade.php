@@ -2,6 +2,17 @@
 
 @section('title', 'Inicio')
 
+@section('css')
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/fullcalendar/fullcalendar.print.css') }}" rel='stylesheet' media='print'>
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
@@ -84,6 +95,14 @@
                                             <div class="form-group">
                                                 <label>Apta</label>
                                                 <input id="txtFit" name="txtFit" type="text" class="form-control">
+                                                <select class="form-control input-sm" id="cmbFit">
+                                                    <option value="">Seleccione</option>
+                                                    <option value="1">Si</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <div class="i-checks"><label> <input type="checkbox"><i></i> Remember me </label></div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Otros Procedimientos</label>
@@ -139,14 +158,27 @@
             $('#btnAgregar').on('click', function () {
                 var tr = '<tr>';
                 tr += '<td></td>';
-                tr += '<td>' + $('#txtAnimal_id').val() + '</td>';
-                tr += '<td>' + $('#txtChapeta').val() + '</td>';
-                tr += '<td>' + $('#txtDiagnostic').val() + '</td>';
-                tr += '<td>' + $('#txtFit').val() + '</td>';
-                tr += '<td>' + $('#txtOther_procedures').val() + '</td>';
-                tr += '<td>' + $('#txtComments').val() + '</td>';
+                tr += '<td>' + $('#txtAnimal_id').val() ;
+                tr += '<input type="hidden" name="txtAnimal_id[]" value="' + $('#txtAnimal_id').val() + '">';
+                tr += '</td>';
+                tr += '<td>' + $('#txtChapeta').val();
+                tr += '<input type="hidden" name="txtChapeta[]" value="' + $('#txtChapeta').val() + '">';
+                tr += '</td>';
+                tr += '<td>' + $('#txtDiagnostic').val();
+                tr += '<input type="hidden" name="txtDiagnostic[]" value="' + $('#txtDiagnostic').val() + '">';
+                tr += '</td>';
+                tr += '<td>' + $('#txtFit').val() ;
+                tr += '<input type="hidden" name="txtFit[]" value="' + $('#txtFit').val() + '">';
+                tr += '</td>';
+                tr += '<td>' + $('#txtOther_procedures').val();
+                tr += '<input type="hidden" name="txtOther_procedures[]" value="' + $('#txtOther_procedures').val() + '">';
+                tr += '</td>';
+                tr += '<td>' + $('#txtComments').val();
+                tr += '<input type="hidden" name="txtComments[]" value="' + $('#txtComments').val() + '">';
+                tr += '</td>';
                 tr += '</tr>';
                 $('#tblPlanilla tbody').append(tr);
+                $('#txtAnimal_id, #txtChapeta, #txtDiagnostic, #txtFit, #txtOther_procedures, #txtComments').val('');
             });
 
             $('#myModal').on('hidden.bs.modal', function(e){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Evaluation;
+use App\EvaluationDetail;
 use Illuminate\Http\Request;
 
 
@@ -51,9 +52,9 @@ class EvaluationController extends Controller
         //$evaluation->comments = $request->input('txtIdOrden');
         $evaluation->save();
 
-        for ($i = 0; $i < Count($request->input('txtLocalName')); $i++) {
+        for ($i = 0; $i < Count($request->input('txtAnimal_id')); $i++) {
 
-          $evaluation_details = new Evaluation_details();
+          $evaluation_details = new EvaluationDetail();
           $evaluation_details->evaluation_id = $evaluation->id;
           $evaluation_details->animal_id = $request->input('txtAnimal_id')[$i];
           $evaluation_details->chapeta = $request->input('txtChapeta')[$i];
