@@ -72,7 +72,7 @@
                                                 <td>{{ $productionOrder->client->bussiness_name }}</td>
                                                 <td>{{ $detail->local->name }}</td>
                                                 <td>
-                                                    <a href="{{ route($route, $productionOrder->id) }}" class="btn btn-sm btn-warning">Planilla</a>
+                                                    <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning">Planilla</a>
                                                 </td>
                                             </tr>
                                         @endforeach
