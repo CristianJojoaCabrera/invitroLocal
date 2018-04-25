@@ -35,19 +35,19 @@
                         <div class="row">
                             <div class="form-group col-lg-3">
                                 <label>Orden de producción</label>
-                                <input type="text" class="form-control input-sm" value="{{ $productionOrder->id }}">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled="">
                             </div>
                             <div class="form-group col-lg-6">
                                 <label>Cliente</label>
-                                <input type="text" class="form-control input-sm" value="{{ $productionOrder->bussiness_name }}">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled="">
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Fecha</label>
-                                <input type="text" class="form-control input-sm" value="{{ date('Y-m-d') }}">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled="">
                             </div>
                             <div class="form-group col-lg-6">
                                 <label>Finca</label>
-                                <input type="text" class="form-control input-sm" value="">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled="">
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Receptoras Sincronizadas</label>

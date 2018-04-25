@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
 {
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
+    }
+
     public function local() {
         return $this->hasOne('App\Local', 'id', 'local_id');
     }

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\ProductionOrder;
+use App\OrderDetail;
 use Illuminate\Http\Request;
 
 class AspirationController extends Controller
@@ -32,11 +31,10 @@ class AspirationController extends Controller
             ->with('route', $route);
     }
 
-    public function find($poId)
+    public function find($orderDetailId)
     {
-        $productionOrder = Order::find($poId);
-
+        $orderDetail = OrderDetail::find($orderDetailId);
         return view('aspiration')
-            ->with('productionOrder', $productionOrder);
+            ->with('orderDetail', $orderDetail);
     }
 }
