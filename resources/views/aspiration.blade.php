@@ -108,54 +108,53 @@
                                         <h4 class="modal-title">Planilla de Apiración Folicular</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Donadora</label>
-                                            <input id="txtDonadora" type="text" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Raza</label>
-                                            <input id="txtRazaD" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Toro</label>
-                                            <input id="txtToro" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Raza</label>
-                                            <input id="txtRazaT" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tipo</label>
-                                            <input id="txtTipo" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>GI</label>
-                                            <input id="txtGI" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>GII</label>
-                                            <input id="txtGII" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>GIII</label>
-                                            <input id="txtGIII" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>GIII</label>
-                                            <input id="txtOtros" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Viables</label>
-                                            <input id="txtViables" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Toro</label>
-                                            <input id="txtToro" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Raza</label>
-                                            <input id="txtRaza" type="text" class="form-control">
-                                        </div>
+                                        <form id="formPlanilla" method="POST" action="{{ route('aspiration_save', $orderDetail->id) }}">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label>Donadora</label>
+                                                <input name="txtDonadora" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Raza</label>
+                                                <input name="txtRazaD" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Toro</label>
+                                                <input name="txtToro" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Raza</label>
+                                                <input name="txtRazaT" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tipo</label>
+                                                <input name="txtTipo" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>GI</label>
+                                                <input name="txtGI" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>GII</label>
+                                                <input name="txtGII" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>GIII</label>
+                                                <input name="txtGIII" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Otros</label>
+                                                <input name="txtOtros" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Toro</label>
+                                                <input name="txtToro2" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Raza</label>
+                                                <input name="txtRaza2" type="text" class="form-control">
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -203,6 +202,8 @@
     <script>
         $(document).ready(function(){
             $('#btnAgregar').on('click', function(){
+                $('#formPlanilla').submit();
+                /*var viables = (parseInt($('#txtGI').val()) + parseInt($('#txtGII').val()) + parseInt($('#txtGIII').val()));
                 var tr = '<tr>';
                 tr += '<td>' + $('#txtDonadora').val() + '</td>';
                 tr += '<td>' + $('#txtRazaD').val() + '</td>';
@@ -213,13 +214,13 @@
                 tr += '<td>' + $('#txtGII').val() + '</td>';
                 tr += '<td>' + $('#txtGIII').val() + '</td>';
                 tr += '<td>' + $('#txtOtros').val() + '</td>';
-                tr += '<td>' + $('#txtViables').val() + '</td>';
-                tr += '<td>' + $('#txtTotal').val() + '</td>';
+                tr += '<td>' + viables + '</td>';
+                tr += '<td>' + (parseInt($('#txtOtros').val()) + viables) + '</td>';
                 tr += '<td>' + $('#txtToro').val() + '</td>';
                 tr += '<td>' + $('#txtRaza').val() + '</td>';
-                tr += '<td>' + $('#txtGIII').val() + '</td>';
+                tr += '<td>{{-- $orderDetail->order->client->bussiness_name --}}</td>';
                 tr += '</tr>';
-                $('#tblPlanilla tbody').append(tr);
+                $('#tblPlanilla tbody').append(tr);*/
             });
         });
     </script>

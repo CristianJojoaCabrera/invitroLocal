@@ -65,8 +65,11 @@ Route::post('/evaluation/create', 'EvaluationController@store')
 Route::get('/aspiration/production_orders', 'AspirationController@index')
     ->name('aspiration_po');
 
-Route::get('/aspiration/{poId}', 'AspirationController@find')
+Route::get('/aspiration/{orderDetailId}', 'AspirationController@find')
     ->name('aspiration');
+
+Route::post('/aspiration/{orderDetailId}/save', 'AspirationController@storeform')
+    ->name('aspiration_save');
 
 Route::get('/production', 'ProductionController@index')
     ->name('production');

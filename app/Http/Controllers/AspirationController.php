@@ -37,4 +37,20 @@ class AspirationController extends Controller
         return view('aspiration')
             ->with('orderDetail', $orderDetail);
     }
+
+    public function storeform($orderDetailId, Request $request)
+    {
+        dd($request);
+        $request->input('txtDonadora');
+        $request->input('txtRazaD');
+        $request->input('txtToro');
+        $request->input('txtRazaT');
+        $request->input('txtTipo');
+        $request->input('txtGI');
+        $request->input('txtGII');
+        $request->input('txtGIII');
+        $request->input('txtOtros');
+        $request->input('txtToro2');
+        $request->input('txtRaza2');
+    }
 }
