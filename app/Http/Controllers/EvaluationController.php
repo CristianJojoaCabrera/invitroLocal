@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Evaluation;
 use App\EvaluationDetail;
+use App\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 
 class EvaluationController extends Controller
@@ -34,39 +36,30 @@ class EvaluationController extends Controller
             ->with('route', $route);
     }
 
-    public function find($poId)
+    public function find($orderDetailId)
     {
-        $productionOrder = Order::find($poId);
-
+        $orderDetail = OrderDetail::find($orderDetailId);
+        if (Evaluation::where('order_detail_id', $orderDetailId)->first() == null) {
+            $evaluation = new Evaluation();
+            $evaluation->order_detail_id = $orderDetailId;
+            $evaluation->save();
+        }
         return view('evaluation')
-            ->with('productionOrder', $productionOrder);
-
+            ->with('orderDetail', $orderDetail);
     }
 
-    public function store(Request $request)
+    public function store($orderDetailId, Request $request)
     {
-
-        $evaluation = new Evaluation();
-        $evaluation->order_id = $request->input('txtOrder_id');
-        //dd($request->input('txtOrder_id'));
-        //$evaluation->comments = $request->input('txtIdOrden');
-        $evaluation->save();
-
-        for ($i = 0; $i < Count($request->input('txtAnimal_id')); $i++) {
-
-          $evaluation_details = new EvaluationDetail();
-          $evaluation_details->evaluation_id = $evaluation->id;
-          $evaluation_details->animal_id = $request->input('txtAnimal_id')[$i];
-          $evaluation_details->chapeta = $request->input('txtChapeta')[$i];
-          $evaluation_details->diagnostic = $request->input('txtDiagnostic')[$i];
-          $evaluation_details->fit = $request->input('txtFit')[$i];
-          $evaluation_details->other_procedures = $request->input('txtOther_procedures')[$i];
-          $evaluation_details->comments = $request->input('txtComments')[$i];
-          $evaluation_details->save();
-        }
-
-
-        return redirect()->route('evaluation', 1);
-        //$productionOrder->id
+        $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
+        $evaluation_details = new EvaluationDetail();
+        $evaluation_details->evaluation_id = $evaluation->id;
+        $evaluation_details->animal_id = $request->input('txtAnimal_id');
+        $evaluation_details->chapeta = $request->input('txtChapeta');
+        $evaluation_details->diagnostic = $request->input('txtDiagnostic');
+        $evaluation_details->fit = $request->input('cmbFit');
+        $evaluation_details->other_procedures = $request->input('txtOther_procedures');
+        $evaluation_details->comments = $request->input('txtComments');
+        $evaluation_details->save();
+        return redirect()->route('evaluation', $orderDetailId);
     }
 }

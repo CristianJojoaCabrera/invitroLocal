@@ -19,4 +19,8 @@ class OrderDetail extends Model
         return $this->hasOne('App\Aspiration');
     }
 
+    public function evaluation() {
+        return $this->hasOne('App\Evaluation');
+    }
+
 }

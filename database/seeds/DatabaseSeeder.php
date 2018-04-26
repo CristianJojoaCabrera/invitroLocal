@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiceSeeder::class);
         $this->call(SubserviceSeeder::class);
         $this->call(ServiceSubserviceSeeder::class);
+        $this->call(ClientSeeder::class);
     }
 
     public function truncateTables(array $tables)
