@@ -16,7 +16,7 @@ class OrderDetail extends Model
     }
 
     public function aspiration() {
-        return $this->belongsTo('App\Aspiration', 'order_detail_id');
+        return $this->hasOne('App\Aspiration');
     }
 
 }

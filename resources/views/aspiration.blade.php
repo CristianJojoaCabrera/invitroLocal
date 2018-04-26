@@ -180,11 +180,9 @@
                                     <th>Total</th>
                                     <th>Toro</th>
                                     <th>Raza</th>
-                                    <th>Local</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{ dd($orderDetail->aspiration) }}
                                     @foreach($orderDetail->aspiration->details as $detail)
                                         <tr>
                                             <td>{{ $detail->donor }}</td>
@@ -196,6 +194,8 @@
                                             <td>{{ $detail->gii }}</td>
                                             <td>{{ $detail->giii }}</td>
                                             <td>{{ $detail->others }}</td>
+                                            <td>{{ ($detail->gi + $detail->gii + $detail->giii) }}</td>
+                                            <td>{{ ($detail->others + ($detail->gi + $detail->gii + $detail->giii)) }}</td>
                                             <td>{{ $detail->bull2 }}</td>
                                             <td>{{ $detail->bull2_breed }}</td>
                                         </tr>

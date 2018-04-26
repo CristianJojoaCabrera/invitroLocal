@@ -49,14 +49,9 @@ class AspirationController extends Controller
 
     public function storeform($orderDetailId, Request $request)
     {
-        dd($request);
         $aspiration = Aspiration::where('order_detail_id', $orderDetailId)->first();
-        if ($aspiration == null) {
-            $aspiration = new Aspiration();
-            $aspiration->order_detail_id = $orderDetailId;
-            $aspiration->save();
-        }
         $aspirationDetail = new AspirationDetail();
+        $aspirationDetail->aspiration_id = $aspiration->id;
         $aspirationDetail->donor = $request->input('txtDonadora');
         $aspirationDetail->donor_breed = $request->input('txtRazaD');
         $aspirationDetail->bull = $request->input('txtToro');
@@ -69,5 +64,6 @@ class AspirationController extends Controller
         $aspirationDetail->bull2 = $request->input('txtToro2');
         $aspirationDetail->bull2_breed = $request->input('txtRaza2');
         $aspirationDetail->save();
+        return redirect()->route('aspiration', $orderDetailId);
     }
 }
