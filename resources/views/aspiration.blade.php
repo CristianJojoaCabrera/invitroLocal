@@ -184,7 +184,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                {{ dd($orderDetail->aspiration) }}
+                                    @foreach($orderDetail->aspiration->details as $detail)
+                                        <tr>
+                                            <td>{{ $detail->donor }}</td>
+                                            <td>{{ $detail->donor_breed }}</td>
+                                            <td>{{ $detail->bull }}</td>
+                                            <td>{{ $detail->bull_breed }}</td>
+                                            <td>{{ $detail->type }}</td>
+                                            <td>{{ $detail->gi }}</td>
+                                            <td>{{ $detail->gii }}</td>
+                                            <td>{{ $detail->giii }}</td>
+                                            <td>{{ $detail->others }}</td>
+                                            <td>{{ $detail->bull2 }}</td>
+                                            <td>{{ $detail->bull2_breed }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
 
