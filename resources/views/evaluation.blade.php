@@ -32,7 +32,7 @@
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
-        <form method="POST" action="{{ route('create_evaluation', $orderDetail->id) }}">
+        <form method="POST" action="{{ route('evaluation_save', $orderDetail->id) }}">
             <div class="row">
                 {{ csrf_field() }}
                 <div class="col-lg-12">
@@ -52,17 +52,17 @@
                                     <label>Orden de producción</label>
                                     <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" id="txtOrder_id" name="txtOrder_id" readonly>
                                 </div>
-                                <div class="form-group col-lg-1">
-                                    <label>Detalle</label>
-                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->id }}" id="txtOrder_Detail_id" name="txtOrder_Detail_id" readonly>
-                                </div>
                                 <div class="form-group col-lg-4">
                                     <label>Cliente</label>
                                     <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" readonly>
                                 </div>
-                                <div class="form-group col-lg-3">
+                                <div class="form-group col-lg-2">
+                                    <label>Local</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" readonly>
+                                </div>
+                                <div class="form-group col-lg-2">
                                     <label>Ciudad</label>
-                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->city }}" readonly>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->city }}" readonly>
                                 </div>
                                 <div class="form-group col-lg-2">
                                     <label>Fecha</label>
@@ -76,7 +76,7 @@
                             <h5>Planilla de Selección de Receptoras</h5>
                         </div>
                         <div class="ibox-content">
-                            <button id="btnModalAgregar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            <button id="btnAgregarM" type="button" class="btn btn-primary"> <!--data-toggle="modal" data-target="#myModal" -->
                                 Agregar
                             </button>
                             <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -85,10 +85,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                             <h4 class="modal-title">Planilla de Selección de Receptoras</h4>
-                                            <input id="txtEvaluation_id" name="txtEvaluation_id" type="hidden"
-                                                   value=""
-                                                              class="form-control">
-                                            <small class="font-bold"></small>
+                                            <input id="txtEvaluation_id" name="txtEvaluation_id" type="hidden" value="" class="form-control">
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -107,7 +104,7 @@
                                                 <label>Apta</label>
                                                 <!--<input id="txtFit" name="txtFit" type="text" class="form-control">-->
                                                 <select class="form-control input-sm" id="cmbFit" name="cmbFit">
-                                                    <option value="0">Seleccione</option>
+                                                    <option value="">Seleccione</option>
                                                     <option value="1">Si</option>
                                                     <option value="0">No</option>
                                                 </select>
@@ -124,8 +121,9 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" value="0" >Eliminar</button>
                                             <!--<button type="button" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button> -->
-                                            <button type="submit" class="btn btn-primary">Guardar Planilla</button>
+                                            <button type="submit" class="btn btn-primary"id="btnAgregar" name="btnAgregar" >Agregar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -147,17 +145,21 @@
                                     <tbody>
                                     @foreach($orderDetail->evaluation->details as $detail)
                                         <tr>
-                                            <td>{{ $detail->id }}</td>
-                                            <td>{{ $detail->animal_id }}</td>
-                                            <td>{{ $detail->chapeta }}</td>
-                                            <td>{{ $detail->diagnostic }}</td>
-                                            <td>
-                                                <input type="checkbox" class="i-checks"  @if($detail->fit == 1 ) checked @endif >
+                                            <td id="id{{ $detail->id }}">{{ $detail->id }}</td>
+                                            <td id="animal_id{{ $detail->id }}">{{ $detail->animal_id }}</td>
+                                            <td id="chapeta{{ $detail->id }}">{{ $detail->chapeta }}</td>
+                                            <td id="diagnostic{{ $detail->id }}">{{ $detail->diagnostic }}</td>
+                                            <td id="fit{{ $detail->id }}">@if($detail->fit == 1 )
+                                                    Si
+                                                @else
+                                                    No
+                                                @endif
                                             </td>
-                                            <td>{{ $detail->other_procedures }}</td>
-                                            <td>{{ $detail->comments }}</td>
+                                            <td id="other_procedures{{ $detail->id }}">{{ $detail->other_procedures }}</td>
+                                            <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
                                             <td class="center">
-                                                <button type="button" class="btn btn-xs btn-warning">
+                                                <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
+                                                        value = "{{ $detail->id }}">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
                                             </td>
@@ -173,6 +175,8 @@
                             <div class="ibox-content" align="right">
                                 <button type="submit" class="btn btn-w-m btn-primary">Guardar Planilla</button>
                             </div>
+data-toggle="modal" data-target="#myModal"
+
                             -->
                         </div>
 
@@ -188,35 +192,40 @@
 
     <script>
         $(document).ready(function() {
-            $('#btnAgregar').on('click', function () {
-                var tr = '<tr>';
-                tr += '<td></td>';
-                tr += '<td>' + $('#txtAnimal_id').val() ;
-                tr += '<input type="hidden" name="txtAnimal_id[]" value="' + $('#txtAnimal_id').val() + '">';
-                tr += '</td>';
-                tr += '<td>' + $('#txtChapeta').val();
-                tr += '<input type="hidden" name="txtChapeta[]" value="' + $('#txtChapeta').val() + '">';
-                tr += '</td>';
-                tr += '<td>' + $('#txtDiagnostic').val();
-                tr += '<input type="hidden" name="txtDiagnostic[]" value="' + $('#txtDiagnostic').val() + '">';
-                tr += '</td>';
-                tr += '<td>' + $('#txtFit').val() ;
-                tr += '<input type="hidden" name="txtFit[]" value="' + $('#txtFit').val() + '">';
-                tr += '</td>';
-                tr += '<td>' + $('#txtOther_procedures').val();
-                tr += '<input type="hidden" name="txtOther_procedures[]" value="' + $('#txtOther_procedures').val() + '">';
-                tr += '</td>';
-                tr += '<td>' + $('#txtComments').val();
-                tr += '<input type="hidden" name="txtComments[]" value="' + $('#txtComments').val() + '">';
-                tr += '</td>';
-                tr += '</tr>';
-                $('#tblPlanilla tbody').append(tr);
-                $('#txtAnimal_id, #txtChapeta, #txtDiagnostic, #txtFit, #txtOther_procedures, #txtComments').val('');
+
+            //$('#myModal').on('hidden.bs.modal', function(e){
+            $('#btnAgregarM').on('click', function () {
+                $('#myModal').modal('show');
+                $('#btnEliminar').hide();
+                $('#btnEliminar').val(0);
+                $('#btnAgregar').html("Agregar");
+                $(".modal-body input").val("");
+            }) ;
+
+            $("[id*=btnModal]").on('click', function () {
+                $('#myModal').modal('show');
+                $('#btnAgregar').html("Modificar");
+                $('#btnEliminar').show();
+
+                $('#txtEvaluation_id').val((this).value);
+                $('#txtAnimal_id').val($('#animal_id'+(this).value).text());
+                $('#txtChapeta').val($('#chapeta'+(this).value).text());
+                $('#txtDiagnostic').val($('#diagnostic'+(this).value).text());
+
+                if( $('#fit'+(this).value).text() == 'Si' ){
+                    $('#cmbFit').val(1);
+                }else{
+                    $('#cmbFit').val(0);
+                };
+
+                $('#txtOther_procedures').val($('#other_procedures'+(this).value).text());
+                $('#txtComments').val($('#comments'+(this).value).text());
             });
 
-            $('#myModal').on('hidden.bs.modal', function(e){
-                $(".modal-body input").val("")
-            }) ;
+            $('#btnEliminar').click(function() {
+                $('#btnEliminar').val(1);
+                form.submit();
+            });
 
             <!-- iCheck -->
             $('.i-checks').iCheck({
@@ -225,6 +234,7 @@
             });
 
         });
+
 
     </script>
 @endsection

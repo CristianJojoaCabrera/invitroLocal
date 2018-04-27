@@ -60,7 +60,7 @@ Route::get('/evaluation/{poId}', 'EvaluationController@find') -> where('poId', '
     ->name('evaluation');
 
 Route::post('/evaluation/{orderDetailId}/save', 'EvaluationController@store')
-    ->name('create_evaluation');
+    ->name('evaluation_save');
 
 Route::get('/aspiration/production_orders', 'AspirationController@index')
     ->name('aspiration_po');
