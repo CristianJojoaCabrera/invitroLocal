@@ -49,21 +49,31 @@ class AspirationController extends Controller
 
     public function storeform($orderDetailId, Request $request)
     {
-        $aspiration = Aspiration::where('order_detail_id', $orderDetailId)->first();
-        $aspirationDetail = new AspirationDetail();
-        $aspirationDetail->aspiration_id = $aspiration->id;
-        $aspirationDetail->donor = $request->input('txtDonadora');
-        $aspirationDetail->donor_breed = $request->input('txtRazaD');
-        $aspirationDetail->bull = $request->input('txtToro');
-        $aspirationDetail->bull_breed = $request->input('txtRazaT');
-        $aspirationDetail->type = $request->input('txtTipo');
-        $aspirationDetail->gi = $request->input('txtGI');
-        $aspirationDetail->gii = $request->input('txtGII');
-        $aspirationDetail->giii = $request->input('txtGIII');
-        $aspirationDetail->others = $request->input('txtOtros');
-        $aspirationDetail->bull2 = $request->input('txtToro2');
-        $aspirationDetail->bull2_breed = $request->input('txtRaza2');
-        $aspirationDetail->save();
+        if ($request->input('btnEliminar') == "1"){
+            $aspirationDetail = AspirationDetail::find($request->input('txtAspirationId'));
+            $aspirationDetail->delete();
+        }else{
+            if($request->input('txtAspirationId') == null) {
+                $aspiration = Aspiration::where('order_detail_id', $orderDetailId)->first();
+                $aspirationDetail = new AspirationDetail();
+                $aspirationDetail->aspiration_id = $aspiration->id;
+            } else {
+                $aspirationDetail = AspirationDetail::find($request->input('txtAspirationId'));
+            }
+            $aspirationDetail->donor = $request->input('txtDonadora');
+            $aspirationDetail->donor_breed = $request->input('txtRazaD');
+            $aspirationDetail->bull = $request->input('txtToro');
+            $aspirationDetail->bull_breed = $request->input('txtRazaT');
+            $aspirationDetail->type = $request->input('txtTipo');
+            $aspirationDetail->gi = $request->input('txtGI');
+            $aspirationDetail->gii = $request->input('txtGII');
+            $aspirationDetail->giii = $request->input('txtGIII');
+            $aspirationDetail->others = $request->input('txtOtros');
+            $aspirationDetail->bull2 = $request->input('txtToro2');
+            $aspirationDetail->bull2_breed = $request->input('txtRaza2');
+            $aspirationDetail->save();
+
+        }
         return redirect()->route('aspiration', $orderDetailId);
     }
 }

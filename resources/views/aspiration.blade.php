@@ -97,9 +97,7 @@
                         <h5>Planilla de Aspiración Folicular (OPU)</h5>
                     </div>
                     <div class="ibox-content">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                            Agregar
-                        </button>
+                        <button type="button" class="btn btn-primary"id="btnAgregarM" name="btnAgregarM" >Agregar</button>
                         <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content animated bounceInRight">
@@ -107,59 +105,61 @@
                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                         <h4 class="modal-title">Planilla de Apiración Folicular</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        <form id="formPlanilla" method="POST" action="{{ route('aspiration_save', $orderDetail->id) }}">
-                                            {{ csrf_field() }}
+                                    <form id="formPlanilla" method="POST" action="{{ route('aspiration_save', $orderDetail->id) }}">
+                                        {{ csrf_field() }}
+                                        <input id="txtAspirationId" name="txtAspirationId" type="hidden" value="" class="form-control">
+                                        <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Donadora</label>
-                                                <input name="txtDonadora" type="text" class="form-control">
+                                                <input name="txtDonadora" id="txtDonadora" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Raza</label>
-                                                <input name="txtRazaD" type="text" class="form-control">
+                                                <input name="txtRazaD" id="txtRazaD" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Toro</label>
-                                                <input name="txtToro" type="text" class="form-control">
+                                                <input name="txtToro" id="txtToro" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Raza</label>
-                                                <input name="txtRazaT" type="text" class="form-control">
+                                                <input name="txtRazaT" id="txtRazaT" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Tipo</label>
-                                                <input name="txtTipo" type="text" class="form-control">
+                                                <input name="txtTipo" id="txtTipo" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>GI</label>
-                                                <input name="txtGI" type="number" class="form-control">
+                                                <input name="txtGI" id="txtGI" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>GII</label>
-                                                <input name="txtGII" type="number" class="form-control">
+                                                <input name="txtGII" id="txtGII" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>GIII</label>
-                                                <input name="txtGIII" type="number" class="form-control">
+                                                <input name="txtGIII" id="txtGIII" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Otros</label>
-                                                <input name="txtOtros" type="text" class="form-control">
+                                                <input name="txtOtros" id="txtOtros" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Toro</label>
-                                                <input name="txtToro2" type="text" class="form-control">
+                                                <input name="txtToro2" id="txtToro2" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Raza</label>
-                                                <input name="txtRaza2" type="text" class="form-control">
+                                                <input name="txtRaza2" id="txtRaza2" type="text" class="form-control">
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" value="0" >Eliminar</button>
+                                            <button type="submit" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -180,24 +180,30 @@
                                     <th>Total</th>
                                     <th>Toro</th>
                                     <th>Raza</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($orderDetail->aspiration->details as $detail)
                                         <tr>
-                                            <td>{{ $detail->donor }}</td>
-                                            <td>{{ $detail->donor_breed }}</td>
-                                            <td>{{ $detail->bull }}</td>
-                                            <td>{{ $detail->bull_breed }}</td>
-                                            <td>{{ $detail->type }}</td>
-                                            <td>{{ $detail->gi }}</td>
-                                            <td>{{ $detail->gii }}</td>
-                                            <td>{{ $detail->giii }}</td>
-                                            <td>{{ $detail->others }}</td>
+                                            <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
+                                            <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
+                                            <td id="bull{{ $detail->id }}">{{ $detail->bull }}</td>
+                                            <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
+                                            <td id="type{{ $detail->id }}">{{ $detail->type }}</td>
+                                            <td id="gi{{ $detail->id }}">{{ $detail->gi }}</td>
+                                            <td id="gii{{ $detail->id }}">{{ $detail->gii }}</td>
+                                            <td id="giii{{ $detail->id }}">{{ $detail->giii }}</td>
+                                            <td id="others{{ $detail->id }}">{{ $detail->others }}</td>
                                             <td>{{ ($detail->gi + $detail->gii + $detail->giii) }}</td>
                                             <td>{{ ($detail->others + ($detail->gi + $detail->gii + $detail->giii)) }}</td>
-                                            <td>{{ $detail->bull2 }}</td>
-                                            <td>{{ $detail->bull2_breed }}</td>
+                                            <td id="bull2{{ $detail->id }}">{{ $detail->bull2 }}</td>
+                                            <td id="bull2_breed{{ $detail->id }}">{{ $detail->bull2_breed }}</td>
+                                            <td class="center">
+                                                <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -238,5 +244,42 @@
                 $('#tblPlanilla tbody').append(tr);*/
             });
         });
+
+        $('#btnEliminar').click(function() {
+            $('#btnEliminar').val(1);
+            form.submit();
+        });
+
+        $('#btnAgregarM').on('click', function () {
+            $('#myModal').modal('show');
+            $('#btnEliminar').hide();
+            $('#btnEliminar').val(0);
+            $('#btnAgregar').html("Agregar");
+            $(".modal-body input").val("");
+        }) ;
+
+        $("[id*=btnModal]").on('click', function () {
+            $('#myModal').modal('show');
+            $('#btnAgregar').html("Modificar");
+            $('#btnEliminar').show();
+            $('#txtAspirationId').val((this).value);
+            $('#txtDonadora').val($('#donor'+(this).value).text());
+            $('#txtRazaD').val($('#donor_breed'+(this).value).text());
+            $('#txtToro').val($('#bull'+(this).value).text());
+            $('#txtRazaT').val($('#bull_breed'+(this).value).text());
+            $('#txtTipo').val($('#type'+(this).value).text());
+            $('#txtGI').val($('#gi'+(this).value).text());
+            $('#txtGII').val($('#gii'+(this).value).text());
+            $('#txtGIII').val($('#giii'+(this).value).text());
+            $('#txtOtros').val($('#others'+(this).value).text());
+            $('#txtToro2').val($('#bull2'+(this).value).text());
+            $('#txtRaza2').val($('#bull2_breed'+(this).value).text());
+        });
+
+        $('#btnEliminar').click(function() {
+            $('#btnEliminar').val(1);
+            form.submit();
+        });
+
     </script>
 @endsection
