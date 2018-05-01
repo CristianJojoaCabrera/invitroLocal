@@ -62,6 +62,9 @@
                                             <th>Aprobada</th>
                                         @endif
                                         <th></th>
+                                        @if ($route == 'evaluation')
+                                            <th></th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,6 +77,11 @@
                                                 <td>
                                                     <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning">Planilla</a>
                                                 </td>
+                                                @if ($route == 'evaluation')
+                                                    <td>
+                                                        <a href="" class="btn btn-sm btn-danger">No Aplica</a>
+                                                    </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     @endforeach

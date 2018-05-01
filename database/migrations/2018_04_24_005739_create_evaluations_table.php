@@ -19,6 +19,7 @@ class CreateEvaluationsTable extends Migration
             $table->integer('order_detail_id')->unsigned();
             $table->foreign('order_detail_id')->references('id')->on('order_details');
             $table->string('comments', 100)->nullable();
+            $table->integer('state')->unsigned();
             $table->timestamps();
         });
     }

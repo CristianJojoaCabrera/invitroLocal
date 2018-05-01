@@ -76,9 +76,20 @@
                             <h5>Planilla de Selección de Receptoras</h5>
                         </div>
                         <div class="ibox-content">
-                            <button id="btnAgregarM" type="button" class="btn btn-primary"> <!--data-toggle="modal" data-target="#myModal" -->
-                                Agregar
-                            </button>
+                            @if ( $orderDetail->evaluation->state <> 1)
+                                <button id="btnAgregarM" type="button" class="btn btn-primary"> <!--data-toggle="modal" data-target="#myModal" -->
+                                    Agregar
+                                </button>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content animated bounceInRight">
@@ -90,11 +101,11 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Id. Animal</label>
-                                                <input id="txtAnimal_id" name="txtAnimal_id" type="text"  class="form-control">
+                                                <input id="txtAnimal_id" name="txtAnimal_id" type="number"  class="form-control" >
                                             </div>
                                             <div class="form-group">
                                                 <label>Chapeta</label>
-                                                <input id="txtChapeta" name="txtChapeta" type="text" class="form-control">
+                                                <input id="txtChapeta" name="txtChapeta" type="text" class="form-control" value="{{ old('txtChapeta') }}">
                                             </div>
                                             <div class="form-group">
                                                 <label>Diagnóstico</label>
@@ -122,8 +133,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                                             <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" value="0" >Eliminar</button>
-                                            <!--<button type="button" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button> -->
-                                            <button type="submit" class="btn btn-primary"id="btnAgregar" name="btnAgregar" >Agregar</button>
+                                            <button type="submit" class="btn btn-primary" id="btnAgregar" name="btnAgregar" >Agregar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -158,10 +168,14 @@
                                             <td id="other_procedures{{ $detail->id }}">{{ $detail->other_procedures }}</td>
                                             <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
                                             <td class="center">
-                                                <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
-                                                        value = "{{ $detail->id }}">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
+                                                @if ( $orderDetail->evaluation->state <> 1)
+                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
+                                                            value = "{{ $detail->id }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                @endif
+
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -171,13 +185,12 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <!--
-                            <div class="ibox-content" align="right">
-                                <button type="submit" class="btn btn-w-m btn-primary">Guardar Planilla</button>
-                            </div>
-data-toggle="modal" data-target="#myModal"
-
-                            -->
+                            @if ( $orderDetail->evaluation->state == 0)
+                                <div class="ibox-content" align="right">
+                                    <button type="submit" class="btn btn-w-m btn-primary" id="btnFinalizar" name="btnFinalizar" value="0">Finalizar</button>
+                                </div>
+                            @endif
+                            <!-- data-toggle="modal" data-target="#myModal"-->
                         </div>
 
                     </div>
@@ -187,11 +200,9 @@ data-toggle="modal" data-target="#myModal"
     </div>
 @endsection
 @section('javascript')
-    <!-- iCheck -->
-    <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
-
     <script>
         $(document).ready(function() {
+            $('#btnFinalizar').val(0);
 
             //$('#myModal').on('hidden.bs.modal', function(e){
             $('#btnAgregarM').on('click', function () {
@@ -224,13 +235,11 @@ data-toggle="modal" data-target="#myModal"
 
             $('#btnEliminar').click(function() {
                 $('#btnEliminar').val(1);
-                form.submit();
+
             });
 
-            <!-- iCheck -->
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
+            $('#btnFinalizar').click(function() {
+                $('#btnFinalizar').val(1);
             });
 
         });

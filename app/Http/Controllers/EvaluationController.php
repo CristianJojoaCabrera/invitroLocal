@@ -42,6 +42,7 @@ class EvaluationController extends Controller
         if (Evaluation::where('order_detail_id', $orderDetailId)->first() == null) {
             $evaluation = new Evaluation();
             $evaluation->order_detail_id = $orderDetailId;
+            $evaluation->state = 0;
             $evaluation->save();
         }
         return view('evaluation')
@@ -50,12 +51,32 @@ class EvaluationController extends Controller
 
     public function store($orderDetailId, Request $request)
     {
-        // dd($request->input('btnEliminar'));
 
-        if ($request->input('btnEliminar') == "1"){
+        if ($request->input('btnFinalizar') == "1"){
+
+            $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
+            $evaluation->state = 1;
+            $evaluation->save();
+
+        }elseif ($request->input('btnEliminar') == "1"){
+
             $evaluation_details = EvaluationDetail::find($request->input('txtEvaluation_id'));
             $evaluation_details->delete();
+
         }else{
+            $data = request()->validate([
+                'txtAnimal_id' => 'required',
+                'txtChapeta' => 'required',
+                'txtDiagnostic' => 'required',
+                'cmbFit' => 'required'
+            ], [
+                'txtAnimal_id.required' => 'El campo Id. Animal es obligatorio',
+                'txtChapeta.required' => 'El campo Chapeta es obligatorio',
+                'txtDiagnostic.required' => 'El campo Diagnóstico es obligatorio',
+                'cmbFit.required' => 'El campo Apta es obligatorio'
+            ]);
+
+
             if($request->input('txtEvaluation_id') == null){
                 $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
                 $evaluation_details = new EvaluationDetail();

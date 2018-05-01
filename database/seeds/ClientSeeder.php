@@ -2,6 +2,7 @@
 
 use \App\Client;
 use \App\Local;
+use \App\ClientService;
 use Illuminate\Database\Seeder;
 
 class ClientSeeder extends Seeder
@@ -13,7 +14,7 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        Client::create([
+        $client = Client::create([
             'identification_type_id' => '1',
             'identification_number' => '123456789876',
             'bussiness_name' => 'Finca Llano Grande',
@@ -28,6 +29,23 @@ class ClientSeeder extends Seeder
             'city' => 'Bogotá',
             'department' => 'Cundinamarca'
         ]);
+
+        $local = Local::create([
+            'client_id' => $client->id,
+            'name' => ' Finca 1',
+            'city' => 'Tunja',
+            'department' => 'Boyaca',
+            'phone' => '1234567',
+            'email' => 'admin@fincallano.com',
+            'contact' => 'Maria J'
+        ]);
+
+        $service = ClientService::create([
+            'amount' => '200000',
+            'client_id' => $client->id,
+            'service_id' => '1'
+        ]);
+
 
     }
 }
