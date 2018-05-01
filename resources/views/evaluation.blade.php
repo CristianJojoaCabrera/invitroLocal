@@ -101,7 +101,7 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Id. Animal</label>
-                                                <input id="txtAnimal_id" name="txtAnimal_id" type="number"  class="form-control" >
+                                                <input id="txtAnimal_id" name="txtAnimal_id" type="number"  class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Chapeta</label>

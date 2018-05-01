@@ -222,18 +222,16 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 @foreach($services as $service)
-                                                                    @if($service->id != 5)
-                                                                        <tr>
-                                                                            <td>{{ $service->name }}</td>
-                                                                            <td>
-                                                                                <div class="input-group m-b">
-                                                                                    <span class="input-group-addon">$</span>
-                                                                                    <input type="number" class="form-control" name="txtService[{{ $service->id }}]">
-                                                                                    <span class="input-group-addon">.00</span>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endif
+                                                                    <tr>
+                                                                        <td>{{ $service->name }}</td>
+                                                                        <td>
+                                                                            <div class="input-group m-b">
+                                                                                <span class="input-group-addon">$</span>
+                                                                                <input type="number" class="form-control" name="txtService[{{ $service->id }}]" value="0">
+                                                                                <span class="input-group-addon">.00</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
                                                                 @endforeach
                                                                 </tbody>
                                                             </table>

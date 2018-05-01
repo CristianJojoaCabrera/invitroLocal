@@ -56,8 +56,7 @@
                                 <thead>
                                     <tr>
                                         <th># Orden</th>
-                                        <th>Local</th>
-                                        <th>Razón Social</th>
+                                        <th>Cliente</th>
                                         <th>Teléfono</th>
                                         <th>Celular</th>
                                         <th>Correo</th>
