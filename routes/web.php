@@ -56,19 +56,31 @@ Route::get('/production_orders/{poId}', 'ProductionOrdersController@edit')
 Route::get('/evaluation/', 'EvaluationController@index')
     ->name('evaluation_po');
 
-Route::get('/evaluation/{poId}', 'EvaluationController@find') -> where('poId', '[0-9]+')
+Route::get('/evaluation/{poId}', 'EvaluationController@find')
+    -> where('poId', '[0-9]+')
     ->name('evaluation');
 
 Route::post('/evaluation/{orderDetailId}/save', 'EvaluationController@store')
+    ->where('orderDetailId', '[0-9]+')
     ->name('evaluation_save');
 
 Route::get('/aspiration/production_orders', 'AspirationController@index')
     ->name('aspiration_po');
 
 Route::get('/aspiration/{orderDetailId}', 'AspirationController@find')
+    ->where('orderDetailId', '[0-9]+')
     ->name('aspiration');
 
+Route::post('/aspiration/{orderDetailId}/store', 'AspirationController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('aspiration_store');
+
+Route::post('/aspiration/{orderDetailId}/finish', 'AspirationController@finish')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('aspiration_finish');
+
 Route::post('/aspiration/{orderDetailId}/save', 'AspirationController@storeform')
+    ->where('orderDetailId', '[0-9]+')
     ->name('aspiration_save');
 
 Route::get('/production', 'ProductionController@index')

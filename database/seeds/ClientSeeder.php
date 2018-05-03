@@ -1,9 +1,9 @@
 <?php
 
-use \App\Client;
-use \App\Local;
-use \App\ClientService;
 use Illuminate\Database\Seeder;
+use App\Client;
+use App\Local;
+use App\ClientService;
 
 class ClientSeeder extends Seeder
 {
@@ -45,7 +45,5 @@ class ClientSeeder extends Seeder
             'client_id' => $client->id,
             'service_id' => '1'
         ]);
-
-
     }
 }

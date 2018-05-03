@@ -8,7 +8,10 @@
             <h2>Aspiración Folicular</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ route('aspiration_po') }}">Aspiración Folicular</a>
                 </li>
                 <li class="active">
                     <strong>Planilla de Aspiración Folicular</strong>
@@ -33,62 +36,70 @@
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="form-group col-lg-3">
-                                <label>Orden de producción</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled="">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Cliente</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled="">
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Fecha</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled="">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Finca</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled="">
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Receptoras Sincronizadas</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Lote Medio MIV</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Medio OPU</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Lote Medio OPU</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Aspirador</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Buscador</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Hora Llegada</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Temperatura Llegada</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Nombre quien recibe</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Tipo de Transporte</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
+                            <form method="post" action="{{ route('aspiration_store', $orderDetail->id) }}">
+                                {{ csrf_field() }}
+                                <div class="form-group col-lg-3">
+                                    <label>Orden de producción</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled="">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Cliente</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled="">
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Fecha</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled="">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Finca</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled="">
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Receptoras Sincronizadas</label>
+                                    <input type="text" class="form-control input-sm" name="txtSynchronizedReceivers" value="{{ $orderDetail->aspiration->synchronized_receivers }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Lote Medio MIV</label>
+                                    <input type="text" class="form-control input-sm" name="txtMediumLotMIV" value="{{ $orderDetail->aspiration->medium_lot_miv }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Medio OPU</label>
+                                    <input type="text" class="form-control input-sm" name="txtMediumOpu" value="{{ $orderDetail->aspiration->medium_opu }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Lote Medio OPU</label>
+                                    <input type="text" class="form-control input-sm" name="txtMediumLotOpu" value="{{ $orderDetail->aspiration->medium_lot_opu }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Aspirador</label>
+                                    <input type="text" class="form-control input-sm" name="txtAspirator" value="{{ $orderDetail->aspiration->aspirator }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Buscador</label>
+                                    <input type="text" class="form-control input-sm" name="txtSearcher" value="{{ $orderDetail->aspiration->searcher }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Hora Llegada</label>
+                                    <input type="text" class="form-control input-sm" name="txtArrivedTime" value="{{ $orderDetail->aspiration->arrived_time }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Temperatura Llegada</label>
+                                    <input type="text" class="form-control input-sm" name="txtArrivedTemperature" value="{{ $orderDetail->aspiration->arrived_temperature }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Nombre quien recibe</label>
+                                    <input type="text" class="form-control input-sm" name="txtReceiverName" value="{{ $orderDetail->aspiration->receiver_name }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Tipo de Transporte</label>
+                                    <input type="text" class="form-control input-sm" name="txtTransportType" value="{{ $orderDetail->aspiration->transport_type }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                @if ($orderDetail->aspiration->state == 0)
+                                    <div class="ibox-content" align="right">
+                                        <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
+                                    </div>
+                                @endif
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -97,7 +108,9 @@
                         <h5>Planilla de Aspiración Folicular (OPU)</h5>
                     </div>
                     <div class="ibox-content">
-                        <button type="button" class="btn btn-primary"id="btnAgregarM" name="btnAgregarM" >Agregar</button>
+                        @if( $orderDetail->aspiration->state == 0)
+                            <button type="button" class="btn btn-primary"id="btnAgregarM" name="btnAgregarM" >Agregar</button>
+                        @endif
                         <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content animated bounceInRight">
@@ -143,7 +156,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Otros</label>
-                                                <input name="txtOtros" id="txtOtros" type="text" class="form-control">
+                                                <input name="txtOtros" id="txtOtros" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Toro</label>
@@ -157,7 +170,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                                             <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" value="0" >Eliminar</button>
-                                            <button type="submit" class="btn btn-primary" id="btnAgregar" data-dismiss="modal">Agregar</button>
+                                            <button type="submit" class="btn btn-primary" id="btnAgregar">Agregar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -200,9 +213,11 @@
                                             <td id="bull2{{ $detail->id }}">{{ $detail->bull2 }}</td>
                                             <td id="bull2_breed{{ $detail->id }}">{{ $detail->bull2_breed }}</td>
                                             <td class="center">
-                                                <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
+                                                @if ($orderDetail->aspiration->state == 0)
+                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -212,6 +227,14 @@
                                 </tfoot>
                             </table>
                         </div>
+                        @if ($orderDetail->aspiration->state == 0)
+                            <form method="POST" action="{{ route('aspiration_finish', $orderDetail->id) }}">
+                                {{ csrf_field() }}
+                                <div class="ibox-content" align="right">
+                                    <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
+                                </div>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

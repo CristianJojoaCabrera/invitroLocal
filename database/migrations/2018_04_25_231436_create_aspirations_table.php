@@ -28,6 +28,7 @@ class CreateAspirationsTable extends Migration
             $table->string('arrived_temperature', 50)->nullable();
             $table->string('receiver_name', 50)->nullable();
             $table->string('transport_type', 50)->nullable();
+            $table->boolean('state')->default(false);
             $table->timestamps();
         });
     }

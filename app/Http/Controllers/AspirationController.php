@@ -47,6 +47,30 @@ class AspirationController extends Controller
             ->with('orderDetail', $orderDetail);
     }
 
+    public function finish($orderDetailId) {
+        $aspiration = Aspiration::where('order_detail_id', $orderDetailId)->first();
+        $aspiration->state = true;
+        $aspiration->save();
+        return redirect()->route('aspiration', $orderDetailId);
+    }
+
+    public function store($orderDetailId, Request $request) {
+        $aspiration = Aspiration::where('order_detail_id', $orderDetailId)->first();
+        $aspiration->synchronized_receivers = $request->input('txtSynchronizedReceivers');
+        $aspiration->medium_lot_miv = $request->input('txtMediumLotMIV');
+        $aspiration->medium_opu = $request->input('txtMediumOpu');
+        $aspiration->medium_lot_opu = $request->input('txtMediumLotOpu');
+        $aspiration->aspirator = $request->input('txtAspirator');
+        $aspiration->searcher = $request->input('txtSearcher');
+        $aspiration->arrived_time = $request->input('txtArrivedTime');
+        $aspiration->arrived_temperature = $request->input('txtArrivedTemperature');
+        $aspiration->receiver_name = $request->input('txtReceiverName');
+        $aspiration->transport_type = $request->input('txtTransportType');
+        $aspiration->save();
+        return redirect()->route('aspiration', $orderDetailId);
+    }
+
+
     public function storeform($orderDetailId, Request $request)
     {
         if ($request->input('btnEliminar') == "1"){
