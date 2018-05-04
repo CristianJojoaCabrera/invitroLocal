@@ -52,17 +52,9 @@ class EvaluationController extends Controller
     public function store($orderDetailId, Request $request)
     {
 
-        if ($request->input('btnFinalizar') == "1"){
-
-            $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
-            $evaluation->state = 1;
-            $evaluation->save();
-
-        }elseif ($request->input('btnEliminar') == "1"){
-
+        if ($request->input('btnEliminar') == "1"){
             $evaluation_details = EvaluationDetail::find($request->input('txtEvaluation_id'));
             $evaluation_details->delete();
-
         }else{
             $data = request()->validate([
                 'txtAnimal_id' => 'required',
@@ -76,7 +68,6 @@ class EvaluationController extends Controller
                 'cmbFit.required' => 'El campo Apta es obligatorio'
             ]);
 
-
             if($request->input('txtEvaluation_id') == null){
                 $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
                 $evaluation_details = new EvaluationDetail();
@@ -89,12 +80,20 @@ class EvaluationController extends Controller
             $evaluation_details->chapeta = $request->input('txtChapeta');
             $evaluation_details->diagnostic = $request->input('txtDiagnostic');
             $evaluation_details->fit = $request->input('cmbFit');
+            $evaluation_details->synchronized = $request->input('cmbSynchronized');
+            $evaluation_details->synchronized = $request->input('cmbSynchronized');
             $evaluation_details->other_procedures = $request->input('txtOther_procedures');
             $evaluation_details->comments = $request->input('txtComments');
-
             $evaluation_details->save();
         }
 
+        return redirect()->route('evaluation', $orderDetailId);
+    }
+
+    public function finish($orderDetailId) {
+        $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
+        $evaluation->state = 1;
+        $evaluation->save();
         return redirect()->route('evaluation', $orderDetailId);
     }
 }

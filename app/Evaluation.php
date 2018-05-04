@@ -10,4 +10,12 @@ class Evaluation extends Model
     {
         return $this->hasMany('App\EvaluationDetail', 'evaluation_id', 'id');
     }
+
+    public function detailsSynchronized()
+    {
+        return $this->hasMany('App\EvaluationDetail', 'evaluation_id', 'id')
+            ->leftJoin('transfer_details as td', 'evaluation_details.id', '=', 'td.evaluation_detail_id')
+            -> where ( 'synchronized' ,   1 );
+    }
+
 }

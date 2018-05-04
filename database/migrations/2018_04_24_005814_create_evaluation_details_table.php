@@ -21,6 +21,7 @@ class CreateEvaluationDetailsTable extends Migration
             $table->string('chapeta', 100)->nullable();
             $table->string('diagnostic', 100)->nullable();
             $table->boolean('fit')->default(true);
+            $table->boolean('synchronized')->default(false);
             $table->string('other_procedures', 100)->nullable();
             $table->string('comments', 100)->nullable();
             $table->timestamps();

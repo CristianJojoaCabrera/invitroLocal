@@ -55,7 +55,7 @@
                 <a href="{{ route('production') }}"><i class="fa fa-flask"></i> <span class="nav-label">Producción Embrión</span></a>
             </li>
             <li>
-                <a href="{{ route('transfer') }}"><i class="fa fa-magic"></i> <span class="nav-label">Transferencia Embrión</span></a>
+                <a href="{{ route('transfer_po') }}"><i class="fa fa-magic"></i> <span class="nav-label">Transferencia Embrión</span></a>
             </li>
             <li>
                 <a href="{{ route('diagnostic') }}"><i class="fa fa-stethoscope"></i> <span class="nav-label">Diagnóstico</span></a>
