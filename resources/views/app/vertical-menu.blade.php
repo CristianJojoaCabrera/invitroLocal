@@ -52,7 +52,7 @@
                 <a href="{{ route('aspiration_po') }}"><i class="fa fa-eyedropper"></i> <span class="nav-label">Aspiración Folicular</span></a>
             </li>
             <li>
-                <a href="{{ route('production') }}"><i class="fa fa-flask"></i> <span class="nav-label">Producción Embrión</span></a>
+                <a href="{{ route('production_po') }}"><i class="fa fa-flask"></i> <span class="nav-label">Producción Embrión</span></a>
             </li>
             <li>
                 <a href="{{ route('transfer_po') }}"><i class="fa fa-magic"></i> <span class="nav-label">Transferencia Embrión</span></a>

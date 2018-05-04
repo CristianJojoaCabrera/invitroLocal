@@ -87,8 +87,16 @@ Route::post('/aspiration/{orderDetailId}/save', 'AspirationController@storeform'
     ->where('orderDetailId', '[0-9]+')
     ->name('aspiration_save');
 
-Route::get('/production', 'ProductionController@index')
+Route::get('/production/production_orders', 'ProductionController@index')
+    ->name('production_po');
+
+Route::get('/production/{orderDetailId}', 'ProductionController@find')
+    ->where('orderDetailId', '[0-9]+')
     ->name('production');
+
+Route::post('/production/{orderDetailId}/save', 'ProductionController@storeform')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('production_save');
 
 Route::get('/transfer', 'TransferController@index')
     ->name('transfer_po');

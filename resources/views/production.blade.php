@@ -35,59 +35,59 @@
                         <div class="row">
                             <div class="form-group col-lg-2">
                                 <label>Orden</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label>Cliente</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled>
                             </div>
                             <div class="form-group col-lg-4">
-                                <label>Fecha Miv el mismo día de la aspiración</label>
-                                <input type="text" class="form-control input-sm">
+                                <label>Fecha Miv</label>
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled>
                             </div>
                             <div class="form-group col-lg-5">
                                 <label>Finca</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Número de Receptoras</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm"  disabled>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Lote Medio MIV</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm"  value="{{ $orderDetail->aspiration->medium_lot_miv }}" disabled>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Medio OPU</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_opu }}" disabled>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Lote Medio OPU</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_lot_opu }}" disabled>
                             </div>
                             <div class="form-group col-lg-5">
                                 <label>Aspirador</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->aspirator }}" disabled>
                             </div>
                             <div class="form-group col-lg-5">
                                 <label>Buscador</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->searcher }}" disabled>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Hora Llegada</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_time }}" disabled>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Temperatura Llegada</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_temperature }}" disabled>
                             </div>
                             <div class="form-group col-lg-5">
                                 <label>Nombre quien recibe</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->receiver_name }}" disabled>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Tipo de transporte</label>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->transport_type }}" disabled>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Lote Aceite</label>
@@ -101,6 +101,114 @@
                         <h5>Planilla de Producción de Embriones</h5>
                     </div>
                     <div class="ibox-content">
+                        <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content animated bounceInRight">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <h4 class="modal-title">Planilla de Producción de Embrión</h4>
+                                    </div>
+                                    <form id="formPlanilla" method="POST" action="{{ route('production_save', $orderDetail->id) }}">
+                                        {{ csrf_field() }}
+                                        <input id="txtAspirationId" name="txtAspirationId" type="hidden" value="" class="form-control">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Toro</label>
+                                                <input name="txtToro2" id="txtToro2" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Raza</label>
+                                                <input name="txtRaza2" id="txtRaza2" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>CIV</label>
+                                                <input name="txtCIV" id="txtCIV" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Medio de Cultivo</label>
+                                                <input name="txtMedioCultivo" id="txtMedioCultivo" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Lote Medio</label>
+                                                <input name="txtLoteMedio" id="txtLoteMedio" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cliv</label>
+                                                <input name="txtCliv" id="txtCliv" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>1F</label>
+                                                <input name="txt1F" id="txt1F" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>2F</label>
+                                                <input name="txt2F" id="txt2F" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>C5</label>
+                                                <input name="txtC5" id="txtC5" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Prev</label>
+                                                <input name="txtPrev" id="txtPrev" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bi</label>
+                                                <input name="txtBi" id="txtBi" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bl</label>
+                                                <input name="txtBl" id="txtBl" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bx</label>
+                                                <input name="txtBx" id="txtBx" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bn</label>
+                                                <input name="txtBn" id="txtBn" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Be</label>
+                                                <input name="txtBe" id="txtBe" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Vitri</label>
+                                                <input name="txtVitri" id="txtVitri" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cong</label>
+                                                <input name="txtCOng" id="txtCOng" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Perda</label>
+                                                <input name="txtPerda" id="txtPerda" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>TE</label>
+                                                <input name="txtTE" id="txtTE" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Desc</label>
+                                                <input name="txtDesc" id="txtDesc" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total</label>
+                                                <input name="txtTotal" id="txtTotal" type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bl</label>
+                                                <input name="txtBl" id="txtBl" type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                 <thead>
@@ -139,379 +247,47 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="gradeX">
-                                    <td>1</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">4</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">X</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeC">
-                                    <td>2</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 5.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">C</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>3</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 5.5
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>4</td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 6
-                                    </td>
-                                    <td>Win 98+</td>
-                                    <td class="center">6</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>5</td>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 7</td>
-                                    <td>Win XP SP2+</td>
-                                    <td class="center">7</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>6</td>
-                                    <td>Trident</td>
-                                    <td>AOL browser (AOL desktop)</td>
-                                    <td>Win XP</td>
-                                    <td class="center">6</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>7</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 1.0</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">1.7</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>8</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 1.5</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">1</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>9</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 2.0</td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td class="center">8</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>10</td>
-                                    <td>Gecko</td>
-                                    <td>Firefox 3.0</td>
-                                    <td>Win 2k+ / OSX.3+</td>
-                                    <td class="center">9</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>11</td>
-                                    <td>Gecko</td>
-                                    <td>Camino 1.0</td>
-                                    <td>OSX.2+</td>
-                                    <td class="center">8</td>
-                                    <td>Montross</td>
-                                    <td>10:40</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">4</td>
-                                    <td class="center">A</td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                    <td class="center"></td>
-                                </tr>
+                                @foreach($orderDetail->aspiration->details as $detail)
+                                    <tr>
+                                        <td id="donor{{ $detail->id }}">
+                                            <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
+                                                {{ $detail->id }}
+                                            </button>
+                                        </td>
+                                        <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
+                                        <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
+                                        <td id="gi{{ $detail->id }}">{{ $detail->gi }}</td>
+                                        <td id="gii{{ $detail->id }}">{{ $detail->gii }}</td>
+                                        <td id="giii{{ $detail->id }}">{{ $detail->giii }}</td>
+                                        <td id="others{{ $detail->id }}">{{ $detail->others }}</td>
+                                        <td>{{ ($detail->gi + $detail->gii + $detail->giii) }}</td>
+                                        <td>{{ ($detail->others + ($detail->gi + $detail->gii + $detail->giii)) }}</td>
+                                        <td id="bull2{{ $detail->id }}"></td>
+                                        <td id="bull2_breed{{ $detail->id }}"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
-                                <tfoot>
+                                <!--<tfoot>
                                 <tr>
                                     <th></th>
                                     <th></th>
@@ -545,7 +321,7 @@
                                     <th></th>
                                     <th></th>
                                 </tr>
-                                </tfoot>
+                                </tfoot>-->
                             </table>
                         </div>
 
@@ -554,4 +330,28 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function(){
+            $("[id*=btnModal]").on('click', function () {
+                $('#myModal').modal('show');
+                $('#btnAgregar').html("Modificar");
+                $('#btnEliminar').show();
+                $('#txtAspirationId').val((this).value);
+                $('#txtDonadora').val($('#donor'+(this).value).text());
+                $('#txtRazaD').val($('#donor_breed'+(this).value).text());
+                $('#txtToro').val($('#bull'+(this).value).text());
+                $('#txtRazaT').val($('#bull_breed'+(this).value).text());
+                $('#txtTipo').val($('#type'+(this).value).text());
+                $('#txtGI').val($('#gi'+(this).value).text());
+                $('#txtGII').val($('#gii'+(this).value).text());
+                $('#txtGIII').val($('#giii'+(this).value).text());
+                $('#txtOtros').val($('#others'+(this).value).text());
+                $('#txtToro2').val($('#bull2'+(this).value).text());
+                $('#txtRaza2').val($('#bull2_breed'+(this).value).text());
+            });
+        });
+    </script>
 @endsection
