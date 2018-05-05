@@ -54,37 +54,44 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                 <thead>
-                                    <tr>
-                                        <th># Orden</th>
-                                        <th>Razón Social</th>
-                                        <th>Local</th>
-                                        @if ($route == '')
-                                            <th>Aprobada</th>
-                                        @endif
+                                <tr>
+                                    <th># Orden</th>
+                                    <th>Razón Social</th>
+                                    <th>Local</th>
+                                    @if ($route == '')
+                                        <th>Aprobada</th>
+                                    @endif
+                                    <th></th>
+                                    @if ($route == 'evaluation')
                                         <th></th>
-                                        @if ($route == 'evaluation')
-                                            <th></th>
-                                        @endif
-                                    </tr>
+                                    @endif
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($productionOrders as $productionOrder)
-                                        @foreach ($productionOrder->details as $detail)
-                                            <tr>
-                                                <td>{{ $productionOrder->id }}</td>
-                                                <td>{{ $productionOrder->client->bussiness_name }}</td>
-                                                <td>{{ $detail->local->name }}</td>
-                                                <td>
-                                                    <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning">Planilla</a>
-                                                </td>
-                                                @if ($route == 'evaluation')
-                                                    <td>
-                                                        <a href="" class="btn btn-sm btn-danger">No Aplica</a>
+                                @foreach ($productionOrders as $productionOrder)
+                                    @foreach ($productionOrder->details as $detail)
+                                        <tr>
+                                            <td>{{ $productionOrder->id }}</td>
+                                            <td>{{ $productionOrder->client->bussiness_name }}</td>
+                                            <td>{{ $detail->local->name }}</td>
+                                            <td>
+                                                @if (($route == 'evaluation') )
+                                                    <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning {{($detail->apply_evaluation) ? '' : 'disabled'}}">Planilla</a>
                                                     </td>
+                                                    <td>
+                                                    @if ($detail->evaluation == '' )
+                                                        <a href="{{ route('evaluation_close', $detail->id) }}" class="btn btn-sm btn-danger {{($detail->apply_evaluation) ? '' : 'disabled'}}">No Aplica</a>
+                                                    @else
+                                                        <a href="{{ route('evaluation_close', $detail->id) }}" class="btn btn-sm btn-danger disabled ">No Aplica</a>
+                                                    @endif
+                                                @else
+                                                    <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning">Planilla</a>
                                                 @endif
-                                            </tr>
-                                        @endforeach
+                                            </td>
+                                        </tr>
+
                                     @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

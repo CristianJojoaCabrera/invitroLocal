@@ -49,6 +49,14 @@ class EvaluationController extends Controller
             ->with('orderDetail', $orderDetail);
     }
 
+    public function close($orderDetailId)
+    {
+        $orderDetail = OrderDetail::find($orderDetailId);
+        $orderDetail->apply_evaluation = 0;
+        $orderDetail->save();
+        return redirect()->route('evaluation_po');
+    }
+
     public function store($orderDetailId, Request $request)
     {
 

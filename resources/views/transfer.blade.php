@@ -38,9 +38,36 @@
                                 </ul>
                             </div>
                         @endif
+                        <div class="row">
+                            <form method="post" action="{{ route('transfer_store', $orderDetail->id) }}">
+                                {{ csrf_field() }}
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Recibido por</label>
+                                        <input id="txtRecibido" name="txtRecibido" type="text" class="form-control input-sm" value="{{ $orderDetail->transfer->received_by }}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Cédula</label>
+                                        <input id="txtCedula" name="txtCedula" type="text" class="form-control input-sm" value="{{ $orderDetail->transfer->identification_number }}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label>Observaciones</label>
+                                        <textarea id="txtComment" name="txtComment" class="form-control input-sm" >{{ $orderDetail->transfer->comments }}</textarea>
+                                    </div>
+                                </div>
+                                @if ($orderDetail->transfer->state == 0)
+                                    <div class="ibox-content" align="right">
+                                        <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
+                                    </div>
+                                @endif
+                            </form>
+                        </div>
                         <form method="POST" action="{{ route('transfer_save', $orderDetail-> id) }}">
                             {{ csrf_field() }}
-
                             <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content animated bounceInRight">
@@ -66,7 +93,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Cuerpo Luteo</label>
-                                                <input id="txtCuerpoLuteo" name="txtCuerpoLuteo" type="text"  class="form-control">
+                                                <input id="txtCuerpoLuteo" name="txtCuerpoLuteo" type="number"  class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Donadora (RGD/Nombre)</label>
@@ -117,21 +144,20 @@
                                     <tbody>
                                     @foreach($orderDetail->evaluation->detailsSynchronized as $detail)
                                         <tr>
-                                            <td id="id{{ $detail->id }}">{{ $detail->id}}</td>
-                                            <td id="id{{ $detail->id }}">{{ $detail->id }}</td>
-                                            <td id="chapeta{{ $detail->id }}">{{ $detail->chapeta }}</td>
-                                            <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
-                                            <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
-                                            <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
-                                            <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
-                                            <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
-                                            <td id="bull{{ $detail->id }}">{{ $detail->bull }}</td>
-                                            <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
-                                            <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
+                                            <td id="transfer{{ $detail->evaluation_detail_id }}">{{ $detail->transfer_id}}</td>
+                                            <td id="chapeta{{ $detail->evaluation_detail_id }}">{{ $detail->chapeta }}</td>
+                                            <td id="embryo{{ $detail->evaluation_detail_id }}">{{ $detail->embryo }}</td>
+                                            <td id="embryo_class{{ $detail->evaluation_detail_id }}">{{ $detail->embryo_class }}</td>
+                                            <td id="corpus_luteum{{ $detail->evaluation_detail_id }}">{{ $detail->corpus_luteum }}</td>
+                                            <td id="donor{{ $detail->evaluation_detail_id }}">{{ $detail->donor }}</td>
+                                            <td id="donor_breed{{ $detail->evaluation_detail_id }}">{{ $detail->donor_breed }}</td>
+                                            <td id="bull{{ $detail->evaluation_detail_id }}">{{ $detail->bull }}</td>
+                                            <td id="bull_breed{{ $detail->evaluation_detail_id }}">{{ $detail->bull_breed }}</td>
+                                            <td id="comments{{ $detail->evaluation_detail_id }}">{{ $detail->comments }}</td>
                                             <td class="center">
-                                                @if ( $orderDetail->evaluation->state == 1)
-                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
-                                                            value = "{{ $detail->id }}">
+                                                @if ( $orderDetail->transfer->state == 0)
+                                                    <button id="btnModal{{ $detail->evaluation_detail_id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
+                                                            value = "{{ $detail->evaluation_detail_id }}">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
                                                 @endif
@@ -145,7 +171,7 @@
                                 </table>
                             </div>
                         </form>
-                        @if ( $orderDetail->evaluation->state == 1)
+                        @if ( $orderDetail->transfer->state == 0)
                             <form method="POST" action="{{ route('transfer_finish', $orderDetail->id) }}">
                                 {{ csrf_field() }}
                                 <div class="ibox-content" align="right">
@@ -153,27 +179,6 @@
                                 </div>
                             </form>
                         @endif
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Recibido por</label>
-                                    <input type="text" class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Cédula</label>
-                                    <input type="text" class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Observaciones</label>
-                                    <textarea class="form-control input-sm"></textarea>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -186,6 +191,7 @@
             $("[id*=btnModal]").on('click', function () {
                 $('#myModal').modal('show');
                 $('#txtEvaluation_id').val((this).value);
+                $('#txtTransfer_id').val($('#transfer'+(this).value).text());
                 $('#txtReceptora').val($('#chapeta'+(this).value).text());
                 $('#txtEmbrion').val($('#embryo'+(this).value).text());
                 $('#txtClaseEmbrion').val($('#embryo_class'+(this).value).text());

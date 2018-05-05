@@ -20,6 +20,7 @@ class CreateOrderDetailsTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('local_id')->unsigned();
             $table->foreign('local_id')->references('id')->on('locals');
+            $table->integer('apply_evaluation')->unsigned()->default(1);
             $table->timestamps();
         });
     }

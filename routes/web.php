@@ -60,6 +60,10 @@ Route::get('/evaluation/{poId}', 'EvaluationController@find')
     -> where('poId', '[0-9]+')
     ->name('evaluation');
 
+Route::get('/evaluation/{poId}/close', 'EvaluationController@close')
+    -> where('poId', '[0-9]+')
+    ->name('evaluation_close');
+
 Route::post('/evaluation/{orderDetailId}/save', 'EvaluationController@store')
     ->where('orderDetailId', '[0-9]+')
     ->name('evaluation_save');
@@ -105,13 +109,18 @@ Route::get('/transfer/{orderDetailId}', 'TransferController@find')
     ->where('orderDetailId', '[0-9]+')
     ->name('transfer');
 
-Route::post('/transfer/{orderDetailId}/save', 'TransferController@store')
+Route::post('/transfer/{orderDetailId}/store', 'TransferController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('transfer_store');
+
+Route::post('/transfer/{orderDetailId}/save', 'TransferController@storeform')
     ->where('orderDetailId', '[0-9]+')
     ->name('transfer_save');
 
 Route::post('/transfer/{orderDetailId}/finish', 'TransferController@finish')
     ->where('orderDetailId', '[0-9]+')
     ->name('transfer_finish');
+
 
 Route::get('/diagnostic', 'DiagnosticController@index')
     ->name('diagnostic');

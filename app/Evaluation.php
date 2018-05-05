@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluation extends Model
 {
+
+    public function orderDetail()
+    {
+        return $this->belongsTo('App\OrderDetail');
+    }
+
     public function details()
     {
         return $this->hasMany('App\EvaluationDetail', 'evaluation_id', 'id');
@@ -15,7 +21,8 @@ class Evaluation extends Model
     {
         return $this->hasMany('App\EvaluationDetail', 'evaluation_id', 'id')
             ->leftJoin('transfer_details as td', 'evaluation_details.id', '=', 'td.evaluation_detail_id')
-            -> where ( 'synchronized' ,   1 );
+            -> where ( 'synchronized' ,   1 )
+            ->select( "td.*", "evaluation_details.id  as evaluation_detail_id", "chapeta");
     }
 
 }
