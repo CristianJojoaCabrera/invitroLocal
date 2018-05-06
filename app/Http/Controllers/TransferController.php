@@ -10,6 +10,7 @@ use App\Transfer;
 use App\TransferDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use DB;
 
 class TransferController extends Controller
 {
@@ -29,20 +30,26 @@ class TransferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {/*
+    {
+        /*
+        DB::enableQueryLog();
         $evaluations = Evaluation::where('state', 1)->get();
 
-        foreach ($evaluations as $evaluation) {
-            $productionOrders =  optional($evaluation->OrderDetail);
-        }
-        */
-
+        $productionOrders = '';
         //dd($evaluations);
+        foreach ($evaluations as $evaluation) {
+            //$productionOrders =  optional($evaluation->OrderDetail());
+            $productionOrders =  ($evaluation->OrderDetail->order());
+        }
+        $orderD = OrderDetail::with('evaluation');
+        $log = DB::getQueryLog();
+        var_dump($log);
+         */
+
         $productionOrders = Order::where('approved', true)->get();
         $route = 'transfer';
 
         return view('production_order_details')
-            //->with('productionOrders', $evaluations->orderDetails)
             ->with('productionOrders', $productionOrders)
             ->with('route', $route);
 
@@ -61,9 +68,6 @@ class TransferController extends Controller
             $transfer->user_id_updated = '1';
             $transfer->save();
         }
-
-        //dd( $orderDetail->evaluation->detailsSynchronized);
-
         return view('transfer')
             ->with('orderDetail', $orderDetail);
     }

@@ -69,7 +69,13 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($productionOrders as $productionOrder)
-                                    @foreach ($productionOrder->details as $detail)
+                                    @if ($route == 'transfer')
+                                        @php $details = $productionOrder->detailsforTransfer  @endphp
+                                    @else
+                                        @php $details = $productionOrder->details @endphp
+                                    @endif
+
+                                    @foreach ($details as $detail)
                                         <tr>
                                             <td>{{ $productionOrder->id }}</td>
                                             <td>{{ $productionOrder->client->bussiness_name }}</td>
@@ -89,7 +95,6 @@
                                                 @endif
                                             </td>
                                         </tr>
-
                                     @endforeach
                                 @endforeach
                                 </tbody>

@@ -81,7 +81,7 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Receptora</label>
-                                                <input id="txtReceptora" name="txtReceptora" type="text"  class="form-control">
+                                                <input id="txtReceptora" name="txtReceptora" type="text"  class="form-control" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label>Embrion</label>
