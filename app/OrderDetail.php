@@ -24,7 +24,7 @@ class OrderDetail extends Model
     }
 
     public function production() {
-        return $this->hasOne('App\Aspiration');
+        return $this->hasOne('App\Production');
     }
 
     public function transfer() {

@@ -98,9 +98,17 @@ Route::get('/production/{orderDetailId}', 'ProductionController@find')
     ->where('orderDetailId', '[0-9]+')
     ->name('production');
 
+Route::post('/production/{orderDetailId}/store', 'ProductionController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('production_store');
+
 Route::post('/production/{orderDetailId}/save', 'ProductionController@storeForm')
     ->where('orderDetailId', '[0-9]+')
     ->name('production_save');
+
+Route::post('/production/{orderDetailId}/finish', 'ProductionController@finish')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('production_finish');
 
 Route::get('/transfer', 'TransferController@index')
     ->name('transfer_po');

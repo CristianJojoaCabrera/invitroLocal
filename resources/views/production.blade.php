@@ -8,7 +8,7 @@
             <h2>Producción de Embriones</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="active">
                     <strong>Producción de Embriones</strong>
@@ -33,66 +33,74 @@
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="form-group col-lg-2">
-                                <label>Orden</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Cliente</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Fecha Miv</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-5">
-                                <label>Finca</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Número de Receptoras</label>
-                                <input type="text" class="form-control input-sm"  disabled>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Lote Medio MIV</label>
-                                <input type="text" class="form-control input-sm"  value="{{ $orderDetail->aspiration->medium_lot_miv }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Medio OPU</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_opu }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Lote Medio OPU</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_lot_opu }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-5">
-                                <label>Aspirador</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->aspirator }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-5">
-                                <label>Buscador</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->searcher }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Hora Llegada</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_time }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Temperatura Llegada</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_temperature }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-5">
-                                <label>Nombre quien recibe</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->receiver_name }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label>Tipo de transporte</label>
-                                <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->transport_type }}" disabled>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Lote Aceite</label>
-                                <input type="text" class="form-control input-sm">
-                            </div>
+                            <form method="post" action="{{ route('production_store', $orderDetail->id) }}">
+                                {{ csrf_field() }}
+                                <div class="form-group col-lg-2">
+                                    <label>Orden</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->id }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Cliente</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->order->client->bussiness_name }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Fecha Miv</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->created_at }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label>Finca</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->local->name }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Número de Receptoras</label>
+                                    <input type="text" class="form-control input-sm"  disabled>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Lote Medio MIV</label>
+                                    <input type="text" class="form-control input-sm"  value="{{ $orderDetail->aspiration->medium_lot_miv }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Medio OPU</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_opu }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Lote Medio OPU</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->medium_lot_opu }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label>Aspirador</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->aspirator }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label>Buscador</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->searcher }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Hora Llegada</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_time }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Temperatura Llegada</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->arrived_temperature }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label>Nombre quien recibe</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->receiver_name }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label>Tipo de transporte</label>
+                                    <input type="text" class="form-control input-sm" value="{{ $orderDetail->aspiration->transport_type }}" disabled>
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label>Lote Acéite</label>
+                                    <input type="text" class="form-control input-sm" name="txtLotOil" value="{{ $orderDetail->production->lot_oil}}" {{ ( $orderDetail->production->state == 0) ? '' : 'disabled' }}>
+                                </div>
+                                @if ($orderDetail->production->state == 0)
+                                    <div class="form-group col-lg-12" align="right">
+                                        <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
+                                    </div>
+                                @endif
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -205,45 +213,52 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Donadora</th>
-                                    <th>Raza</th>
-                                    <th>GI</th>
-                                    <th>GII</th>
-                                    <th>GIII</th>
-                                    <th>Otros</th>
-                                    <th>Viables</th>
-                                    <th>Total</th>
-                                    <th>Toro</th>
-                                    <th>Raza</th>
-                                    <th>CIV</th>
-                                    <th>Medio Cultivo</th>
-                                    <th>Lote Medio</th>
-                                    <th>Cliv</th>
-                                    <th>1 F</th>
-                                    <th>2 F</th>
-                                    <th>C5</th>
-                                    <th>Prev</th>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Donadora</th>
+                                    <th rowspan="2">Raza</th>
+                                    <th rowspan="2">GI</th>
+                                    <th rowspan="2">GII</th>
+                                    <th rowspan="2">GIII</th>
+                                    <th rowspan="2">Otros</th>
+                                    <th rowspan="2">Viables</th>
+                                    <th rowspan="2">Total</th>
+                                    <th rowspan="2">Toro</th>
+                                    <th rowspan="2">Raza</th>
+                                    <th rowspan="2">CIV</th>
+                                    <th rowspan="2">Medio Cultivo</th>
+                                    <th rowspan="2">Lote Medio</th>
+                                    <th rowspan="2">Cliv</th>
+                                    <th rowspan="2">1F</th>
+                                    <th rowspan="2">2F</th>
+                                    <th rowspan="2">C5</th>
+                                    <th rowspan="2">Prev</th>
+                                    <th colspan="5">Clasificación Embriones Empacados</th>
+                                    <th rowspan="2">Vitri</th>
+                                    <th rowspan="2">Cong</th>
+                                    <th rowspan="2">Perda</th>
+                                    <th rowspan="2">TE</th>
+                                    <th rowspan="2">Desc</th>
+                                    <th rowspan="2">Total</th>
+                                </tr>
+                                <tr>
                                     <th>Bi</th>
                                     <th>Bl</th>
                                     <th>Bx</th>
                                     <th>Bn</th>
                                     <th>Be</th>
-                                    <th>Vitri</th>
-                                    <th>Cong</th>
-                                    <th>Perda</th>
-                                    <th>TE</th>
-                                    <th>Desc</th>
-                                    <th>Total</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($orderDetail->aspiration->details as $detail)
                                     <tr>
                                         <td>
-                                            <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
+                                            @if ($orderDetail->production->state == 0)
+                                                <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
+                                                    {{ $detail->id }}
+                                                </button>
+                                            @else
                                                 {{ $detail->id }}
-                                            </button>
+                                            @endif
                                         </td>
                                         <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
                                         <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
@@ -275,7 +290,30 @@
                                             <td id="transferred_embryos{{ $detail->id }}">{{ $detail->productionDetail->transferred_embryos }}</td>
                                             <td id="discarded{{ $detail->id }}">{{ $detail->productionDetail->discarded }}</td>
                                             <td>{{ $detail->productionDetail->vitrified + $detail->productionDetail->frozen + $detail->productionDetail->lost + $detail->productionDetail->transferred_embryos + $detail->productionDetail->discarded }}</td>
+                                        @else
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         @endif
+
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -315,6 +353,14 @@
                                 </tr>
                                 </tfoot>-->
                             </table>
+                            @if ($orderDetail->production->state == 0)
+                                <div class="form-group col-lg-12" align="right">
+                                    <form method="POST" action="{{ route('production_finish', $orderDetail->id) }}">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
 
                     </div>
