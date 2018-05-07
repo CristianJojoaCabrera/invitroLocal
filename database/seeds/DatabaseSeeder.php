@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             'services',
             'subservices',
             'orders',
-            'order_details'
+            'order_details',
+            'production_details',
+            'productions'
         ]);
 
         $this->call(UserSeeder::class);

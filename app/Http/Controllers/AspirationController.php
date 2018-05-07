@@ -93,8 +93,6 @@ class AspirationController extends Controller
             $aspirationDetail->gii = $request->input('txtGII');
             $aspirationDetail->giii = $request->input('txtGIII');
             $aspirationDetail->others = $request->input('txtOtros');
-            $aspirationDetail->bull2 = $request->input('txtToro2');
-            $aspirationDetail->bull2_breed = $request->input('txtRaza2');
             $aspirationDetail->save();
 
         }

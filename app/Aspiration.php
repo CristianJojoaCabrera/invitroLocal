@@ -9,4 +9,8 @@ class Aspiration extends Model
     public function details() {
         return $this->hasMany('App\AspirationDetail', 'aspiration_id', 'id');
     }
+
+    public function orderDetail() {
+        return $this->hasOne('App\OrderDetail');
+    }
 }

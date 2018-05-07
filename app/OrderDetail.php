@@ -23,6 +23,10 @@ class OrderDetail extends Model
         return $this->hasOne('App\Evaluation');
     }
 
+    public function production() {
+        return $this->hasOne('App\Aspiration');
+    }
+
     public function transfer() {
         return $this->hasOne('App\Transfer');
     }

@@ -95,7 +95,7 @@
                                     <input type="text" class="form-control input-sm" name="txtTransportType" value="{{ $orderDetail->aspiration->transport_type }}" {{ ( $orderDetail->aspiration->state == 0) ? '' : 'disabled' }}>
                                 </div>
                                 @if ($orderDetail->aspiration->state == 0)
-                                    <div class="ibox-content" align="right">
+                                    <div class="form-group col-lg-12" align="right">
                                         <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
                                     </div>
                                 @endif
@@ -158,14 +158,6 @@
                                                 <label>Otros</label>
                                                 <input name="txtOtros" id="txtOtros" type="number" class="form-control">
                                             </div>
-                                            <div class="form-group">
-                                                <label>Toro</label>
-                                                <input name="txtToro2" id="txtToro2" type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Raza</label>
-                                                <input name="txtRaza2" id="txtRaza2" type="text" class="form-control">
-                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -191,8 +183,6 @@
                                     <th>Otros</th>
                                     <th>Viables</th>
                                     <th>Total</th>
-                                    <th>Toro</th>
-                                    <th>Raza</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -210,8 +200,6 @@
                                             <td id="others{{ $detail->id }}">{{ $detail->others }}</td>
                                             <td>{{ ($detail->gi + $detail->gii + $detail->giii) }}</td>
                                             <td>{{ ($detail->others + ($detail->gi + $detail->gii + $detail->giii)) }}</td>
-                                            <td id="bull2{{ $detail->id }}">{{ $detail->bull2 }}</td>
-                                            <td id="bull2_breed{{ $detail->id }}">{{ $detail->bull2_breed }}</td>
                                             <td class="center">
                                                 @if ($orderDetail->aspiration->state == 0)
                                                     <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
@@ -226,15 +214,15 @@
 
                                 </tfoot>
                             </table>
-                        </div>
-                        @if ($orderDetail->aspiration->state == 0)
-                            <form method="POST" action="{{ route('aspiration_finish', $orderDetail->id) }}">
-                                {{ csrf_field() }}
-                                <div class="ibox-content" align="right">
-                                    <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
+                            @if ($orderDetail->aspiration->state == 0)
+                                <div class="form-group col-lg-12" align="right">
+                                    <form method="POST" action="{{ route('aspiration_finish', $orderDetail->id) }}">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
+                                    </form>
                                 </div>
-                            </form>
-                        @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

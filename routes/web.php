@@ -91,14 +91,14 @@ Route::post('/aspiration/{orderDetailId}/save', 'AspirationController@storeform'
     ->where('orderDetailId', '[0-9]+')
     ->name('aspiration_save');
 
-Route::get('/production/production_orders', 'ProductionController@index')
+Route::get('/production/production_orders', 'OrderDetailController@index')
     ->name('production_po');
 
 Route::get('/production/{orderDetailId}', 'ProductionController@find')
     ->where('orderDetailId', '[0-9]+')
     ->name('production');
 
-Route::post('/production/{orderDetailId}/save', 'ProductionController@storeform')
+Route::post('/production/{orderDetailId}/save', 'ProductionController@storeForm')
     ->where('orderDetailId', '[0-9]+')
     ->name('production_save');
 

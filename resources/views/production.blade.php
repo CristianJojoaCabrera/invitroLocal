@@ -110,19 +110,19 @@
                                     </div>
                                     <form id="formPlanilla" method="POST" action="{{ route('production_save', $orderDetail->id) }}">
                                         {{ csrf_field() }}
-                                        <input id="txtAspirationId" name="txtAspirationId" type="hidden" value="" class="form-control">
+                                        <input id="txtAspirationDetailId" name="txtAspirationDetailId" type="hidden" value="" class="form-control">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Toro</label>
-                                                <input name="txtToro2" id="txtToro2" type="text" class="form-control">
+                                                <input name="txtToro" id="txtToro" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Raza</label>
-                                                <input name="txtRaza2" id="txtRaza2" type="text" class="form-control">
+                                                <input name="txtRaza" id="txtRaza" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>CIV</label>
-                                                <input name="txtCIV" id="txtCIV" type="text" class="form-control">
+                                                <input name="txtCIV" id="txtCIV" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Medio de Cultivo</label>
@@ -133,16 +133,16 @@
                                                 <input name="txtLoteMedio" id="txtLoteMedio" type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Cliv</label>
-                                                <input name="txtCliv" id="txtCliv" type="text" class="form-control">
+                                                <label>Clivaje</label>
+                                                <input name="txtCliv" id="txtCliv" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>1F</label>
-                                                <input name="txt1F" id="txt1F" type="text" class="form-control">
+                                                <label>1 Feeding</label>
+                                                <input name="txt1F" id="txt1F" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>2F</label>
-                                                <input name="txt2F" id="txt2F" type="text" class="form-control">
+                                                <label>2 Feeding</label>
+                                                <input name="txt2F" id="txt2F" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>C5</label>
@@ -173,37 +173,29 @@
                                                 <input name="txtBe" id="txtBe" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Vitri</label>
+                                                <label>Vitrificados</label>
                                                 <input name="txtVitri" id="txtVitri" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Cong</label>
-                                                <input name="txtCOng" id="txtCOng" type="number" class="form-control">
+                                                <label>Congelados</label>
+                                                <input name="txtCong" id="txtCong" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Perda</label>
+                                                <label>Pérdida</label>
                                                 <input name="txtPerda" id="txtPerda" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>TE</label>
+                                                <label>Embriones transferidos</label>
                                                 <input name="txtTE" id="txtTE" type="number" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Desc</label>
+                                                <label>Descartados</label>
                                                 <input name="txtDesc" id="txtDesc" type="number" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Total</label>
-                                                <input name="txtTotal" id="txtTotal" type="number" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Bl</label>
-                                                <input name="txtBl" id="txtBl" type="number" class="form-control">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                                            <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -224,7 +216,6 @@
                                     <th>Total</th>
                                     <th>Toro</th>
                                     <th>Raza</th>
-                                    <th>Local</th>
                                     <th>CIV</th>
                                     <th>Medio Cultivo</th>
                                     <th>Lote Medio</th>
@@ -249,7 +240,7 @@
                                 <tbody>
                                 @foreach($orderDetail->aspiration->details as $detail)
                                     <tr>
-                                        <td id="donor{{ $detail->id }}">
+                                        <td>
                                             <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning" value = "{{ $detail->id }}">
                                                 {{ $detail->id }}
                                             </button>
@@ -262,28 +253,29 @@
                                         <td id="others{{ $detail->id }}">{{ $detail->others }}</td>
                                         <td>{{ ($detail->gi + $detail->gii + $detail->giii) }}</td>
                                         <td>{{ ($detail->others + ($detail->gi + $detail->gii + $detail->giii)) }}</td>
-                                        <td id="bull2{{ $detail->id }}"></td>
-                                        <td id="bull2_breed{{ $detail->id }}"></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        @if ($detail->productionDetail != null)
+                                            <td id="bull2{{ $detail->id }}">{{ $detail->productionDetail->bull }}</td>
+                                            <td id="bull2_breed{{ $detail->id }}">{{ $detail->productionDetail->bull_breed }}</td>
+                                            <td id="civ{{ $detail->id }}">{{ $detail->productionDetail->civ }}</td>
+                                            <td id="medium_cultivation{{ $detail->id }}">{{ $detail->productionDetail->medium_cultivation }}</td>
+                                            <td id="lot_medium{{ $detail->id }}">{{ $detail->productionDetail->lot_medium }}</td>
+                                            <td id="cleavage{{ $detail->id }}">{{ $detail->productionDetail->cleavage }}</td>
+                                            <td id="feeding1{{ $detail->id }}">{{ $detail->productionDetail->feeding1 }}</td>
+                                            <td id="feeding2{{ $detail->id }}">{{ $detail->productionDetail->feeding2 }}</td>
+                                            <td id="c5{{ $detail->id }}">{{ $detail->productionDetail->c5 }}</td>
+                                            <td id="prevision{{ $detail->id }}">{{ $detail->productionDetail->prevision }}</td>
+                                            <td id="bi{{ $detail->id }}">{{ $detail->productionDetail->bi }}</td>
+                                            <td id="bl{{ $detail->id }}">{{ $detail->productionDetail->bl }}</td>
+                                            <td id="bx{{ $detail->id }}">{{ $detail->productionDetail->bx }}</td>
+                                            <td id="bn{{ $detail->id }}">{{ $detail->productionDetail->bn }}</td>
+                                            <td id="be{{ $detail->id }}">{{ $detail->productionDetail->be }}</td>
+                                            <td id="vitrified{{ $detail->id }}">{{ $detail->productionDetail->vitrified }}</td>
+                                            <td id="frozen{{ $detail->id }}">{{ $detail->productionDetail->frozen }}</td>
+                                            <td id="lost{{ $detail->id }}">{{ $detail->productionDetail->lost }}</td>
+                                            <td id="transferred_embryos{{ $detail->id }}">{{ $detail->productionDetail->transferred_embryos }}</td>
+                                            <td id="discarded{{ $detail->id }}">{{ $detail->productionDetail->discarded }}</td>
+                                            <td>{{ $detail->productionDetail->vitrified + $detail->productionDetail->frozen + $detail->productionDetail->lost + $detail->productionDetail->transferred_embryos + $detail->productionDetail->discarded }}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -338,19 +330,27 @@
             $("[id*=btnModal]").on('click', function () {
                 $('#myModal').modal('show');
                 $('#btnAgregar').html("Modificar");
-                $('#btnEliminar').show();
-                $('#txtAspirationId').val((this).value);
-                $('#txtDonadora').val($('#donor'+(this).value).text());
-                $('#txtRazaD').val($('#donor_breed'+(this).value).text());
-                $('#txtToro').val($('#bull'+(this).value).text());
-                $('#txtRazaT').val($('#bull_breed'+(this).value).text());
-                $('#txtTipo').val($('#type'+(this).value).text());
-                $('#txtGI').val($('#gi'+(this).value).text());
-                $('#txtGII').val($('#gii'+(this).value).text());
-                $('#txtGIII').val($('#giii'+(this).value).text());
-                $('#txtOtros').val($('#others'+(this).value).text());
-                $('#txtToro2').val($('#bull2'+(this).value).text());
-                $('#txtRaza2').val($('#bull2_breed'+(this).value).text());
+                $('#txtAspirationDetailId').val((this).value);
+                $('#txtToro').val($('#bull2'+(this).value).text());
+                $('#txtRaza').val($('#bull2_breed'+(this).value).text());
+                $('#txtCIV').val($('#civ'+(this).value).text());
+                $('#txtMedioCultivo').val($('#medium_cultivation'+(this).value).text());
+                $('#txtLoteMedio').val($('#lot_medium'+(this).value).text());
+                $('#txtCliv').val($('#cleavage'+(this).value).text());
+                $('#txt1F').val($('#feeding1'+(this).value).text());
+                $('#txt2F').val($('#feeding2'+(this).value).text());
+                $('#txtC5').val($('#c5'+(this).value).text());
+                $('#txtPrev').val($('#prevision'+(this).value).text());
+                $('#txtBi').val($('#bi'+(this).value).text());
+                $('#txtBl').val($('#bl'+(this).value).text());
+                $('#txtBx').val($('#bx'+(this).value).text());
+                $('#txtBn').val($('#bn'+(this).value).text());
+                $('#txtBe').val($('#be'+(this).value).text());
+                $('#txtVitri').val($('#vitrified'+(this).value).text());
+                $('#txtCong').val($('#frozen'+(this).value).text());
+                $('#txtPerda').val($('#lost'+(this).value).text());
+                $('#txtTE').val($('#transferred_embryos'+(this).value).text());
+                $('#txtDesc').val($('#discarded'+(this).value).text());
             });
         });
     </script>

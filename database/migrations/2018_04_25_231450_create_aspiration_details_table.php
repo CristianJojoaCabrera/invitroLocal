@@ -14,6 +14,7 @@ class CreateAspirationDetailsTable extends Migration
     public function up()
     {
         Schema::create('aspiration_details', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('aspiration_id')->unsigned();
             $table->foreign('aspiration_id')->references('id')->on('aspirations');
@@ -26,8 +27,6 @@ class CreateAspirationDetailsTable extends Migration
             $table->integer('gii');
             $table->integer('giii');
             $table->integer('others');
-            $table->string('bull2', 50)->nullable();
-            $table->string('bull2_breed', 50)->nullable();
             $table->timestamps();
         });
     }
