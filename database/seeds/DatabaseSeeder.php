@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
             'orders',
             'order_details',
             'production_details',
-            'productions'
+            'productions',
+            'transfer_details',
+            'transfers'
         ]);
 
         $this->call(UserSeeder::class);
