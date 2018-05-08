@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsTable extends Migration
+class CreateSexageDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateEvaluationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('evaluations', function (Blueprint $table) {
+        Schema::create('sexage_details', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->integer('order_detail_id')->unsigned();
-            $table->foreign('order_detail_id')->references('id')->on('order_details');
-            $table->string('comments', 100)->nullable();
-            $table->integer('state')->unsigned();
+            $table->integer('sexage_id')->unsigned();
+            $table->foreign('sexage_id')->references('id')->on('sexages');
+            $table->integer('transfer_detail_id')->unsigned();
+            $table->foreign('transfer_detail_id')->references('id')->on('transfer_details');
+            $table->string('sex', 1)->nullable();
             $table->integer('user_id_created')->unsigned();
             $table->foreign('user_id_created')->references('id')->on('users');
             $table->integer('user_id_updated')->unsigned();
@@ -35,6 +36,6 @@ class CreateEvaluationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('sexage_details');
     }
 }

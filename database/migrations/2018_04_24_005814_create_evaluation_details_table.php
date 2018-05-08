@@ -24,6 +24,10 @@ class CreateEvaluationDetailsTable extends Migration
             $table->boolean('synchronized')->default(false);
             $table->string('other_procedures', 100)->nullable();
             $table->string('comments', 100)->nullable();
+            $table->integer('user_id_created')->unsigned();
+            $table->foreign('user_id_created')->references('id')->on('users');
+            $table->integer('user_id_updated')->unsigned();
+            $table->foreign('user_id_updated')->references('id')->on('users');
             $table->timestamps();
         });
     }

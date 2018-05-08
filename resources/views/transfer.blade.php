@@ -10,8 +10,11 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
+                <li>
+                    <a href="{{ route('transfer_po') }}">Transferencia de Embriones</a>
+                </li>
                 <li class="active">
-                    <strong>Transferencia de Embriones</strong>
+                    <strong>{{ $title }}</strong>
                 </li>
             </ol>
         </div>
@@ -26,7 +29,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Planilla de Transferencia de Embriones</h5>
+                        <h5>{{ $title }}</h5>
                     </div>
                     <div class="ibox-content">
                         @if ($errors->any())
@@ -73,7 +76,7 @@
                                     <div class="modal-content animated bounceInRight">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">Planilla de Selección de Receptoras</h4>
+                                            <h4 class="modal-title">{{ $title }}</h4>
                                             <input id="txtEvaluation_id" name="txtEvaluation_id" type="hidden" value="" class="form-control">
                                             <input id="txtTransfer_id" name="txtTransfer_id" type="hidden" value="" class="form-control">
                                         </div>
@@ -112,6 +115,10 @@
                                                 <input id="txtRazaToro" name="txtRazaToro" type="text"  class="form-control">
                                             </div>
                                             <div class="form-group">
+                                                <label>Transferidor</label>
+                                                <input id="txtTransferidor" name="txtTransferidor" type="text"  class="form-control">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Observaciones para examen</label>
                                                 <input id="txtComments" name="txtComments" type="textArea" class="form-control">
                                             </div>
@@ -137,6 +144,7 @@
                                         <th>Raza</th>
                                         <th>Toro (RGD/Nombre)</th>
                                         <th>Raza</th>
+                                        <th>Transferidor</th>
                                         <th>Obs. Para examen</th>
                                         <th></th>
                                     </tr>
@@ -153,6 +161,7 @@
                                             <td id="donor_breed{{ $detail->evaluation_detail_id }}">{{ $detail->donor_breed }}</td>
                                             <td id="bull{{ $detail->evaluation_detail_id }}">{{ $detail->bull }}</td>
                                             <td id="bull_breed{{ $detail->evaluation_detail_id }}">{{ $detail->bull_breed }}</td>
+                                            <td id="transferor{{ $detail->evaluation_detail_id }}">{{ $detail->transferor }}</td>
                                             <td id="comments{{ $detail->evaluation_detail_id }}">{{ $detail->comments }}</td>
                                             <td class="center">
                                                 @if ( $orderDetail->transfer->state == 0)
@@ -200,6 +209,7 @@
                 $('#txtRazaDonadora').val($('#donor_breed'+(this).value).text());
                 $('#txtToroRGD').val($('#bull'+(this).value).text());
                 $('#txtRazaToro').val($('#bull_breed'+(this).value).text());
+                $('#txtTransferidor').val($('#transferor'+(this).value).text());
                 $('#txtComments').val($('#comments'+(this).value).text());
             });
         });

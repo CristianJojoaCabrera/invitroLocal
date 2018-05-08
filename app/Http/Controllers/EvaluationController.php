@@ -8,6 +8,7 @@ use App\EvaluationDetail;
 use App\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Auth;
 
 
 class EvaluationController extends Controller
@@ -43,13 +44,15 @@ class EvaluationController extends Controller
             $evaluation = new Evaluation();
             $evaluation->order_detail_id = $orderDetailId;
             $evaluation->state = 0;
+            $evaluation->user_id_created = Auth::id();
+            $evaluation->user_id_updated = Auth::id();
             $evaluation->save();
         }
         return view('evaluation')
             ->with('orderDetail', $orderDetail);
     }
 
-    public function close($orderDetailId)
+    public function notApply($orderDetailId)
     {
         $orderDetail = OrderDetail::find($orderDetailId);
         $orderDetail->apply_evaluation = 0;
@@ -80,6 +83,7 @@ class EvaluationController extends Controller
                 $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
                 $evaluation_details = new EvaluationDetail();
                 $evaluation_details->evaluation_id = $evaluation->id;
+                $evaluation_details->user_id_created = Auth::id();
             }
             else{
                 $evaluation_details = EvaluationDetail::find($request->input('txtEvaluation_id'));
@@ -92,6 +96,7 @@ class EvaluationController extends Controller
             $evaluation_details->synchronized = $request->input('cmbSynchronized');
             $evaluation_details->other_procedures = $request->input('txtOther_procedures');
             $evaluation_details->comments = $request->input('txtComments');
+            $evaluation_details->user_id_updated = Auth::id();
             $evaluation_details->save();
         }
 
@@ -101,6 +106,7 @@ class EvaluationController extends Controller
     public function finish($orderDetailId) {
         $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
         $evaluation->state = 1;
+        $evaluation->user_id_updated = Auth::id();
         $evaluation->save();
         return redirect()->route('evaluation', $orderDetailId);
     }

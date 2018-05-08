@@ -60,9 +60,9 @@ Route::get('/evaluation/{poId}', 'EvaluationController@find')
     -> where('poId', '[0-9]+')
     ->name('evaluation');
 
-Route::get('/evaluation/{poId}/close', 'EvaluationController@close')
+Route::get('/evaluation/{poId}/notApply', 'EvaluationController@notApply')
     -> where('poId', '[0-9]+')
-    ->name('evaluation_close');
+    ->name('evaluation_notApply');
 
 Route::post('/evaluation/{orderDetailId}/save', 'EvaluationController@store')
     ->where('orderDetailId', '[0-9]+')
@@ -129,15 +129,62 @@ Route::post('/transfer/{orderDetailId}/finish', 'TransferController@finish')
     ->where('orderDetailId', '[0-9]+')
     ->name('transfer_finish');
 
-
 Route::get('/diagnostic', 'DiagnosticController@index')
+    ->name('diagnostic_po');
+
+Route::get('/diagnostic/{orderDetailId}', 'DiagnosticController@find')
+    ->where('orderDetailId', '[0-9]+')
     ->name('diagnostic');
 
+Route::post('/diagnostic/{orderDetailId}/store', 'DiagnosticController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('diagnostic_store');
+
+Route::post('/diagnostic/{orderDetailId}/save', 'DiagnosticController@storeform')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('diagnostic_save');
+
+Route::post('/diagnostic/{orderDetailId}/finish', 'DiagnosticController@finish')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('diagnostic_finish');
+
 Route::get('/sexage', 'SexageController@index')
+    ->name('sexage_po');
+
+Route::get('/sexage/{orderDetailId}', 'SexageController@find')
+    ->where('orderDetailId', '[0-9]+')
     ->name('sexage');
 
+Route::post('/sexage/{orderDetailId}/store', 'SexageController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('sexage_store');
+
+Route::post('/sexage/{orderDetailId}/save', 'SexageController@storeform')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('sexage_save');
+
+Route::post('/sexage/{orderDetailId}/finish', 'SexageController@finish')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('sexage_finish');
+
 Route::get('/delivery', 'DeliveryController@index')
+    ->name('delivery_po');
+
+Route::get('/delivery/{orderDetailId}', 'DeliveryController@find')
+    ->where('orderDetailId', '[0-9]+')
     ->name('delivery');
+
+Route::post('/delivery/{orderDetailId}/store', 'DeliveryController@store')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('delivery_store');
+
+Route::post('/delivery/{orderDetailId}/save', 'DeliveryController@storeform')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('delivery_save');
+
+Route::post('/delivery/{orderDetailId}/finish', 'DeliveryController@finish')
+    ->where('orderDetailId', '[0-9]+')
+    ->name('delivery_finish');
 
 Route::get('/vitrification', 'VitrificationController@index')
     ->name('vitrification');

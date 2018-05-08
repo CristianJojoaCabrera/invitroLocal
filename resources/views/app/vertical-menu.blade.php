@@ -58,13 +58,13 @@
                 <a href="{{ route('transfer_po') }}"><i class="fa fa-magic"></i> <span class="nav-label">Transferencia Embrión</span></a>
             </li>
             <li>
-                <a href="{{ route('diagnostic') }}"><i class="fa fa-stethoscope"></i> <span class="nav-label">Diagnóstico</span></a>
+                <a href="{{ route('diagnostic_po') }}"><i class="fa fa-stethoscope"></i> <span class="nav-label">Diagnóstico</span></a>
             </li>
             <li>
-                <a href="{{ route('sexage') }}"><i class="fa fa-random"></i> <span class="nav-label">Sexaje</span></a>
+                <a href="{{ route('sexage_po') }}"><i class="fa fa-random"></i> <span class="nav-label">Sexaje</span></a>
             </li>
             <li>
-                <a href="{{ route('delivery') }}"><i class="fa fa-truck"></i> <span class="nav-label">Entrega</span></a>
+                <a href="{{ route('delivery_po') }}"><i class="fa fa-truck"></i> <span class="nav-label">Entrega</span></a>
             </li>
             <li>
                 <a href="{{ route('vitrification') }}"><i class="fa fa-codepen"></i> <span class="nav-label">Vitrificación</span></a>
