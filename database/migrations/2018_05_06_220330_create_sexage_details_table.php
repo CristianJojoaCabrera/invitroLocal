@@ -18,8 +18,8 @@ class CreateSexageDetailsTable extends Migration
             $table->increments('id');
             $table->integer('sexage_id')->unsigned();
             $table->foreign('sexage_id')->references('id')->on('sexages');
-            $table->integer('transfer_detail_id')->unsigned();
-            $table->foreign('transfer_detail_id')->references('id')->on('transfer_details');
+            $table->integer('diagnostic_detail_id')->unsigned();
+            $table->foreign('diagnostic_detail_id')->references('id')->on('diagnostic_details');
             $table->string('sex', 1)->nullable();
             $table->integer('user_id_created')->unsigned();
             $table->foreign('user_id_created')->references('id')->on('users');

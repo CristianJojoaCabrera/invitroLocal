@@ -47,7 +47,8 @@
                                     <th>Razón Social</th>
                                     <th>Local</th>
                                     <th>Fecha Transferencia</th>
-                                    <th></th>
+                                    <th>Fecha Diagnóstico</th>
+                                    <th>Planilla</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,8 +58,24 @@
                                         <td>{{ $transfer->orderDetail->order->client->bussiness_name }}</td>
                                         <td>{{ $transfer->orderDetail->local->name }}</td>
                                         <td>{{ $transfer->updated_at  }}</td>
+
                                         <td>
-                                           <a href="{{ route($route, $transfer->orderDetail->id ) }}" class="btn btn-sm btn-warning">Planilla</a>
+                                            @if(is_null($transfer->orderDetail->diagnostic))
+
+                                            @else
+                                                {{$transfer->orderDetail->diagnostic->updated_at}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(is_null($transfer->orderDetail->diagnostic))
+                                                <a href="{{ route($route, $transfer->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                            @else
+                                                @if ($transfer->orderDetail->diagnostic->state == 0)
+                                                    <a href="{{ route($route, $transfer->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                @else
+                                                    <a href="{{ route($route, $transfer->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
+                                                @endif
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

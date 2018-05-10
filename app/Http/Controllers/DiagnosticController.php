@@ -61,6 +61,7 @@ class DiagnosticController extends Controller
         }
         return view('diagnostic')
             ->with('transfer', $transfer)
+            ->with('title', $this->title)
             ->with('orderDetail', $orderDetail);
     }
 

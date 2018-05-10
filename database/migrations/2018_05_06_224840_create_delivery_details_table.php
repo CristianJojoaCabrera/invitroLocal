@@ -18,8 +18,8 @@ class CreateDeliveryDetailsTable extends Migration
             $table->increments('id');
             $table->integer('delivery_id')->unsigned();
             $table->foreign('delivery_id')->references('id')->on('deliveries');
-            $table->integer('transfer_detail_id')->unsigned();
-            $table->foreign('transfer_detail_id')->references('id')->on('transfer_details');
+            $table->integer('sexage_detail_id')->unsigned();
+            $table->foreign('sexage_detail_id')->references('id')->on('sexage_details');
             $table->string('sex', 1)->nullable();
             $table->string('dx2', 1)->nullable();
             $table->integer('user_id_created')->unsigned();

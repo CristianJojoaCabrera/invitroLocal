@@ -48,6 +48,7 @@ class TransferController extends Controller
             return view('transfer_index')
             ->with('productionOrders', $productionOrders)
             ->with('evaluations', $evaluations)
+            ->with('title', $this->title)
             ->with('route', $route);
 
         return view('transfer');
@@ -69,7 +70,6 @@ class TransferController extends Controller
             ->with('title', $this->title)
             ->with('orderDetail', $orderDetail);
     }
-
 
     public function store($orderDetailId, Request $request) {
         $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();

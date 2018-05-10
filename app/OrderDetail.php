@@ -40,4 +40,9 @@ class OrderDetail extends Model
     {
         return $this->hasOne('App\Diagnostic');
     }
+
+    public function sexage()
+    {
+        return $this->hasOne('App\Sexage');
+    }
 }

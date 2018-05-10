@@ -12,13 +12,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transferencia de Embriones</h2>
+            <h2>Sexaje</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="index.html">Home</a>
                 </li>
                 <li class="active">
-                    <strong>Transferencia de Embriones</strong>
+                    <strong>Sexaje</strong>
                 </li>
             </ol>
         </div>
@@ -46,33 +46,33 @@
                                     <th># Orden</th>
                                     <th>Razón Social</th>
                                     <th>Local</th>
-                                    <th>Fecha Evaluación</th>
-                                    <th>Fecha Transferencia</th>
+                                    <th>Fecha Diagnóstico</th>
+                                    <th>Fecha Sexaje</th>
                                     <th>Planilla</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($evaluations as $evaluation)
+                                @foreach ($diagnostics as $diagnostic)
                                     <tr>
-                                        <td>{{ $evaluation->orderDetail->order->id }}</td>
-                                        <td>{{ $evaluation->orderDetail->order->client->bussiness_name }}</td>
-                                        <td>{{ $evaluation->orderDetail->local->name }}</td>
-                                        <td>{{ $evaluation->updated_at  }}</td>
+                                        <td>{{ $diagnostic->id }}</td>
+                                        <td>{{ $diagnostic->orderDetail->order->client->bussiness_name }}</td>
+                                        <td>{{ $diagnostic->orderDetail->local->name }}</td>
+                                        <td>{{ $diagnostic->updated_at  }}</td>
                                         <td>
-                                            @if(is_null($evaluation->orderDetail->transfer))
+                                            @if(is_null($diagnostic->orderDetail->sexage))
 
                                             @else
-                                                {{$evaluation->orderDetail->transfer->updated_at}}
+                                                {{$diagnostic->orderDetail->sexage->updated_at}}
                                             @endif
                                         </td>
                                         <td>
-                                            @if(is_null($evaluation->orderDetail->transfer))
-                                                <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                            @if(is_null($diagnostic->orderDetail->sexage))
+                                                <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                             @else
-                                                @if ($evaluation->orderDetail->transfer->state == 0)
-                                                    <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                @if ($diagnostic->orderDetail->sexage->state == 0)
+                                                    <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                                 @else
-                                                    <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
+                                                    <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
                                                 @endif
                                             @endif
                                         </td>

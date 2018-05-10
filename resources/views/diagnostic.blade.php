@@ -14,7 +14,7 @@
                     <a href="{{ route('diagnostic_po') }}">Diagnóstico</a>
                 </li>
                 <li class="active">
-                    <strong>Planilla de Diagnóstico</strong>
+                    <strong>{{ $title }}</strong>
                 </li>
             </ol>
         </div>
@@ -29,7 +29,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Planilla de Diagnóstico</h5>
+                        <h5>{{ $title }}</h5>
                     </div>
                     <div class="ibox-content">
                         @if ($errors->any())
@@ -42,24 +42,24 @@
                             </div>
                         @endif
                         <div class="row">
-                            <form method="post" action="{{ route('transfer_store', $orderDetail->id) }}">
+                            <form method="post" action="{{ route('diagnostic_store', $orderDetail->id) }}">
                                 {{ csrf_field() }}
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Recibido por</label>
-                                        <input id="txtRecibido" name="txtRecibido" type="text" class="form-control input-sm" value="{{ $orderDetail->transfer->received_by }}" >
+                                        <input id="txtRecibido" name="txtRecibido" type="text" class="form-control input-sm" value="{{ $orderDetail->diagnostic->received_by }}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Cédula</label>
-                                        <input id="txtCedula" name="txtCedula" type="text" class="form-control input-sm" value="{{ $orderDetail->transfer->identification_number }}" >
+                                        <input id="txtCedula" name="txtCedula" type="text" class="form-control input-sm" value="{{ $orderDetail->diagnostic->identification_number }}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="form-group">
                                         <label>Observaciones</label>
-                                        <textarea id="txtComment" name="txtComment" class="form-control input-sm" >{{ $orderDetail->transfer->comments }}</textarea>
+                                        <textarea id="txtComment" name="txtComment" class="form-control input-sm" >{{ $orderDetail->diagnostic->comments }}</textarea>
                                     </div>
                                 </div>
                                 @if ($orderDetail->diagnostic->state == 0)
@@ -76,7 +76,7 @@
                                     <div class="modal-content animated bounceInRight">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">Planilla de Diagnóstico</h4>
+                                            <h4 class="modal-title">{{ $title }}</h4>
                                             <input id="txtDiagnostico_id" name="txtDiagnostico_id" type="hidden" value="" class="form-control">
                                             <input id="txtTransferDetail_id" name="txtTransferDetail_id" type="hidden" value="" class="form-control">
                                         </div>
@@ -131,7 +131,6 @@
                                         <tr>
                                             <td id="transfer{{ $detail->id }}">{{$detail->id}}</td>
                                             <td id="chapeta{{ $detail->id }}">{{ $detail->evaluationDetail->chapeta }}</td>
-
                                             <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
                                             <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
                                             <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>

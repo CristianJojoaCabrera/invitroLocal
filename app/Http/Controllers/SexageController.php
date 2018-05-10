@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\Evaluation;
-use App\EvaluationDetail;
+use App\Diagnostic;
+use App\DiagnosticDetail;
 use App\OrderDetail;
+use App\Sexage;
+use App\SexageDetail;
 use App\Transfer;
 use App\TransferDetail;
 use Illuminate\Http\Request;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SexageController extends Controller
 {
+    private $title = 'Planilla de Sexaje';
     /**
      * Create a new controller instance.
      *
@@ -33,11 +36,11 @@ class SexageController extends Controller
 
     public function index()
     {
-        $productionOrders = Order::where('approved', true)->get();
+        $diagnostic = Diagnostic::where('state', 1)->get();
         $route = 'sexage';
 
-        return view('production_order_details')
-            ->with('productionOrders', $productionOrders)
+        return view('sexage_index')
+            ->with('diagnostics', $diagnostic)
             ->with('route', $route);
 
         return view('sexage');
@@ -47,63 +50,56 @@ class SexageController extends Controller
     {
         $orderDetail = OrderDetail::find($orderDetailId);
 
-        if (Transfer::where('order_detail_id', $orderDetailId)->first() == null) {
-            $transfer = new Transfer();
-            $transfer->order_detail_id = $orderDetailId;
-            $transfer->state = 0;
-            $transfer->user_id_created = Auth::id();
-            $transfer->user_id_updated = Auth::id();
-            $transfer->save();
+        if ( Sexage::where('order_detail_id', $orderDetailId)->first() == null) {
+            $sexage = new Sexage();
+            $sexage->order_detail_id = $orderDetailId;
+            $sexage->state = 0;
+            $sexage->user_id_created = Auth::id();
+            $sexage->user_id_updated = Auth::id();
+            $sexage->save();
         }
         return view('sexage')
-            ->with('orderDetail', $orderDetail);
+            ->with('orderDetail', $orderDetail)
+            ->with('title', $this->title);
     }
 
 
     public function store($orderDetailId, Request $request) {
-        $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
-        $transfer->received_by = $request->input('txtRecibido');
-        $transfer->identification_number = $request->input('txtCedula');
-        $transfer->comments = $request->input('txtComment');
-        $transfer->user_id_updated = Auth::id();
-        //$transfer->state = 0;
-        $transfer->save();
+        $Sexage = Sexage::where('order_detail_id', $orderDetailId)->first();
+        $Sexage->received_by = $request->input('txtRecibido');
+        $Sexage->identification_number = $request->input('txtCedula');
+        $Sexage->comments = $request->input('txtComment');
+        $Sexage->user_id_updated = Auth::id();
+        $Sexage->save();
 
         return redirect()->route('sexage', $orderDetailId);
     }
 
     public function storeform($orderDetailId, Request $request)
     {
-        if($request->input('txtTransfer_id') == null){
-            $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
-            $transfer_details = new TransferDetail();
-            $transfer_details->transfer_id = $transfer->id;
+        //dd($request);
+        if($request->input('txtSexageDetail_id') == null){
+            $sexage = Sexage::where('order_detail_id', $orderDetailId)->first();
+            $sexage_details = new SexageDetail();
+            $sexage_details->sexage_id = $sexage->id;
         }
         else{
-            $transfer_details = TransferDetail::find($request->input('txtTransfer_id'));
+            $sexage_details = SexageDetail::find($request->input('txtDiagnosticDetail_id'));
         }
-        $transfer_details->evaluation_detail_id = $request->input('txtEvaluation_id');
-        $transfer_details->embryo = $request->input('txtEmbrion');
-        $transfer_details->embryo_class = $request->input('txtClaseEmbrion');
-        $transfer_details->corpus_luteum = $request->input('txtCuerpoLuteo');
-        $transfer_details->donor = $request->input('txtDonadoraRGD');
-        $transfer_details->donor_breed = $request->input('txtRazaDonadora');
-        $transfer_details->bull = $request->input('txtToroRGD');
-        $transfer_details->bull_breed = $request->input('txtRazaToro');
-        $transfer_details->transferor = $request->input('txtTransferidor');
-        $transfer_details->comments = $request->input('txtComments');
-        $transfer_details->user_id_created= Auth::id();
-        $transfer_details->user_id_updated = Auth::id();
-        $transfer_details->save();
+        $sexage_details->diagnostic_detail_id = $request->input('txtDiagnosticDetail_id');
+        $sexage_details->dx1 = $request->input('cmbDx1');
+        $sexage_details->user_id_created= Auth::id();
+        $sexage_details->user_id_updated = Auth::id();
+        $sexage_details->save();
 
         return redirect()->route('sexage', $orderDetailId);
     }
 
 
     public function finish($orderDetailId) {
-        $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
-        $transfer->state = 1;
-        $transfer->save();
+        $sexage = Sexage::where('order_detail_id', $orderDetailId)->first();
+        $sexage->state = 1;
+        $sexage->save();
         return redirect()->route('sexage', $orderDetailId);
     }
 }
