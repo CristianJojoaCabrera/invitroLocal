@@ -62,17 +62,19 @@
                                             @if(is_null($diagnostic->orderDetail->sexage))
 
                                             @else
-                                                {{$diagnostic->orderDetail->sexage->updated_at}}
+                                                @if ($diagnostic->orderDetail->sexage->state == 1)
+                                                    {{$diagnostic->orderDetail->sexage->updated_at}}
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
                                             @if(is_null($diagnostic->orderDetail->sexage))
-                                                <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                <a href="{{ route($route, $diagnostic->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                             @else
                                                 @if ($diagnostic->orderDetail->sexage->state == 0)
-                                                    <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                    <a href="{{ route($route, $diagnostic->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                                 @else
-                                                    <a href="{{ route($route, $diagnostic->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
+                                                    <a href="{{ route($route, $diagnostic->orderDetail->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
                                                 @endif
                                             @endif
                                         </td>

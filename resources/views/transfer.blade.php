@@ -150,23 +150,23 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($orderDetail->evaluation->detailsSynchronized as $detail)
+                                    @foreach($orderDetail->transfer->details as $detail)
                                         <tr>
-                                            <td id="transfer{{ $detail->evaluation_detail_id }}">{{ $detail->transfer_id}}</td>
-                                            <td id="chapeta{{ $detail->evaluation_detail_id }}">{{ $detail->chapeta }}</td>
-                                            <td id="embryo{{ $detail->evaluation_detail_id }}">{{ $detail->embryo }}</td>
-                                            <td id="embryo_class{{ $detail->evaluation_detail_id }}">{{ $detail->embryo_class }}</td>
-                                            <td id="corpus_luteum{{ $detail->evaluation_detail_id }}">{{ $detail->corpus_luteum }}</td>
-                                            <td id="donor{{ $detail->evaluation_detail_id }}">{{ $detail->donor }}</td>
-                                            <td id="donor_breed{{ $detail->evaluation_detail_id }}">{{ $detail->donor_breed }}</td>
-                                            <td id="bull{{ $detail->evaluation_detail_id }}">{{ $detail->bull }}</td>
-                                            <td id="bull_breed{{ $detail->evaluation_detail_id }}">{{ $detail->bull_breed }}</td>
-                                            <td id="transferor{{ $detail->evaluation_detail_id }}">{{ $detail->transferor }}</td>
-                                            <td id="comments{{ $detail->evaluation_detail_id }}">{{ $detail->comments }}</td>
+                                            <td id="transfer{{ $detail->id }}">{{ $detail->id}}</td>
+                                            <td id="receiver{{ $detail->id }}">{{ $detail->receiver }}</td>
+                                            <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
+                                            <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
+                                            <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
+                                            <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
+                                            <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
+                                            <td id="bull{{ $detail->id }}">{{ $detail->bull }}</td>
+                                            <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
+                                            <td id="transferor{{ $detail->id }}">{{ $detail->transferor }}</td>
+                                            <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
                                             <td class="center">
                                                 @if ( $orderDetail->transfer->state == 0)
-                                                    <button id="btnModal{{ $detail->evaluation_detail_id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
-                                                            value = "{{ $detail->evaluation_detail_id }}">
+                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
+                                                            value = "{{ $detail->id }}">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
                                                 @endif
@@ -201,7 +201,7 @@
                 $('#myModal').modal('show');
                 $('#txtEvaluation_id').val((this).value);
                 $('#txtTransfer_id').val($('#transfer'+(this).value).text());
-                $('#txtReceptora').val($('#chapeta'+(this).value).text());
+                $('#txtReceptora').val($('#receiver'+(this).value).text());
                 $('#txtEmbrion').val($('#embryo'+(this).value).text());
                 $('#txtClaseEmbrion').val($('#embryo_class'+(this).value).text());
                 $('#txtCuerpoLuteo').val($('#corpus_luteum'+(this).value).text());

@@ -77,7 +77,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                             <h4 class="modal-title">{{ $title }}</h4>
-                                            <input id="txtDiagnostico_id" name="txtDiagnostico_id" type="hidden" value="" class="form-control">
+                                            <input id="txtDiagnosticDetail_id" name="txtDiagnostico_id" type="hidden" value="" class="form-control">
                                             <input id="txtTransferDetail_id" name="txtTransferDetail_id" type="hidden" value="" class="form-control">
                                         </div>
 
@@ -129,8 +129,15 @@
                                     <tbody>
                                     @foreach($orderDetail->transfer->details as $detail)
                                         <tr>
-                                            <td id="transfer{{ $detail->id }}">{{$detail->id}}</td>
-                                            <td id="chapeta{{ $detail->id }}">{{ $detail->evaluationDetail->chapeta }}</td>
+                                            <td id="transfer{{ $detail->id }}" hidden="hidden">{{$detail->id}}</td>
+                                            <td id="diagnostic{{ $detail->id }}"  >
+                                                @if(is_null($detail->diagnosticDetail))
+
+                                                @else
+                                                    {{$detail->diagnosticDetail->id}}
+                                                @endif
+                                            </td>
+                                            <td id="receiver{{ $detail->id }}">{{ $detail->receiver }}</td>
                                             <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
                                             <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
                                             <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
@@ -166,7 +173,7 @@
                             </div>
                         </form>
                         @if ( $orderDetail->diagnostic->state == 0)
-                            <form method="POST" action="{{ route('diagnostic_finish', $transfer->orderDetail->id) }}">
+                            <form method="POST" action="{{ route('diagnostic_finish', $orderDetail->id) }}">
                                 {{ csrf_field() }}
                                 <div class="ibox-content" align="right">
                                     <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
@@ -185,8 +192,8 @@
             $("[id*=btnModal]").on('click', function () {
                 $('#myModal').modal('show');
                 $('#txtTransferDetail_id').val((this).value);
-                $('#txtDiagnosticDetail_id').val($('#transfer'+(this).value).text());
-                $('#txtReceptora').val($('#chapeta'+(this).value).text());
+                $('#txtDiagnosticDetail_id').val($('#diagnostic'+(this).value).text());
+                $('#txtReceptora').val($('#receiver'+(this).value).text());
                 $('#txtEmbrion').val($('#embryo'+(this).value).text());
                 $('#cmbDx1').val($('#diagnostic'+(this).value).text());
             });

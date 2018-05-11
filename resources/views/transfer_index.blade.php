@@ -62,17 +62,19 @@
                                             @if(is_null($evaluation->orderDetail->transfer))
 
                                             @else
-                                                {{$evaluation->orderDetail->transfer->updated_at}}
+                                                @if ($evaluation->orderDetail->transfer->state == 1)
+                                                    {{$evaluation->orderDetail->transfer->updated_at}}
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
                                             @if(is_null($evaluation->orderDetail->transfer))
-                                                <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                <a href="{{ route($route, $evaluation->orderDetail->id) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                             @else
                                                 @if ($evaluation->orderDetail->transfer->state == 0)
-                                                    <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                    <a href="{{ route($route, $evaluation->orderDetail->id) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                                 @else
-                                                    <a href="{{ route($route, $evaluation->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
+                                                    <a href="{{ route($route, $evaluation->orderDetail->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
                                                 @endif
                                             @endif
                                         </td>

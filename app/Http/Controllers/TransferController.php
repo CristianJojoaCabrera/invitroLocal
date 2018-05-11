@@ -43,9 +43,7 @@ class TransferController extends Controller
         $log = DB::getQueryLog();
         var_dump($log);
         */
-
-        //return view('production_order_details')
-            return view('transfer_index')
+        return view('transfer_index')
             ->with('productionOrders', $productionOrders)
             ->with('evaluations', $evaluations)
             ->with('title', $this->title)
@@ -77,7 +75,6 @@ class TransferController extends Controller
         $transfer->identification_number = $request->input('txtCedula');
         $transfer->comments = $request->input('txtComment');
         $transfer->user_id_updated = Auth::id();
-        //$transfer->state = 0;
         $transfer->save();
 
         return redirect()->route('transfer', $orderDetailId);
@@ -93,7 +90,8 @@ class TransferController extends Controller
         else{
             $transfer_details = TransferDetail::find($request->input('txtTransfer_id'));
         }
-        $transfer_details->evaluation_detail_id = $request->input('txtEvaluation_id');
+        //$transfer_details->evaluation_detail_id = $request->input('txtEvaluation_id');
+        $transfer_details->receiver = $request->input('txtReceptora');
         $transfer_details->embryo = $request->input('txtEmbrion');
         $transfer_details->embryo_class = $request->input('txtClaseEmbrion');
         $transfer_details->corpus_luteum = $request->input('txtCuerpoLuteo');

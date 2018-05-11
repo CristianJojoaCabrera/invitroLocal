@@ -62,7 +62,7 @@
                                             <textarea id="txtComment" name="txtComment" class="form-control input-sm" >{{ $orderDetail->sexage->comments }}</textarea>
                                         </div>
                                     </div>
-                                    @if ($orderDetail->diagnostic->state == 0)
+                                    @if ($orderDetail->sexage->state == 0)
                                         <div class="ibox-content" align="right">
                                             <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
                                         </div>
@@ -77,8 +77,8 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                 <h4 class="modal-title">{{ $title }}</h4>
-                                                <input id="txtDiagnostico_id" name="txtDiagnostico_id" type="hidden" value="" class="form-control">
-                                                <input id="txtTransferDetail_id" name="txtTransferDetail_id" type="hidden" value="" class="form-control">
+                                                <input id="txtDiagnosticDetail_id" name="txtDiagnosticDetail_id" type="hidden" value="" class="form-control">
+                                                <input id="txtSexageDetail_id" name="txtSexageDetail_id" type="hidden" value="" class="form-control">
                                             </div>
 
                                             <div class="modal-body">
@@ -91,11 +91,11 @@
                                                     <input id="txtEmbrion" name="txtEmbrion" type="text"  class="form-control" readonly>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Diagnóstico 1</label>
-                                                    <select class="form-control input-sm" id="cmbDx1" name="cmbDx1">
+                                                    <label>Sexaje</label>
+                                                    <select class="form-control input-sm" id="cmbSex" name="cmbSex">
                                                         <option value="">Seleccione</option>
-                                                        <option value="P">Preñado</option>
-                                                        <option value="V">Vacío</option>
+                                                        <option value="H">Hembra</option>
+                                                        <option value="M">Macho</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -123,15 +123,22 @@
                                             <th>Transferidor</th>
                                             <th>Obs. Para examen</th>
                                             <th>Diagnóstico 1</th>
+                                            <th>Sexaje</th>
                                             <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($orderDetail->transfer->details as $detail)
                                             <tr>
-                                                <td id="transfer{{ $detail->id }}">{{$detail->id}}</td>
-                                                <td id="chapeta{{ $detail->id }}">{{ $detail->evaluationDetail->chapeta }}</td>
+                                                <td id="diagnostic{{ $detail->id }}" hidden="hidden">{{$detail->diagnosticDetail->id}}</td>
+                                                <td id="sexage{{ $detail->id }}"  >
+                                                    @if(is_null($detail->diagnosticDetail->sexageDetail))
 
+                                                    @else
+                                                        {{$detail->diagnosticDetail->sexageDetail->id}}
+                                                    @endif
+                                                </td>
+                                                <td id="receiver{{ $detail->id }}">{{ $detail->receiver }}</td>
                                                 <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
                                                 <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
                                                 <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
@@ -141,16 +148,17 @@
                                                 <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
                                                 <td id="transferor{{ $detail->id }}">{{ $detail->transferor }}</td>
                                                 <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
+                                                <td id="dx1{{ $detail->id }}">{{ $detail->diagnosticDetail->dx1}}</td>
 
-                                                <td id="diagnostic{{ $detail->id }}">
-                                                    @if(is_null($detail->diagnosticDetail))
+                                                <td id="sex{{ $detail->id }}">
+                                                    @if(is_null($detail->diagnosticDetail->sexageDetail))
 
                                                     @else
-                                                        {{$detail->diagnosticDetail->dx1}}
+                                                        {{$detail->diagnosticDetail->sexageDetail->sex}}
                                                     @endif
                                                 </td>
                                                 <td class="center">
-                                                    @if ( $orderDetail->diagnostic->state == 0)
+                                                    @if ( $orderDetail->sexage->state == 0)
                                                         <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
                                                                 value = "{{ $detail->id }}">
                                                             <i class="fa fa-edit"></i>
@@ -166,8 +174,8 @@
                                     </table>
                                 </div>
                             </form>
-                            @if ( $orderDetail->diagnostic->state == 0)
-                                <form method="POST" action="{{ route('diagnostic_finish', $transfer->orderDetail->id) }}">
+                            @if ( $orderDetail->sexage->state == 0)
+                                <form method="POST" action="{{ route('sexage_finish', $orderDetail->id) }}">
                                     {{ csrf_field() }}
                                     <div class="ibox-content" align="right">
                                         <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
@@ -185,11 +193,11 @@
         $(document).ready(function() {
             $("[id*=btnModal]").on('click', function () {
                 $('#myModal').modal('show');
-                $('#txtTransferDetail_id').val((this).value);
-                $('#txtDiagnosticDetail_id').val($('#transfer'+(this).value).text());
-                $('#txtReceptora').val($('#chapeta'+(this).value).text());
+                $('#txtDiagnosticDetail_id').val($('#diagnostic'+(this).value).text());
+                $('#txtSexageDetail_id').val($('#sexage'+(this).value).text());
                 $('#txtEmbrion').val($('#embryo'+(this).value).text());
-                $('#cmbDx1').val($('#diagnostic'+(this).value).text());
+                $('#txtReceptora').val($('#receiver'+(this).value).text());
+                $('#cmbSex').val($('#sex'+(this).value).text());
             });
         });
     </script>

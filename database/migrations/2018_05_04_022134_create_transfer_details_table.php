@@ -18,11 +18,12 @@ class CreateTransferDetailsTable extends Migration
             $table->increments('id');
             $table->integer('transfer_id')->unsigned();
             $table->foreign('transfer_id')->references('id')->on('transfers');
-            $table->integer('evaluation_detail_id')->unsigned();
+            $table->integer('evaluation_detail_id')->unsigned()->nullable();
             $table->foreign('evaluation_detail_id')->references('id')->on('evaluation_details');
+            $table->string('receiver', 100)->nullable();
             $table->string('embryo', 100)->nullable();
             $table->string('embryo_class', 100)->nullable();
-            $table->integer('corpus_luteum')->unsigned();
+            $table->integer('corpus_luteum')->unsigned()->nullable();
             $table->string('donor', 50)->nullable();
             $table->string('donor_breed', 50)->nullable();
             $table->string('bull', 50)->nullable();

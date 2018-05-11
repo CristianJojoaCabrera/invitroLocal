@@ -68,8 +68,8 @@ Route::post('/evaluation/{orderDetailId}/save', 'EvaluationController@store')
     ->where('orderDetailId', '[0-9]+')
     ->name('evaluation_save');
 
-Route::post('/evaluation/{orderDetailId}/finish', 'EvaluationController@finish')
-    ->where('orderDetailId', '[0-9]+')
+Route::post('/evaluation/{evaluationlId}/finish', 'EvaluationController@finish')
+    ->where('evaluationlId', '[0-9]+')
     ->name('evaluation_finish');
 
 Route::get('/aspiration/production_orders', 'AspirationController@index')

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderDetail;
 use App\Evaluation;
 use App\EvaluationDetail;
-use App\OrderDetail;
+use App\Transfer;
+use App\TransferDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 
 
 class EvaluationController extends Controller
@@ -108,6 +111,32 @@ class EvaluationController extends Controller
         $evaluation->state = 1;
         $evaluation->user_id_updated = Auth::id();
         $evaluation->save();
+
+        $evaluation_details = EvaluationDetail::where('evaluation_id', $evaluation->id)
+                                ->where('synchronized', true)
+                                ->get();
+
+        foreach ( $evaluation_details as $evaluation_detail ){
+            if (Transfer::where('order_detail_id', $orderDetailId)->first() == null) {
+                $transfer = new Transfer();
+                $transfer->order_detail_id = $orderDetailId;
+                $transfer->state = 0;
+                $transfer->user_id_created = Auth::id();
+                $transfer->user_id_updated = Auth::id();
+                $transfer->save();
+            }else{
+                $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
+            };
+
+            $transfer_details = new TransferDetail();
+            $transfer_details->transfer_id = $transfer->id;
+            $transfer_details->evaluation_detail_id = $evaluation_detail->id;
+            $transfer_details->receiver = $evaluation_detail->animal_id." ".$evaluation_detail->chapeta;
+            $transfer_details->user_id_created = Auth::id();
+            $transfer_details->user_id_updated = Auth::id();
+            $transfer_details->save();
+        }
+
         return redirect()->route('evaluation', $orderDetailId);
     }
 }

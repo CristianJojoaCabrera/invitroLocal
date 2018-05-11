@@ -12,13 +12,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Diagnóstico</h2>
+            <h2>Entrega</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="index.html">Home</a>
                 </li>
                 <li class="active">
-                    <strong>Diagnóstico</strong>
+                    <strong>Entrega</strong>
                 </li>
             </ol>
         </div>
@@ -46,36 +46,35 @@
                                     <th># Orden</th>
                                     <th>Razón Social</th>
                                     <th>Local</th>
-                                    <th>Fecha Transferencia</th>
                                     <th>Fecha Diagnóstico</th>
+                                    <th>Fecha Sexaje</th>
                                     <th>Planilla</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($transfers as $transfer)
+                                @foreach ($sexages as $sexage)
                                     <tr>
-                                        <td>{{ $transfer->id }}</td>
-                                        <td>{{ $transfer->orderDetail->order->client->bussiness_name }}</td>
-                                        <td>{{ $transfer->orderDetail->local->name }}</td>
-                                        <td>{{ $transfer->updated_at  }}</td>
-
+                                        <td>{{ $sexage->id }}</td>
+                                        <td>{{ $sexage->orderDetail->order->client->bussiness_name }}</td>
+                                        <td>{{ $sexage->orderDetail->local->name }}</td>
+                                        <td>{{ $sexage->updated_at  }}</td>
                                         <td>
-                                            @if(is_null($transfer->orderDetail->diagnostic))
+                                            @if(is_null($sexage->orderDetail->delivery))
 
                                             @else
-                                                @if ($transfer->orderDetail->diagnostic->state == 1)
-                                                    {{$transfer->orderDetail->diagnostic->updated_at}}
+                                                @if ($sexage->orderDetail->delivery->state == 1)
+                                                    {{$sexage->orderDetail->delivery->updated_at}}
                                                 @endif
                                             @endif
                                         </td>
                                         <td>
-                                            @if(is_null($transfer->orderDetail->diagnostic))
-                                                <a href="{{ route($route, $transfer->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                            @if(is_null($sexage->orderDetail->delivery))
+                                                <a href="{{ route($route, $sexage->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                             @else
-                                                @if ($transfer->orderDetail->diagnostic->state == 0)
-                                                    <a href="{{ route($route, $transfer->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
+                                                @if ($sexage->orderDetail->delivery->state == 0)
+                                                    <a href="{{ route($route, $sexage->orderDetail->id ) }}" class="btn btn-sm btn-warning">Pendiente</a>
                                                 @else
-                                                    <a href="{{ route($route, $transfer->orderDetail->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
+                                                    <a href="{{ route($route, $sexage->orderDetail->id ) }}" class="btn btn-sm btn-success">Finalizada</a>
                                                 @endif
                                             @endif
                                         </td>

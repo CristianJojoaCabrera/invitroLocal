@@ -83,11 +83,11 @@ class SexageController extends Controller
             $sexage_details = new SexageDetail();
             $sexage_details->sexage_id = $sexage->id;
         }
-        else{
-            $sexage_details = SexageDetail::find($request->input('txtDiagnosticDetail_id'));
+        else {
+            $sexage_details = SexageDetail::find($request->input('txtSexageDetail_id'));
         }
         $sexage_details->diagnostic_detail_id = $request->input('txtDiagnosticDetail_id');
-        $sexage_details->dx1 = $request->input('cmbDx1');
+        $sexage_details->sex = $request->input('cmbSex');
         $sexage_details->user_id_created= Auth::id();
         $sexage_details->user_id_updated = Auth::id();
         $sexage_details->save();

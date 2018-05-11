@@ -22,8 +22,4 @@ class TransferDetail extends Model
         return $this->hasOne('App\DiagnosticDetail', 'transfer_detail_id', 'id');
     }
 
-    public function sexageDetail()
-    {
-        return $this->hasOne('App\SexageDetail', 'sexage_detail_id', 'id');
-    }
 }
