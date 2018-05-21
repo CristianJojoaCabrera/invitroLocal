@@ -98,6 +98,20 @@ class MasterClientController extends Controller
 
 	    $clients = Client::all();
 	    return DataTables::of($clients)
+		    ->addColumn('identification_type_id',function ($identification){
+		        switch ($identification->identification_type_id){
+			        case 1 :
+			        	return 'Cedula de Ciudadania';
+		            break;
+			        case 2 :
+						return 'Nit';
+			        break;
+			        case 3 :
+						return 'Cédula de Extranjería' ;
+			        break;
+
+		        }
+	    	})
 		    ->addindexColumn()
             ->make(true);
     }
@@ -109,22 +123,20 @@ class MasterClientController extends Controller
 	 */
 	public function updateMasterClient(Request $request){
 
-		$articulo = Client::find(1);
-		//$articulo->update($request->all());
-			//$request->get('');
-			$articulo->identification_type_id = $request->input('identification_type_id');
-			$articulo->identification_number = $request->input('identification_number') ;
-			$articulo->bussiness_name = $request->input('bussiness_name');
-			$articulo->address = $request->input('address');
-			$articulo->phone = $request->input('phone');
-			$articulo->cellphone = $request->input('cellphone');
-			$articulo->email ='h@gmail.com' ;//$request->input('email');
-			$articulo->contact =$request->input('contact');
-			$articulo->city =$request->input('city');
-			$articulo->quota =$request->input('quota');
-			$articulo->payment_deadline =$request->input('payment_deadline');
-			$articulo->save();
-
+		$articulo = Client::find($request->input('id'));
+		$articulo->identification_type_id = $request->input('identification_type_id');
+		$articulo->identification_number = $request->input('identification_number') ;
+		$articulo->bussiness_name = $request->input('bussiness_name');
+		$articulo->address = $request->input('address');
+		$articulo->phone = $request->input('phone');
+		$articulo->cellphone = $request->input('cellphone');
+		$articulo->email =$request->input('Usua_Correo');
+		$articulo->contact =$request->input('contact');
+		$articulo->city =$request->input('city');
+		$articulo->quota =$request->input('quota');
+		$articulo->payment_deadline =$request->input('payment_deadline');
+		$articulo->save();
+		return redirect()->route('master_client');
 
 
 	}

@@ -22,94 +22,155 @@
                         Edición Clientes
                     </h2>
                 </div>
-
-
 	            <div class="modal-body">
-	                {!! Form::open(['route'=>array('update_master_client'),'method'=>'PUT','id'=>'form-editar-usuarios']) !!}
-	                    <div class="container-fluid">
-		                    <div class="row">
-	                            <input type="hidden" id="id">
-	                            <div class="col-md-12">
-		                            {!!Form::label('email', 'E-Mail Address',['class' => 'awesome'])!!}
-		                            {!!Form::textarea('ART_Descripcion')
-                                        !!}
-		                            <div class="col-md-6">
-	                                    <label for="recipient-name" class="control-label">Tipo Identificacion:</label>
-                                        <input type="text" class="form-control" id="identification_type_id">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Número:</label>
-                                        <input type="text" class="form-control" id="identification_number">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Razón Social:</label>
-                                        <input type="text" class="form-control" id="bussiness_name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Dirección:</label>
-                                        <input type="text" class="form-control" id="address">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Telefono:</label>
-                                        <input type="text" class="form-control" id="phone">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Movil:</label>
-                                        <input type="text" class="form-control" id="cellphone">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Correo:</label>
-                                        <input type="text" class="form-control" id="email">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="recipient-name" class="control-label">Contacto:</label>
-                                        <input type="text" class="form-control" id="contact">
-                                    </div>
-                                </div>
-                            </div>
-	                        <div class="row">
-		                        <div class="col-md-12">
-			                        <div class="col-md-6">
-				                        <label for="recipient-name" class="control-label">Ciudad:</label>
-				                        <input type="text" class="form-control" id="city">
-			                        </div>
-			                        <div class="col-md-6">
-				                        <label for="recipient-name" class="control-label">Cupo:</label>
-				                        <input type="text" class="form-control" id="quota">
-			                        </div>
-		                        </div>
-	                        </div>
-	                        <div class="row">
-		                        <div class="col-md-12">
-			                        <div class="col-md-6">
-				                        <label for="recipient-name" class="control-label">Plazo:</label>
-				                        <input type="text" class="form-control" id="payment_deadline">
-			                        </div>
+		            {!! Form::open(['route'=>array('update_master_client'),'method'=>'PUT','id'=>'form-editar-usuarios']) !!}
+		            <div class="container-fluid">
+			            <div class="row">
+				            {!!  Form::text('id',null,
+                                    ['class'=>'form-control','required','style'=>"display:none" ]);
+                            !!}
+				            <div class="col-md-12">
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('tipo', 'Tipo Identificación :',['class' => 'awesome'])
+								   !!}
+						            {!! Form::select(
+						                'identification_type_id',
+						                [1 => 'Cédula de Ciudadanias', 2 => 'Nit',3 =>'Cédula de Extranjería'],null,
+						                ['class'=>'form-control input-sm']
+						                )
+						            !!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('numero', 'Número :',['class' => 'awesome'])
+								   !!}
+						            {!!
+										Form::text('identification_number',null,
+											['class'=>'form-control','required','maxlength' => 10 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('razonSo', 'Razón Social :',
+									    ['class' => 'awesome']
+									   )
+								   !!}
+						            {!!
+										Form::text('bussiness_name',null,
+											['class'=>'form-control','required','maxlength' => 15 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('direccion', 'Dirección :',['class' => 'awesome'])
+								   !!}
+						            {!!
+										Form::text('address',null,
+											['class'=>'form-control','required','maxlength' => 13 , 'minlength' =>3]
+										)
+									!!}
 
-		                        </div>
-	                        </div>
-	                        <br><br>
-	                        <div class="modal-footer">
-		                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-		                        <button type="submit" class="btn btn-primary">Editar</button>
-		                        <button type="button" class="btn btn-danger">Eliminar</button>
-	                        </div>
-                        </div>
-	                {!! Form::close() !!}
-                </div>
+					            </div>
+				            </div>
+			            </div>
+			            <div class="row">
+				            <div class="col-md-12">
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('telefono', 'Telefono :',['class' => 'awesome'])
+								    !!}
+						            {!!
+										Form::text('phone',null,
+											['class'=>'form-control','required','maxlength' => 13 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('movil', 'Movil :',['class' => 'awesome'])
+								    !!}
+						            {!!
+										Form::text('cellphone',null,
+										['class'=>'form-control','required','maxlength' => 13 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('correo', 'Correo :',['class' => 'awesome'])
+								    !!}
+						            {!!  Form::email('Usua_Correo',null,
+                                            ['class'=>'form-control','required']
+                                         );
+                                    !!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('contacto', 'Contacto :',
+									   ['class' => 'awesome',])
 
+								    !!}
+						            {!!
+										Form::text('contact',null,
+											['class'=>'form-control','required','maxlength' => 10 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+				            </div>
+			            </div>
+			            <div class="row">
+				            <div class="col-md-12">
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('ciudad', 'Ciudad :',['class' => 'awesome'])
+								    !!}
+						            {!!
+										Form::text('city',null,
+											['class'=>'form-control','required','maxlength' => 10 , 'minlength' =>3]
+										)
+									!!}
+
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('cupo', 'Cupo :',['class' => 'awesome'])
+								    !!}
+						            {!!
+										Form::text('quota',null,
+											['class'=>'form-control','required','maxlength' => 10 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+					            <div class="col-md-3">
+						            {!!
+									   Form::label('plazo', 'Plazo :',['class' => 'awesome'])
+								    !!}
+						            {!!
+										Form::text('payment_deadline',null,
+											['class'=>'form-control','required','maxlength' => 10 , 'minlength' =>3]
+										)
+									!!}
+					            </div>
+				            </div>
+			            </div>
+			            <br><br>
+			            <div class="modal-footer">
+				            <div class="row">
+					            <div class="col-md-1">
+						            <button type="button" class="btn btn-danger">Eliminar</button>
+					            </div>
+					            <div class="col-md-3 col-md-offset-8">
+						            <button type="submit" class="btn btn-primary">Editar</button>
+						            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            {!! Form::close() !!}
+	            </div>
             </div>
         </div>
     </div>
@@ -175,9 +236,8 @@
 </div>
 <div id="tab-2" class="tab-pane">
 <div class="panel-body">
-	<form method="POST" action="{{ route('create_master_client') }}">
+	{!! Form::open(['route'=>array('create_master_client'),'method'=>'POST','id'=>'form-crear-usuarios']) !!}
 		<div class="row">
-			{{ csrf_field() }}
 			<div class="col-lg-12">
 				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
@@ -188,66 +248,172 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in">
 							<div class="panel-body">
-								<div class="form-group col-lg-4">
-									<label>Tipo Identificación</label>
-									<select class="form-control input-sm" name="cmbTypeId">
-										<option>Seleccione</option>
-										@foreach($documentTypes as $documentType)
-											<option value="{{ $documentType->id }}">{{ $documentType->name }}</option>
-										@endforeach
-									</select>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-2">
+											{!! Form::select(
+												'identification_type_id',
+												[1 => 'Cédula de Ciudadania', 2 => 'Nit',3 =>'Cédula de Extranjería'],1,
+												['class'=>'form-control input-sm']
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtNumId',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Número :','id'=>'txtNumId'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtBussinessName',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 15 , 'minlength' =>3,
+														'placeholder'=>'Razón Social :'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtAddress',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 13 , 'minlength' =>3,
+														'placeholder'=>'Dirección :'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtPhone',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 13 , 'minlength' =>3,
+														'placeholder'=>'Telefono :'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtCellphone',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 13 , 'minlength' =>3,
+														'placeholder'=>'Movil:'
+													]
+												)
+											!!}
+										</div>
+									</div>
 								</div>
-								<div class="form-group col-lg-4">
-									<label>Número Identificación</label>
-									<input type="text" class="form-control input-sm" name="txtNumId">
+								<br>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-2">
+											{!!  Form::email('txtEmail',null,
+													[
+														'class'=>'form-control','required',
+														'placeholder'=>'Correo :'
+													]
+												 );
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtContact',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Contacto :'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+
+											{!!
+												Form::text('txtPosition',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Cargo :'
+													]
+												)
+											!!}
+
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtDepartment',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Departamentos :'
+													]
+												)
+											!!}
+
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtCity',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Ciudad :'
+													]
+												)
+											!!}
+
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtQuota',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder'=>'Cupo Disponible :'
+													]
+												)
+											!!}
+										</div>
+									</div>
 								</div>
-								<div class="form-group col-lg-4">
-									<label>Razón Social</label>
-									<input type="text" class="form-control input-sm" name="txtBussinessName">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Dirección</label>
-									<input type="text" class="form-control input-sm" name="txtAddress">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Teléfono</label>
-									<input type="text" class="form-control input-sm" name="txtPhone">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Móvil</label>
-									<input type="text" class="form-control input-sm" name="txtCellphone">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Correo Electrónico</label>
-									<input type="text" class="form-control input-sm" name="txtEmail">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Contacto</label>
-									<input type="text" class="form-control input-sm" name="txtContact">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Cargo</label>
-									<input type="text" class="form-control input-sm" name="txtPosition">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Ciudad</label>
-									<input type="text" class="form-control input-sm" name="txtCity">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Departamento</label>
-									<input type="text" class="form-control input-sm" name="txtDepartment">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Cupo disponible</label>
-									<input type="text" class="form-control input-sm" name="txtQuota">
-								</div>
-								<div class="form-group col-lg-4">
-									<label>Plazo de Pago</label>
-									<input type="text" class="form-control input-sm" name="txtDeadlinePayment">
-								</div>
-								<div class="form-group col-lg-4">
-									<label># Inventario Semen</label>
-									<input type="text" class="form-control input-sm" name="txtSummary">
+								<br>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-2">
+											{!!
+												Form::text('txtDeadlinePayment',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder' => 'Plazo de Pago :'
+													]
+												)
+											!!}
+										</div>
+										<div class="col-md-2">
+											{!!
+												Form::text('txtSummary',null,
+													[
+														'class'=>'form-control','required',
+														'maxlength' => 10 , 'minlength' =>3,
+														'placeholder' => 'Inventario Semen :'
+													]
+												)
+											!!}
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -260,32 +426,33 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse">
 							<div class="panel-body">
-								<div class="form-inline">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Nombre del local" id="txtNewLocalName">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Contacto" id="txtNewLocalContact">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Teléfono" id="txtNewLocalPhone">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Correo" id="txtNewLocalEmail">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Ciudad" id="txtNewLocalCity">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Nombre del local" id="txtNewLocalName">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Contacto" id="txtNewLocalContact">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Teléfono" id="txtNewLocalPhone">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Correo" id="txtNewLocalEmail">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Departamento" id="txtNewLocalDepartment">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="Ciudad" id="txtNewLocalCity">
+										</div>
 									</div>
 								</div>
-								<div class="form-inline m-b">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Departamento" id="txtNewLocalDepartment">
-									</div>
-								</div>
-								<div class="form-inline m-b">
-									<div class="form-group">
-										<button type="button" class="btn btn-primary" id="btnNewLocal">Agregar</button>
-									</div>
+								<br>
+								<div class="col-md-12">
+									<button type="button" class="btn btn-primary" id="btnNewLocal">Agregar</button>
+									<br>
+									<br>
 								</div>
 								<table id="tblLocals" class="table table-striped table-bordered table-hover dataTables-example" >
 									<thead>
@@ -344,7 +511,7 @@
 				<button type="submit" class="btn btn-w-m btn-primary">Guardar</button>
 			</div>
 		</div>
-	</form>
+	{!! Form::close() !!}
 </div>
 </div>
 </div>
@@ -362,23 +529,23 @@
     var table =
     $('#tblClients').DataTable({
     language: {
-    "decimal": "",
-    "emptyTable": "No hay información",
-    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-    "infoPostFix": "",
-    "thousands": ",",
-    "lengthMenu": "Mostrar _MENU_ Entradas",
-    "loadingRecords": "Cargando...",
-    "processing": "Procesando...",
-    "search": "Buscar:",
-    "zeroRecords": "Sin resultados encontrados",
-    "paginate": {
-    "first": "Primero",
-    "last": "Ultimo",
-    "next": "Siguiente",
-    "previous": "Anterior"
+	    "decimal": "",
+	    "emptyTable": "No hay información",
+	    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+	    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+	    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+	    "infoPostFix": "",
+	    "thousands": ",",
+	    "lengthMenu": "Mostrar _MENU_ Entradas",
+	    "loadingRecords": "Cargando...",
+	    "processing": "Procesando...",
+	    "search": "Buscar:",
+	    "zeroRecords": "Sin resultados encontrados",
+	    "paginate": {
+	    "first": "Primero",
+	    "last": "Ultimo",
+	    "next": "Siguiente",
+	    "previous": "Anterior"
     }
     },
     'proccesing':true, 
@@ -392,7 +559,7 @@
     {data: 'phone'},
     {data: 'cellphone'},
     {data: 'email'},
-    {data: 'email'},
+    {data: 'contact'},
     {data: 'city'},
     {data: 'quota'},
     {data: 'payment_deadline'},
@@ -418,19 +585,19 @@
         $tr = $(this).closest('tr');
         var dataTable = table.row($tr).data();
         console.log(dataTable);
-        $('#id').val(dataTable.id);
-        $('#identification_type_id').val(dataTable.identification_type_id);
-        $('#identification_number').val(dataTable.identification_number);
-        $('#bussiness_name').val(dataTable.bussiness_name);
-        $('#address').val(dataTable.address);
-        $('#phone').val(dataTable.phone);
-        $('#cellphone').val(dataTable.cellphone);
-        //$('#email').val(dataTable.email);
-        $('#contact').val(dataTable.contact);
-        $('#city').val(dataTable.city);
-        $('#quota').val(dataTable.quota);
-        $('#payment_deadline').val(dataTable.payment_deadline);
-        console.log( $('#identification_number').val());
+        $('input[name=id]').val(dataTable.id);
+        $('input[name=identification_type_id]').val(dataTable.identification_type_id);
+        $('input[name=identification_number]').val(dataTable.identification_number);
+        $('input[name=bussiness_name]').val(dataTable.bussiness_name);
+        $('input[name=address]').val(dataTable.address);
+        $('input[name=phone]').val(dataTable.phone);
+        $('input[name=cellphone]').val(dataTable.cellphone);
+        $('input[name=Usua_Correo]').val(dataTable.email);
+        $('input[name=contact]').val(dataTable.contact);
+        $('input[name=city]').val(dataTable.city);
+        $('input[name=quota]').val(dataTable.quota);
+        $('input[name=payment_deadline]').val(dataTable.payment_deadline);
+        console.log( $('input[name=emailT]').val());
 	    $('#modalCliente').modal('toggle');
     });
 
