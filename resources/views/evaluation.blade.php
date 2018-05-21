@@ -10,9 +10,6 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li>
-                    <a href="{{ route('evaluation_po') }}">Seleccion Receptoras</a>
-                </li>
                 <li class="active">
                     <strong>Planilla de Selección de Receptoras</strong>
                 </li>

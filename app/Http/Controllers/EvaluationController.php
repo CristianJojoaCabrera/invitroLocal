@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderDetail;
 use App\Evaluation;
 use App\EvaluationDetail;
-use App\Transfer;
-use App\TransferDetail;
+use App\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Auth;
-use \Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 
 
 class EvaluationController extends Controller
@@ -47,15 +43,13 @@ class EvaluationController extends Controller
             $evaluation = new Evaluation();
             $evaluation->order_detail_id = $orderDetailId;
             $evaluation->state = 0;
-            $evaluation->user_id_created = Auth::id();
-            $evaluation->user_id_updated = Auth::id();
             $evaluation->save();
         }
         return view('evaluation')
             ->with('orderDetail', $orderDetail);
     }
 
-    public function notApply($orderDetailId)
+    public function close($orderDetailId)
     {
         $orderDetail = OrderDetail::find($orderDetailId);
         $orderDetail->apply_evaluation = 0;
@@ -86,7 +80,6 @@ class EvaluationController extends Controller
                 $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
                 $evaluation_details = new EvaluationDetail();
                 $evaluation_details->evaluation_id = $evaluation->id;
-                $evaluation_details->user_id_created = Auth::id();
             }
             else{
                 $evaluation_details = EvaluationDetail::find($request->input('txtEvaluation_id'));
@@ -99,7 +92,6 @@ class EvaluationController extends Controller
             $evaluation_details->synchronized = $request->input('cmbSynchronized');
             $evaluation_details->other_procedures = $request->input('txtOther_procedures');
             $evaluation_details->comments = $request->input('txtComments');
-            $evaluation_details->user_id_updated = Auth::id();
             $evaluation_details->save();
         }
 
@@ -109,34 +101,7 @@ class EvaluationController extends Controller
     public function finish($orderDetailId) {
         $evaluation = Evaluation::where('order_detail_id', $orderDetailId)->first();
         $evaluation->state = 1;
-        $evaluation->user_id_updated = Auth::id();
         $evaluation->save();
-
-        $evaluation_details = EvaluationDetail::where('evaluation_id', $evaluation->id)
-                                ->where('synchronized', true)
-                                ->get();
-
-        foreach ( $evaluation_details as $evaluation_detail ){
-            if (Transfer::where('order_detail_id', $orderDetailId)->first() == null) {
-                $transfer = new Transfer();
-                $transfer->order_detail_id = $orderDetailId;
-                $transfer->state = 0;
-                $transfer->user_id_created = Auth::id();
-                $transfer->user_id_updated = Auth::id();
-                $transfer->save();
-            }else{
-                $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
-            };
-
-            $transfer_details = new TransferDetail();
-            $transfer_details->transfer_id = $transfer->id;
-            $transfer_details->evaluation_detail_id = $evaluation_detail->id;
-            $transfer_details->receiver = $evaluation_detail->animal_id." ".$evaluation_detail->chapeta;
-            $transfer_details->user_id_created = Auth::id();
-            $transfer_details->user_id_updated = Auth::id();
-            $transfer_details->save();
-        }
-
         return redirect()->route('evaluation', $orderDetailId);
     }
 }

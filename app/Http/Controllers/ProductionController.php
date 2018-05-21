@@ -34,21 +34,6 @@ class ProductionController extends Controller
             ->with('orderDetail', $orderDetail);
     }
 
-
-    public function finish($orderDetailId) {
-        $production = Production::where('order_detail_id', $orderDetailId)->first();
-        $production->state = true;
-        $production->save();
-        return redirect()->route('production', $orderDetailId);
-    }
-
-    public function store($orderDetailId, Request $request) {
-        $production = Production::where('order_detail_id', $orderDetailId)->first();
-        $production->lot_oil = $request->input('txtLotOil');
-        $production->save();
-        return redirect()->route('production', $orderDetailId);
-    }
-
     /**
      *
      * @return \Illuminate\Http\Response

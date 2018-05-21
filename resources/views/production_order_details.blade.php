@@ -86,9 +86,9 @@
                                                     </td>
                                                     <td>
                                                     @if ($detail->evaluation == '' )
-                                                        <a href="{{ route('evaluation_notApply', $detail->id) }}" class="btn btn-sm btn-danger {{($detail->apply_evaluation) ? '' : 'disabled'}}">No Aplica</a>
+                                                        <a href="{{ route('evaluation_close', $detail->id) }}" class="btn btn-sm btn-danger {{($detail->apply_evaluation) ? '' : 'disabled'}}">No Aplica</a>
                                                     @else
-                                                        <a href="{{ route('evaluation_notApply', $detail->id) }}" class="btn btn-sm btn-danger disabled ">No Aplica</a>
+                                                        <a href="{{ route('evaluation_close', $detail->id) }}" class="btn btn-sm btn-danger disabled ">No Aplica</a>
                                                     @endif
                                                 @else
                                                     <a href="{{ route($route, $detail->id) }}" class="btn btn-sm btn-warning">Planilla</a>
@@ -101,7 +101,6 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

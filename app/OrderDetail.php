@@ -11,43 +11,24 @@ class OrderDetail extends Model
         return $this->belongsTo('App\Order');
     }
 
-    public function local()
-    {
+    public function local() {
         return $this->hasOne('App\Local', 'id', 'local_id');
     }
 
-    public function aspiration()
-    {
+    public function aspiration() {
         return $this->hasOne('App\Aspiration');
     }
 
-    public function evaluation()
-    {
+    public function evaluation() {
         return $this->hasOne('App\Evaluation');
     }
 
-    public function production()
-    {
-        return $this->hasOne('App\Production');
+    public function production() {
+        return $this->hasOne('App\Aspiration');
     }
 
-    public function transfer()
-    {
+    public function transfer() {
         return $this->hasOne('App\Transfer');
     }
 
-    public function diagnostic()
-    {
-        return $this->hasOne('App\Diagnostic');
-    }
-
-    public function sexage()
-    {
-        return $this->hasOne('App\Sexage');
-    }
-
-    public function delivery()
-    {
-        return $this->hasOne('App\Delivery');
-    }
 }

@@ -19,7 +19,6 @@ class CreateProductionsTable extends Migration
             $table->integer('order_detail_id')->unsigned();
             $table->foreign('order_detail_id')->references('id')->on('order_details');
             $table->string('lot_oil', 50)->nullable();
-            $table->boolean('state')->default(false);
             $table->timestamps();
         });
     }

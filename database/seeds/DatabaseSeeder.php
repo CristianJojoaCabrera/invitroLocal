@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
             'users',
             'document_types',
             'client_services',
-            'locals',
             'clients',
             'order_subservices',
             'service_subservices',
@@ -23,18 +22,10 @@ class DatabaseSeeder extends Seeder
             'subservices',
             'orders',
             'order_details',
-            'evaluation_details',
-            'evaluations',
             'production_details',
             'productions',
             'transfer_details',
-            'transfers',
-            'diagnostic_details',
-            'diagnostics',
-            'sexage_details',
-            'sexages',
-            'delivery_details',
-            'deliveries'
+            'transfers'
         ]);
 
         $this->call(UserSeeder::class);

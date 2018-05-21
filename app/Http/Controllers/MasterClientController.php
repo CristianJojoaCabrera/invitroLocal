@@ -9,6 +9,8 @@ use App\DocumentType;
 use App\Local;
 use App\Service;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\DataTables;
 
 class MasterClientController extends Controller
 {
@@ -29,20 +31,24 @@ class MasterClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+    	$clients = Client::all();
         foreach($clients as $client) {
             $client->locales = $client->locals;
             $client->servicios = $client->services;
+
         }
+        //dd($clients);
         $documentTypes = DocumentType::all();
         $services = Service::all();
         return view('master.client')
             ->with('clients', $clients)
             ->with('documentTypes', $documentTypes)
             ->with('services', $services);
+
     }
 
     public function store(Request $request) {
+
         $client = new Client();
         $client->identification_type_id = $request->input('cmbTypeId');
         $client->identification_number = $request->input('txtNumId');
@@ -81,5 +87,47 @@ class MasterClientController extends Controller
 
         return redirect()->route('master_client');
     }
+
+	/**
+	 * Funcion que lista los clientes
+	 *
+	 * @param Request $request
+	 * @return mixed
+	 */
+	public function listClients(Request $request){
+
+	    $clients = Client::all();
+	    return DataTables::of($clients)
+		    ->addindexColumn()
+            ->make(true);
+    }
+	/**
+	 * Funcion que modifica los clientes
+	 *
+	 * @param Request $request
+	 *
+	 */
+	public function updateMasterClient(Request $request){
+
+		$articulo = Client::find(1);
+		//$articulo->update($request->all());
+			//$request->get('');
+			$articulo->identification_type_id = $request->input('identification_type_id');
+			$articulo->identification_number = $request->input('identification_number') ;
+			$articulo->bussiness_name = $request->input('bussiness_name');
+			$articulo->address = $request->input('address');
+			$articulo->phone = $request->input('phone');
+			$articulo->cellphone = $request->input('cellphone');
+			$articulo->email ='h@gmail.com' ;//$request->input('email');
+			$articulo->contact =$request->input('contact');
+			$articulo->city =$request->input('city');
+			$articulo->quota =$request->input('quota');
+			$articulo->payment_deadline =$request->input('payment_deadline');
+			$articulo->save();
+
+
+
+	}
+
 
 }

@@ -20,10 +20,6 @@ class CreateEvaluationsTable extends Migration
             $table->foreign('order_detail_id')->references('id')->on('order_details');
             $table->string('comments', 100)->nullable();
             $table->integer('state')->unsigned();
-            $table->integer('user_id_created')->unsigned();
-            $table->foreign('user_id_created')->references('id')->on('users');
-            $table->integer('user_id_updated')->unsigned();
-            $table->foreign('user_id_updated')->references('id')->on('users');
             $table->timestamps();
         });
     }

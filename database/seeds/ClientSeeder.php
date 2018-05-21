@@ -40,16 +40,6 @@ class ClientSeeder extends Seeder
             'contact' => 'Maria J'
         ]);
 
-        $local = Local::create([
-            'client_id' => $client->id,
-            'name' => ' Finca 2',
-            'city' => 'Sumapaz',
-            'department' => 'Cundinamerca',
-            'phone' => '1234567',
-            'email' => 'admin@fincallano.com',
-            'contact' => 'Maria R'
-        ]);
-
         $service = ClientService::create([
             'amount' => '200000',
             'client_id' => $client->id,

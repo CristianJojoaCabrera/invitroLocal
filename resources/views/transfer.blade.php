@@ -10,11 +10,8 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li>
-                    <a href="{{ route('transfer_po') }}">Transferencia de Embriones</a>
-                </li>
                 <li class="active">
-                    <strong>{{ $title }}</strong>
+                    <strong>Transferencia de Embriones</strong>
                 </li>
             </ol>
         </div>
@@ -29,7 +26,7 @@
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ $title }}</h5>
+                        <h5>Planilla de Transferencia de Embriones</h5>
                     </div>
                     <div class="ibox-content">
                         @if ($errors->any())
@@ -76,7 +73,7 @@
                                     <div class="modal-content animated bounceInRight">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">{{ $title }}</h4>
+                                            <h4 class="modal-title">Planilla de Selección de Receptoras</h4>
                                             <input id="txtEvaluation_id" name="txtEvaluation_id" type="hidden" value="" class="form-control">
                                             <input id="txtTransfer_id" name="txtTransfer_id" type="hidden" value="" class="form-control">
                                         </div>
@@ -115,10 +112,6 @@
                                                 <input id="txtRazaToro" name="txtRazaToro" type="text"  class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Transferidor</label>
-                                                <input id="txtTransferidor" name="txtTransferidor" type="text"  class="form-control">
-                                            </div>
-                                            <div class="form-group">
                                                 <label>Observaciones para examen</label>
                                                 <input id="txtComments" name="txtComments" type="textArea" class="form-control">
                                             </div>
@@ -144,29 +137,27 @@
                                         <th>Raza</th>
                                         <th>Toro (RGD/Nombre)</th>
                                         <th>Raza</th>
-                                        <th>Transferidor</th>
                                         <th>Obs. Para examen</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($orderDetail->transfer->details as $detail)
+                                    @foreach($orderDetail->evaluation->detailsSynchronized as $detail)
                                         <tr>
-                                            <td id="transfer{{ $detail->id }}">{{ $detail->id}}</td>
-                                            <td id="receiver{{ $detail->id }}">{{ $detail->receiver }}</td>
-                                            <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
-                                            <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
-                                            <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
-                                            <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
-                                            <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
-                                            <td id="bull{{ $detail->id }}">{{ $detail->bull }}</td>
-                                            <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
-                                            <td id="transferor{{ $detail->id }}">{{ $detail->transferor }}</td>
-                                            <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
+                                            <td id="transfer{{ $detail->evaluation_detail_id }}">{{ $detail->transfer_id}}</td>
+                                            <td id="chapeta{{ $detail->evaluation_detail_id }}">{{ $detail->chapeta }}</td>
+                                            <td id="embryo{{ $detail->evaluation_detail_id }}">{{ $detail->embryo }}</td>
+                                            <td id="embryo_class{{ $detail->evaluation_detail_id }}">{{ $detail->embryo_class }}</td>
+                                            <td id="corpus_luteum{{ $detail->evaluation_detail_id }}">{{ $detail->corpus_luteum }}</td>
+                                            <td id="donor{{ $detail->evaluation_detail_id }}">{{ $detail->donor }}</td>
+                                            <td id="donor_breed{{ $detail->evaluation_detail_id }}">{{ $detail->donor_breed }}</td>
+                                            <td id="bull{{ $detail->evaluation_detail_id }}">{{ $detail->bull }}</td>
+                                            <td id="bull_breed{{ $detail->evaluation_detail_id }}">{{ $detail->bull_breed }}</td>
+                                            <td id="comments{{ $detail->evaluation_detail_id }}">{{ $detail->comments }}</td>
                                             <td class="center">
                                                 @if ( $orderDetail->transfer->state == 0)
-                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
-                                                            value = "{{ $detail->id }}">
+                                                    <button id="btnModal{{ $detail->evaluation_detail_id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
+                                                            value = "{{ $detail->evaluation_detail_id }}">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
                                                 @endif
@@ -201,7 +192,7 @@
                 $('#myModal').modal('show');
                 $('#txtEvaluation_id').val((this).value);
                 $('#txtTransfer_id').val($('#transfer'+(this).value).text());
-                $('#txtReceptora').val($('#receiver'+(this).value).text());
+                $('#txtReceptora').val($('#chapeta'+(this).value).text());
                 $('#txtEmbrion').val($('#embryo'+(this).value).text());
                 $('#txtClaseEmbrion').val($('#embryo_class'+(this).value).text());
                 $('#txtCuerpoLuteo').val($('#corpus_luteum'+(this).value).text());
@@ -209,7 +200,6 @@
                 $('#txtRazaDonadora').val($('#donor_breed'+(this).value).text());
                 $('#txtToroRGD').val($('#bull'+(this).value).text());
                 $('#txtRazaToro').val($('#bull_breed'+(this).value).text());
-                $('#txtTransferidor').val($('#transferor'+(this).value).text());
                 $('#txtComments').val($('#comments'+(this).value).text());
             });
         });

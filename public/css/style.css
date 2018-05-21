@@ -3590,7 +3590,7 @@ video {
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   outline: 0 none;
-  position: relative;
+  position: center;
 }
 .modal-dialog {
   z-index: 2200;
@@ -3601,9 +3601,11 @@ video {
 .inmodal .modal-body {
   background: #f8fafb;
 }
-.inmodal .modal-header {
-  padding: 30px 15px;
+
+.modal-header {
+  padding: 30px 25px;
   text-align: center;
+  background-color: #0480be;
 }
 .animated.modal.fade .modal-dialog {
   -webkit-transform: none;

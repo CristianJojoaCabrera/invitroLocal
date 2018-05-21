@@ -11,7 +11,6 @@ use App\TransferDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use DB;
-use Illuminate\Support\Facades\Auth;
 
 class TransferController extends Controller
 {
@@ -20,8 +19,6 @@ class TransferController extends Controller
      *
      * @return void
      */
-    private $title = 'Planilla de Transferencia de Embriones';
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -34,19 +31,26 @@ class TransferController extends Controller
      */
     public function index()
     {
-        //DB::enableQueryLog();
+        /*
+        DB::enableQueryLog();
         $evaluations = Evaluation::where('state', 1)->get();
+
+        $productionOrders = '';
+        //dd($evaluations);
+        foreach ($evaluations as $evaluation) {
+            //$productionOrders =  optional($evaluation->OrderDetail());
+            $productionOrders =  ($evaluation->OrderDetail->order());
+        }
+        $orderD = OrderDetail::with('evaluation');
+        $log = DB::getQueryLog();
+        var_dump($log);
+         */
+
         $productionOrders = Order::where('approved', true)->get();
         $route = 'transfer';
 
-        /*
-        $log = DB::getQueryLog();
-        var_dump($log);
-        */
-        return view('transfer_index')
+        return view('production_order_details')
             ->with('productionOrders', $productionOrders)
-            ->with('evaluations', $evaluations)
-            ->with('title', $this->title)
             ->with('route', $route);
 
         return view('transfer');
@@ -60,21 +64,22 @@ class TransferController extends Controller
             $transfer = new Transfer();
             $transfer->order_detail_id = $orderDetailId;
             $transfer->state = 0;
-            $transfer->user_id_created = Auth::id();
-            $transfer->user_id_updated = Auth::id();
+            $transfer->user_id_created= '1';
+            $transfer->user_id_updated = '1';
             $transfer->save();
         }
         return view('transfer')
-            ->with('title', $this->title)
             ->with('orderDetail', $orderDetail);
     }
+
 
     public function store($orderDetailId, Request $request) {
         $transfer = Transfer::where('order_detail_id', $orderDetailId)->first();
         $transfer->received_by = $request->input('txtRecibido');
         $transfer->identification_number = $request->input('txtCedula');
         $transfer->comments = $request->input('txtComment');
-        $transfer->user_id_updated = Auth::id();
+        $transfer->user_id_updated = '1';
+        //$transfer->state = 0;
         $transfer->save();
 
         return redirect()->route('transfer', $orderDetailId);
@@ -90,8 +95,7 @@ class TransferController extends Controller
         else{
             $transfer_details = TransferDetail::find($request->input('txtTransfer_id'));
         }
-        //$transfer_details->evaluation_detail_id = $request->input('txtEvaluation_id');
-        $transfer_details->receiver = $request->input('txtReceptora');
+        $transfer_details->evaluation_detail_id = $request->input('txtEvaluation_id');
         $transfer_details->embryo = $request->input('txtEmbrion');
         $transfer_details->embryo_class = $request->input('txtClaseEmbrion');
         $transfer_details->corpus_luteum = $request->input('txtCuerpoLuteo');
@@ -99,10 +103,9 @@ class TransferController extends Controller
         $transfer_details->donor_breed = $request->input('txtRazaDonadora');
         $transfer_details->bull = $request->input('txtToroRGD');
         $transfer_details->bull_breed = $request->input('txtRazaToro');
-        $transfer_details->transferor = $request->input('txtTransferidor');
         $transfer_details->comments = $request->input('txtComments');
-        $transfer_details->user_id_created= Auth::id();
-        $transfer_details->user_id_updated = Auth::id();
+        $transfer_details->user_id_created= '1';
+        $transfer_details->user_id_updated = '1';
         $transfer_details->save();
 
         return redirect()->route('transfer', $orderDetailId);

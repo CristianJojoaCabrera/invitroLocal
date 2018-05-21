@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+
+
     public function documentType() {
         return $this->hasOne('App\DocumentType', 'id', 'identification_type_id');
     }

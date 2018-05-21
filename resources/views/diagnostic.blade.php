@@ -10,11 +10,8 @@
                 <li>
                     <a href="index.html">Home</a>
                 </li>
-                <li>
-                    <a href="{{ route('diagnostic_po') }}">Diagnóstico</a>
-                </li>
                 <li class="active">
-                    <strong>{{ $title }}</strong>
+                    <strong>Diagnóstico</strong>
                 </li>
             </ol>
         </div>
@@ -25,178 +22,301 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-                @include('layouts.head_po_detail')
-
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{{ $title }}</h5>
+                        <h5>Orden de Producción</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="ibox-content">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                         <div class="row">
-                            <form method="post" action="{{ route('diagnostic_store', $orderDetail->id) }}">
-                                {{ csrf_field() }}
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Recibido por</label>
-                                        <input id="txtRecibido" name="txtRecibido" type="text" class="form-control input-sm" value="{{ $orderDetail->diagnostic->received_by }}" >
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label>Cédula</label>
-                                        <input id="txtCedula" name="txtCedula" type="text" class="form-control input-sm" value="{{ $orderDetail->diagnostic->identification_number }}" >
-                                    </div>
-                                </div>
-                                <div class="col-lg-5">
-                                    <div class="form-group">
-                                        <label>Observaciones</label>
-                                        <textarea id="txtComment" name="txtComment" class="form-control input-sm" >{{ $orderDetail->diagnostic->comments }}</textarea>
-                                    </div>
-                                </div>
-                                @if ($orderDetail->diagnostic->state == 0)
-                                    <div class="ibox-content" align="right">
-                                        <button type="submit" class="btn btn-w-m btn-primary" >Guardar</button>
-                                    </div>
-                                @endif
-                            </form>
+                            <div class="form-group col-lg-4">
+                                <label>Orden</label>
+                                <input type="text" class="form-control input-sm">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Cliente</label>
+                                <input type="text" class="form-control input-sm">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Ciudad</label>
+                                <input type="text" class="form-control input-sm">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Fecha</label>
+                                <input type="text" class="form-control input-sm">
+                            </div>
                         </div>
-                        <form method="POST" action="{{ route('diagnostic_save', $orderDetail-> id) }}">
-                            {{ csrf_field() }}
-                            <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content animated bounceInRight">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">{{ $title }}</h4>
-                                            <input id="txtDiagnosticDetail_id" name="txtDiagnostico_id" type="hidden" value="" class="form-control">
-                                            <input id="txtTransferDetail_id" name="txtTransferDetail_id" type="hidden" value="" class="form-control">
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label>Receptora</label>
-                                                <input id="txtReceptora" name="txtReceptora" type="text"  class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Embrion</label>
-                                                <input id="txtEmbrion" name="txtEmbrion" type="text"  class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Diagnóstico 1</label>
-                                                <select class="form-control input-sm" id="cmbDx1" name="cmbDx1">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="P">Preñado</option>
-                                                    <option value="V">Vacío</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary" id="btnAgregar" name="btnAgregar" >Modificar</button>
-                                        </div>
-
-                                    </div>
+                    </div>
+                </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Planilla de Diagnóstico</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Receptora</th>
+                                    <th>Embrión</th>
+                                    <th>Clasificación del Embrión</th>
+                                    <th>Cuerpo Luteo</th>
+                                    <th>Donadora (RGD/Nombre)</th>
+                                    <th>Raza</th>
+                                    <th>Toro (RGD/Nombre)</th>
+                                    <th>Raza</th>
+                                    <th>Transferidor</th>
+                                    <th>Finca</th>
+                                    <th>Obs. Para examen</th>
+                                    <th>Sub Cliente</th>
+                                    <th>DX / P</th>
+                                    <th>DX / V</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="gradeX">
+                                    <td>1</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 4.0
+                                    </td>
+                                    <td>Win 95+</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeC">
+                                    <td>2</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 5.0
+                                    </td>
+                                    <td>Win 95+</td>
+                                    <td class="center">5</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>3</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 5.5
+                                    </td>
+                                    <td>Win 95+</td>
+                                    <td class="center">5</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>4</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 6
+                                    </td>
+                                    <td>Win 98+</td>
+                                    <td class="center">6</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>5</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td class="center">7</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>6</td>
+                                    <td>Trident</td>
+                                    <td>AOL browser (AOL desktop)</td>
+                                    <td>Win XP</td>
+                                    <td class="center">6</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>7</td>
+                                    <td>Gecko</td>
+                                    <td>Firefox 1.0</td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td class="center">1.7</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>8</td>
+                                    <td>Gecko</td>
+                                    <td>Firefox 1.5</td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td class="center">1</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>9</td>
+                                    <td>Gecko</td>
+                                    <td>Firefox 2.0</td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td class="center">8</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>10</td>
+                                    <td>Gecko</td>
+                                    <td>Firefox 3.0</td>
+                                    <td>Win 2k+ / OSX.3+</td>
+                                    <td class="center">4</td>
+                                    <td class="center">9</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                <tr class="gradeA">
+                                    <td>11</td>
+                                    <td>Gecko</td>
+                                    <td>Camino 1.0</td>
+                                    <td>OSX.2+</td>
+                                    <td class="center">8</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center">4</td>
+                                    <td class="center"></td>
+                                    <td class="center"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Recibido por</label>
+                                    <input type="text" class="form-control input-sm">
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table id="tblPlanilla" class="table table-striped table-bordered table-hover dataTables-example" >
-                                    <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Receptora</th>
-                                        <th>Embrión</th>
-                                        <th>Clasificación del Embrión</th>
-                                        <th>Cuerpo Luteo</th>
-                                        <th>Donadora (RGD/Nombre)</th>
-                                        <th>Raza</th>
-                                        <th>Toro (RGD/Nombre)</th>
-                                        <th>Raza</th>
-                                        <th>Transferidor</th>
-                                        <th>Obs. Para examen</th>
-                                        <th>Diagnóstico 1</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($orderDetail->transfer->details as $detail)
-                                        <tr>
-                                            <td id="transfer{{ $detail->id }}" hidden="hidden">{{$detail->id}}</td>
-                                            <td id="diagnostic{{ $detail->id }}"  >
-                                                @if(is_null($detail->diagnosticDetail))
-
-                                                @else
-                                                    {{$detail->diagnosticDetail->id}}
-                                                @endif
-                                            </td>
-                                            <td id="receiver{{ $detail->id }}">{{ $detail->receiver }}</td>
-                                            <td id="embryo{{ $detail->id }}">{{ $detail->embryo }}</td>
-                                            <td id="embryo_class{{ $detail->id }}">{{ $detail->embryo_class }}</td>
-                                            <td id="corpus_luteum{{ $detail->id }}">{{ $detail->corpus_luteum }}</td>
-                                            <td id="donor{{ $detail->id }}">{{ $detail->donor }}</td>
-                                            <td id="donor_breed{{ $detail->id }}">{{ $detail->donor_breed }}</td>
-                                            <td id="bull{{ $detail->id }}">{{ $detail->bull }}</td>
-                                            <td id="bull_breed{{ $detail->id }}">{{ $detail->bull_breed }}</td>
-                                            <td id="transferor{{ $detail->id }}">{{ $detail->transferor }}</td>
-                                            <td id="comments{{ $detail->id }}">{{ $detail->comments }}</td>
-
-                                            <td id="diagnostic{{ $detail->id }}">
-                                                @if(is_null($detail->diagnosticDetail))
-
-                                                @else
-                                                    {{$detail->diagnosticDetail->dx1}}
-                                                @endif
-                                            </td>
-                                            <td class="center">
-                                                @if ( $orderDetail->diagnostic->state == 0)
-                                                    <button id="btnModal{{ $detail->id }}" name="btnModal"  type="button" class="btn btn-xs btn-warning"
-                                                            value = "{{ $detail->id }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </form>
-                        @if ( $orderDetail->diagnostic->state == 0)
-                            <form method="POST" action="{{ route('diagnostic_finish', $orderDetail->id) }}">
-                                {{ csrf_field() }}
-                                <div class="ibox-content" align="right">
-                                    <button type="submit" class="btn btn-w-m btn-primary" >Finalizar</button>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Cédula</label>
+                                    <input type="text" class="form-control input-sm">
                                 </div>
-                            </form>
-                        @endif
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Observaciones</label>
+                                    <textarea class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-@section('javascript')
-    <script>
-        $(document).ready(function() {
-            $("[id*=btnModal]").on('click', function () {
-                $('#myModal').modal('show');
-                $('#txtTransferDetail_id').val((this).value);
-                $('#txtDiagnosticDetail_id').val($('#diagnostic'+(this).value).text());
-                $('#txtReceptora').val($('#receiver'+(this).value).text());
-                $('#txtEmbrion').val($('#embryo'+(this).value).text());
-                $('#cmbDx1').val($('#diagnostic'+(this).value).text());
-            });
-        });
-    </script>
 @endsection

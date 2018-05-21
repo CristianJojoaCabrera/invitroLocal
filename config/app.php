@@ -160,6 +160,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+	    /*
+	        class dataTable
+	    */
+	    Yajra\DataTables\DataTablesServiceProvider::class,
+	    /* Collective
+	    */
+	    Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -208,7 +215,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+	    /* aliases datatable */
+	    'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+	    /* aliases collective*/
+	    'Form' => Collective\Html\FormFacade::class,
+	    'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
